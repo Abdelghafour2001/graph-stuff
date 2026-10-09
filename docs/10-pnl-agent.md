@@ -1,6 +1,6 @@
 # P&L Agent: Living Forecasts on the Graph
 
-*2026-10-09. Status: design. Builds on the [variance diagnosis](08-variance-diagnosis.md), the news / event agent and the review loop.*
+*2026-10-09. Status: design; structure discovery from formulas prototyped. Builds on the [variance diagnosis](08-variance-diagnosis.md), the news / event agent and the review loop.*
 
 ## The problem, as OCP lives it
 
@@ -26,6 +26,36 @@ This is not hypothetical. In H1 2026, sulphur prices roughly tripled while phosp
 | **Ontology as a digital twin, with simulation.** The supply chain is modelled as objects and links, and scenarios are run against an enterprise goal. One consumer goods company built SKU-level COGS on 7 ERPs this way | Palantir Foundry ([digital twin](https://www.palantir.com/platforms/foundry/digital-twin/), [ontology](https://www.palantir.com/docs/foundry/ontology/overview), [supply chain](https://www.palantir.com/assets/xrfr7uokpv1b/1Ck5r0fJHcYaZSgV21tcXi/2fd9e681ed0641c134c4f9c99be93555/Palantir_Foundry_for_Supply_Chain_2022.pdf)). Independent view: a general platform rather than a planning engine ([Lokad](https://www.lokad.com/review-of-palantir-com/)) | Our Neo4j graph plays the ontology role. We keep the simulation **deterministic and auditable**, which a P&L needs |
 | **Driver-based and agentic planning.** Plans are built from operational drivers (volumes, rates, capacity utilisation, logistics rates), and exogenous drivers (FX, tariffs) trigger recalculation | FP&A tools ([Pigment](https://www.pigment.com/blog/the-importance-of-driver-based-planning), [FP&A Trends](https://fpa-trends.com/article/how-move-static-budgets-agentic-planning), [SDG](https://www.sdggroup.com/en/the-future-of-planning-ai-driven-fpa-framework)) | Branch submissions are stored as drivers, not as P&L lines. Events re-trigger the calculation |
 | **Knowledge graphs for shock propagation.** LLM + KG for causal reasoning about how risk spreads; dynamic financial KGs propagating signals across entities; event-driven forecasting with evidence hypergraphs | Research ([arXiv 2407.17190](https://arxiv.org/pdf/2407.17190), [2607.10932](https://arxiv.org/pdf/2607.10932), [2608.13024](https://arxiv.org/pdf/2608.13024)) | Use the graph to find **which assumptions** an event reaches (traversal), not to guess its size. Size comes from calibrated shocks and the formula engine |
+
+## No templates, no common structure: the agent discovers it
+
+Branches do not fill a group template, and there is no shared structure. Each sends its own spreadsheet (or a PDF, a deck, an email), with its own layout, words and logic, and that can change from one cycle to the next. So the agent's first job is **structure discovery**, not form filling. It works in layers, the most reliable first, and every layer is checked by deterministic code:
+
+1. **Formulas: the branch's own model.** A branch spreadsheet carries its logic in its formulas. `src/formula_graph.py` reads every formula, replaces cell references by the row labels they point to, and generalises over rows and columns.
+   - On the S&P ammonia data file, **395,617 formulas in 52 sheets reduce to 67 rules**. For example, `Op. rate[row] = Production[row] / Capacity by geography[row]` covers 286 rows × 40 years, and Demand is the sum of 8 end-use sheets.
+   - It also produces the sheet dependency graph, and the links to workbooks we do not have (`[2]Model`: 2,680 cells).
+   - For a branch this separates **inputs** (assumptions to mark to market) from **computed rows** (never extracted as inputs), and recovers the branch's revenue and cost logic as `Formula` nodes. The agent tool is `describe_formulas`.
+2. **Arithmetic identities when values are pasted.** When there are no formulas, candidate relations are tested on the numbers:
+   - a row that is the sum of a block (already done by the spec checks);
+   - a row equal to the product of two others (revenue = volume × price);
+   - a ratio that stays constant across periods (cost / volume: a unit cost or a consumption ratio);
+   - a constant growth rate (a lazy forecast).
+
+   The LLM proposes candidates from the labels; arithmetic accepts or rejects them.
+3. **Meaning.** Row labels are mapped to concepts and driver types through the graph's terms (`lookup_term`), with unknown words going to `propose_term`. Units come from the preamble (the existing unit check), periods from `parse_period`, and forecast or actual from cell formats and dates.
+4. **Other formats.** PDFs, decks and emails go through extraction with a verbatim-quote check, as the news agent already does: a number is kept only if its sentence is found in the document.
+5. **Questions back to the branch.** What the agent cannot see becomes a short list of questions, not a guess:
+   - inputs linked to external files;
+   - hard-typed numbers inside a block that otherwise follows a formula (manual overrides);
+   - drivers the graph expects but the submission lacks (DAP needs sulphur and ammonia, but there is no sulphur line);
+   - units it cannot pin down.
+6. **A model that converges over cycles.**
+   - Each branch gets its own model graph (`Assumption` and `Formula` nodes).
+   - Across branches, the agent aligns equivalent drivers (same concept, same driver type) and proposes a **group driver dictionary** that humans approve.
+   - Next cycle, the same layout maps automatically: the spec anchors and the layout memory already exist for market files.
+   - **A change in a branch's formulas between cycles is itself a signal** ("revenue now nets freight"), reported in the bridge.
+
+The structure is never imposed. It is learned per branch, checked by arithmetic, confirmed by people, and becomes the group standard because it was agreed, not because a template demanded it.
 
 ## Core idea: the submission is a set of assumptions linked to the world
 
@@ -81,7 +111,7 @@ The graph already knows how concepts connect: `MADE_FROM`, `TRANSITS`, `PRODUCED
 
 | Agent | Job | Writes |
 |---|---|---|
-| **Intake** | Reads branch templates (Excel, through specs with anchors) into Submission / Assumption nodes. Checks completeness, units, periods, and consistency with the asset graph (volume ≤ capacity × operating rate; consumption ratios within plant norms) | Submissions (to review) |
+| **Intake** | Discovers each submission's structure (formulas, identities, meaning; see above), turns it into Submission / Assumption / Formula nodes, and asks the branch what it cannot see. Checks completeness, units, periods, and consistency with the asset graph (volume ≤ capacity × operating rate; consumption ratios within plant norms) | Submissions and questions (to review) |
 | **Challenger** | Compares each assumption with its market reference and recent analogs. Flags the ones outside a band, stale since a known event, or inconsistent across branches (two branches assuming different sulphur prices for the same month) | Flags, questions to branches |
 | **Watcher** (continuous) | Listens to the news / event agent and price feeds. On a new incident, traverses the graph from the affected concepts to the exposed assumptions in every branch, and asks the engine for the impact with sensitivities and the matching scenario | Alerts, proposed revisions |
 | **Explainer** | Writes bridges (v1→v2, plan→market, plan→actual) from the attribution, with citations to series, incidents and submissions. The [variance diagnosis](08-variance-diagnosis.md) is its tool for actuals | Narratives |
@@ -123,14 +153,16 @@ Branch replies matter. A branch may be hedged, hold inventory, or have a contrac
 - **Model health**: the unexplained share of each bridge, the P&L-explain quality test of the trading desks.
 
 ## What we need from OCP
-1. The branch submission templates (one per branch), for the Intake specs.
-2. The P&L structure per branch (lines, formulas) and the consolidation rules, including transfer prices.
-3. Validated consumption ratios per plant (they also unlock attribution mode in the variance diagnosis).
-4. Which market reference each assumption should be marked against, and hedging / contract practice by input.
-5. Who reviews what: branch controllers, group FP&A.
+No templates and no structure: the agent learns those. What it needs:
+1. **Past submissions as they were sent**, in any format, from two or three branches and two or three cycles. They are the training ground for discovery, and the cycle-to-cycle formula diffs.
+2. **The consolidated group figures for the same cycles**, so the discovered branch models can be reconciled to what the group actually reported (and the mapping tested, not assumed).
+3. **Validated consumption ratios per plant** where they exist (they also unlock attribution mode in the variance diagnosis).
+4. **Who answers the agent's questions** in each branch, and who in group FP&A approves the driver dictionary.
 
 ## Prototype plan
-1. `knowledge/pnl_model.yaml`: an illustrative formula graph for Nutricrops DAP at Jorf (revenue, variable costs from rock / sulphur / ammonia, freight), clearly marked illustrative until OCP provides the real one.
-2. `src/pnl.py`: DAG evaluator, sensitivities, Shapley attribution, mark-to-market against provider series (actuals only), with tests.
-3. A synthetic branch submission, then the Watcher flow end to end on a Hormuz-like incident: exposure by traversal, impact with range, alert text checked by the Reflector.
-4. UI tab: submission vs market-implied, bridge, challenge list.
+0. ~~Formula harvesting~~: done, `src/formula_graph.py` + agent tool `describe_formulas` (tests in `tests/test_formula_graph.py`).
+1. Identity search on pasted values (sum, product, constant ratio, constant growth), and overrides detection (constants inside formula blocks).
+2. `knowledge/pnl_model.yaml`: an illustrative formula graph for Nutricrops DAP at Jorf (revenue, variable costs from rock / sulphur / ammonia, freight), clearly marked illustrative, to be replaced by the model discovered from real branch submissions.
+3. `src/pnl.py`: DAG evaluator, sensitivities, Shapley attribution, mark-to-market against provider series (actuals only), with tests.
+4. A synthetic branch submission (an unstructured workbook, not a template), then the Watcher flow end to end on a Hormuz-like incident: exposure by traversal, impact with range, alert text checked by the Reflector.
+5. UI tab: submission vs market-implied, bridge, challenge list.

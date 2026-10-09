@@ -12,7 +12,7 @@ import openai
 from anthropic import beta_tool
 
 from entity_tools import ocp_assets, resolve_entity
-from excel_tools import describe_sheet, find_sheets, propose_extraction_spec, read_range
+from excel_tools import describe_formulas, describe_sheet, find_sheets, propose_extraction_spec, read_range
 from graph import driver, read_graph
 from news_tools import event_timeline, price_assessments, price_monthly, price_routes, read_article, search_articles
 from variance_tools import diagnose_variance, submit_diagnosis
@@ -35,6 +35,8 @@ The Neo4j graph is your source of truth about the business:
 Working with workbooks:
 - To find where a fact lives, resolve the words to concepts, then call find_sheets. Prefer role=data sheets; dashboards are formula views with drop-downs, not data.
 - Before proposing how to extract a sheet, call describe_sheet, then read_range on the regions you are unsure about (header rows, first data rows, total rows).
+  When a workbook has formulas (a branch's own model), call describe_formulas first: its rules tell you which rows are inputs,
+  which are computed (never extract computed rows as inputs) and which numbers come from files we do not have.
   Watch for: multi-row headers, several tables stacked in one sheet, formula total rows (never extract them as data), forecast markers, units in preamble rows.
 - Express extraction as propose_extraction_spec. It runs your spec and returns checks. If any check fails, fix the spec and propose again
   (up to 4 attempts). Never claim success while checks fail; report the remaining failures honestly.
@@ -181,7 +183,7 @@ def ask_news_agent(question: str) -> str:
                        "evidence": [c["result"] for c in trace if c["tool"] != "reflector"]}, ensure_ascii=False)
 
 
-TOOLS = [lookup_term, describe_concept, run_cypher, propose_term, find_sheets, describe_sheet, read_range, propose_extraction_spec, ask_news_agent,
+TOOLS = [lookup_term, describe_concept, run_cypher, propose_term, find_sheets, describe_sheet, describe_formulas, read_range, propose_extraction_spec, ask_news_agent,
          resolve_entity, ocp_assets, diagnose_variance, submit_diagnosis, calc]
 
 

@@ -9,6 +9,7 @@ import yaml
 from anthropic import beta_tool
 from openpyxl.utils import get_column_letter, range_boundaries
 
+import formula_graph
 from graph import read_graph
 from spec_executor import check, execute, validate
 
@@ -94,6 +95,34 @@ def default_anchor(spec: dict) -> dict | None:
     wb.close()
     return next(({"cell": f"{col}{min_row + i}", "text": str(v[0]).strip()} for i, v in enumerate(cells)
                  if isinstance(v[0], str) and v[0].strip()), None)
+
+
+_harvests: dict = {}
+
+
+@beta_tool
+def describe_formulas(file: str, sheet: str = "") -> str:
+    """The calculation structure of a workbook recovered from its formulas: per sheet, row rules such as
+    "Revenue[row] = Volume[row] * Price[row]" or "SUM([block above])" (with how many rows follow each rule), which sheets feed
+    which, and links to workbooks we do not have. Use it on a branch's own spreadsheet to learn its model before mapping
+    its rows to concepts, and to ask the branch about inputs that come from outside the file.
+
+    Args:
+        file: Workbook file name.
+        sheet: Optional sheet name; empty for every sheet (rules covering 3+ rows only).
+    """
+    path = EXCEL_DIR / file
+    key = (str(path), path.stat().st_mtime)
+    if key not in _harvests:
+        _harvests[key] = formula_graph.harvest(path)
+    h = _harvests[key]
+    if sheet:
+        assert sheet in h["sheets"], f"unknown sheet {sheet}"
+        sheets = {sheet: {**h["sheets"][sheet], "rules": h["sheets"][sheet]["rules"][:30]}}
+    else:
+        sheets = {n: {"formulas": s["formulas"], "rules": [r for r in s["rules"] if r["rows"] >= 3][:8]} for n, s in h["sheets"].items() if s["formulas"]}
+    deps = [d for d in h["depends_on"] if not sheet or sheet in (d["sheet"], d["uses"])]
+    return json.dumps({"sheets": sheets, "depends_on": deps[:60], "external_links": h["external_links"]}, ensure_ascii=False)
 
 
 @beta_tool
