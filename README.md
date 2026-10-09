@@ -10,7 +10,7 @@ The goal is agentic P&L computation across OCP branches and BUs on top of a Neo4
 - [Market-intel data findings + DAP/US–Iran war design](docs/04-market-intel-findings.md)
 - [Prior art sweep (papers + repos) and decisions](docs/05-prior-art.md)
 - [Notes on the market-intel ingestion repo (referential, caster docs)](docs/06-ingestion-repo-notes.md)
-- [Sub-agents with their own graphs (design proposal)](docs/07-subagents.md)
+- [Sub-agents: orchestrator + impact, workbook and news specialists (built), market/entity/business (proposed)](docs/07-subagents.md)
 - [Sample files review (Argus, CRU, S&P, vessel tracker)](docs/09-sample-files-review.md)
 - [P&L agent: branch submissions without templates, structure discovery, P&L engine (design + prototype)](docs/10-pnl-agent.md); try `python scripts/sample_branch.py /tmp/b.xlsx && python scripts/discover_submission.py /tmp/b.xlsx`
 - [Variance diagnosis: why a margin moved (design, with animated architecture)](docs/08-variance-diagnosis.md)

@@ -42,6 +42,13 @@ with chat:
             with st.expander(f"{len(turn['trace'])} tool calls"):
                 for call in turn["trace"]:
                     st.code(f"{call['tool']}({json.dumps(call['input'], ensure_ascii=False) if isinstance(call['input'], dict) else call['input']})")
+                    if call["tool"].startswith("ask_"):  # a specialist: show the tools it used
+                        try:
+                            inner = json.loads(call["result"]).get("tool_calls", [])
+                        except (ValueError, AttributeError):
+                            inner = []
+                        if inner:
+                            st.caption("↳ " + " → ".join(inner))
     if question := st.chat_input("Ask about OCP products, sites, workbooks, or ask for an extraction spec"):
         try:
             with st.spinner("Agent working, tool calls can take a minute…"):

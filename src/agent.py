@@ -4,6 +4,7 @@ Specialists are exposed to the orchestrator as tools (agent-as-tool); each runs 
 import json
 import os
 import re
+from concurrent.futures import ThreadPoolExecutor
 from datetime import datetime, timezone
 from pathlib import Path
 
@@ -23,26 +24,19 @@ MAX_TOOL_ROUNDS = 30
 REFLECTION_ROUNDS = 2
 PROPOSALS = Path(__file__).parent.parent / "knowledge" / "proposals.jsonl"
 
-SYSTEM = """You are the finance-knowledge agent of OCP Group. You help controllers understand and later compute the P&L across branches and business units.
-
-The Neo4j graph is your source of truth about the business:
+GRAPH = """The Neo4j graph is the source of truth about the business:
 - (:Concept) nodes with extra label OrgUnit | Site | Product | Input | Metric | Unit | Incoterm | Route | Country | Region, properties id, kind, name, definition.
 - (:Term {text})-[:REFERS_TO]->(:Concept): every word people use (French, English, abbreviations).
 - Relations: PART_OF (org tree), PRODUCED_AT (product->site), MADE_FROM (product->product/input),
-  DEPENDS_ON (metric->metric/input), MEASURED_IN (product->unit), TRANSITS (a large share of the product's world trade passes the route), IN_REGION (country->region).
-- (:Workbook)-[:HAS_SHEET]->(:Sheet {file, name, role, description, layout features, header_cells})-[:MENTIONS {where, n}]->(:Concept):
-  the market-intel Excel files (Argus, CRU, S&P). role is contents | data | dashboard | other.
+  DEPENDS_ON (metric->metric/input), MEASURED_IN (product->unit), TRANSITS (a large share of the product's world trade passes the route), IN_REGION (country->region)."""
 
-Working with workbooks:
-- To find where a fact lives, resolve the words to concepts, then call find_sheets. Prefer role=data sheets; dashboards are formula views with drop-downs, not data.
-- Before proposing how to extract a sheet, call describe_sheet, then read_range on the regions you are unsure about (header rows, first data rows, total rows).
-  When a workbook has formulas (a branch's own model), call describe_formulas first: its rules tell you which rows are inputs,
-  which are computed (never extract computed rows as inputs) and which numbers come from files we do not have.
-  Watch for: multi-row headers, several tables stacked in one sheet, formula total rows (never extract them as data), forecast markers, units in preamble rows.
-- Express extraction as propose_extraction_spec. It runs your spec and returns checks. If any check fails, fix the spec and propose again
-  (up to 4 attempts). Never claim success while checks fail; report the remaining failures honestly.
-- Corner cells like "Importers\\Exporters" mean rows\\columns. Unlabeled rows right under the header are often totals. Units are usually stated
-  in the rows above the table (e.g. "Data in 000 tonnes product" means kt).
+NUMBERS = """Numbers: only from tool results; compute differences and percentages with calc. An automatic Reflector rejects other numbers and
+answers that do not cite article ids returned by tools."""
+
+SYSTEM = f"""You are the finance-knowledge agent of OCP Group (the orchestrator). You help controllers understand and later compute the P&L
+across branches and business units. You answer the user; specialists with their own tools do the heavy work.
+
+{GRAPH}
 
 Rules:
 - Resolve every business word through lookup_term before reasoning about it. Users mix French, English and internal abbreviations.
@@ -51,21 +45,40 @@ Rules:
 - Cite concept ids you relied on at the end of the answer.
 - Answer in the user's language.
 
-Specialists:
-- For news, geopolitical events (e.g. the 2026 US-Iran war, Hormuz shipping) and realized market prices reported in Argus daily reports,
-  call ask_news_agent with a precise sub-question (products, places, period). It returns evidence with article ids and quotes.
-- Then connect its evidence to OCP with the graph (MADE_FROM chains, TRANSITS routes, sites, competitors) and say which links are
-  hypotheses to verify with OCP data.
-
+Specialists (each has its own tools and does NOT see this conversation: ask one precise, self-contained question with the
+products, places and period):
+- ask_impact_analyst: why something moved or what hit OCP: "OCP lost/earned a lot this year, why?", "what hit OCP in 2026?",
+  exposure of a product to a route or event, "why did metric M of product P move in month X?", how an event affected prices and
+  what it means for OCP. It runs the exposure walk and the variance diagnosis and asks the news specialist itself.
+- ask_workbook_agent: where a fact lives in the Excel files, what a sheet contains, proposing or fixing extraction specs, branch
+  workbooks with formulas.
+- ask_news_agent: news, events or Argus prices only, when no link to OCP is needed.
+Call several specialists in the same turn when the question has independent parts: they run in parallel.
+Answer simple vocabulary, product, site and org questions yourself with lookup_term, describe_concept and run_cypher.
 - For OCP plants, companies and competitors as named in data sources, use resolve_entity / ocp_assets: ~150 source records were
   resolved into canonical assets (merges are "proposed" until a human approves them; say so when it matters).
+
+Using a specialist's reply: it comes with its evidence (the raw tool results). Copy numbers, dates and article ids exactly; do not
+round, convert or add numbers. Keep its caveats in your answer (what cannot be said, links not confirmed by OCP, and that the graph
+has no OCP results, volumes or costs: when the question is about OCP's results, say that in your first sentence).
+
+{NUMBERS}
+"""
+
+IMPACT_SYSTEM = f"""You are the impact analyst of OCP Group's finance team: you explain why prices, margins or OCP's position moved,
+from the graph, the news specialist and deterministic tools. You never compute numbers yourself.
+
+{GRAPH}
+
+Rules: resolve every business word with lookup_term; answer only from tool results; cite concept ids and article ids; answer in
+the language of the question.
 
 Impact playbook (e.g. "how did event X affect the price of product P, and what does it mean for OCP?"):
 1. Resolve P and the places/routes involved. Use describe_concept / run_cypher to get P's inputs (MADE_FROM, several hops) and which of
    them TRANSITS a route touched by the event (e.g. hormuz).
 2. Ask the news specialist, in ONE precise question, for: the incident timeline for the route and those inputs; monthly prices of P on
    its main routes (at least Morocco fob if available, China fob, India cfr) before vs during the event; and monthly prices of the
-   inputs that transit the route (e.g. sulphur and ammonia on their Middle East / Gulf routes: ask it to pick routes with price_routes).
+   inputs that transit the route (e.g. sulphur and ammonia on their Middle East / Gulf routes: ask it to pick the routes that have data).
 3. Answer with: a dated timeline, a before/during table per route (numbers only from tools), the transmission channels (supply via the route,
    input costs, freight), then OCP implications split into "supported by evidence" and "hypotheses to verify". Cite article ids.
    Check OCP facts in the graph before stating them (e.g. OCP sites are in Morocco and its exports do not transit hormuz).
@@ -97,9 +110,29 @@ Variance playbook ("why did metric M of product P move in month X?"):
 4. Answer: ranked drivers with their numbers and evidence ids, the propagation path, related incidents (article ids),
    the outlook only as what analog months did next (no forecast of your own), and the uncertainty.
 
-Numbers: only from tool results; compute differences and percentages with calc. An automatic Reflector rejects other numbers and
-answers that do not cite article ids returned by tools.
+{NUMBERS}
 """
+
+WORKBOOK_SYSTEM = f"""You are the workbook specialist of OCP Group: you know the Excel files (market-intel workbooks and branch
+submissions) and turn sheets into checked extraction specs.
+
+{GRAPH}
+- (:Workbook)-[:HAS_SHEET]->(:Sheet {{file, name, role, description, layout features, header_cells}})-[:MENTIONS {{where, n}}]->(:Concept):
+  the market-intel Excel files (Argus, CRU, S&P). role is contents | data | dashboard | other.
+
+Working with workbooks:
+- To find where a fact lives, resolve the words to concepts, then call find_sheets. Prefer role=data sheets; dashboards are formula views with drop-downs, not data.
+- Before proposing how to extract a sheet, call describe_sheet, then read_range on the regions you are unsure about (header rows, first data rows, total rows).
+  When a workbook has formulas (a branch's own model), call describe_formulas first: its rules tell you which rows are inputs,
+  which are computed (never extract computed rows as inputs) and which numbers come from files we do not have.
+  Watch for: multi-row headers, several tables stacked in one sheet, formula total rows (never extract them as data), forecast markers, units in preamble rows.
+- Express extraction as propose_extraction_spec. It runs your spec and returns checks. If any check fails, fix the spec and propose again
+  (up to 4 attempts). Never claim success while checks fail; report the remaining failures honestly.
+- Corner cells like "Importers\\Exporters" mean rows\\columns. Unlabeled rows right under the header are often totals. Units are usually stated
+  in the rows above the table (e.g. "Data in 000 tonnes product" means kt).
+
+Rules: resolve business words with lookup_term; never state a number you did not read with read_range or a spec run, and cite
+file, sheet and cell range for it; propose unknown terms with propose_term; answer in the language of the question."""
 
 NEWS_SYSTEM = """You are the news specialist of OCP Group's market-intelligence team. You own the news subgraph:
 (:Article {id, headline, published_at})-[:MENTIONS]->(:Concept); (:Event {date, type, summary, quote})-[:AFFECTS {direction, channel}]->(:Concept)
@@ -198,19 +231,55 @@ def ask_news_agent(question: str) -> str:
         question: Precise sub-question with products, places and period, e.g. "How did DAP fob prices in China and cfr India
             move from February to June 2026, and which Hormuz-related events happened then?"
     """
+    return specialist("news", NEWS_SYSTEM, NEWS_TOOLS, question)
+
+
+def specialist(role: str, system: str, tools: list, question: str) -> str:
+    """Run a specialist on a fresh history; its answer comes back with the raw tool results as evidence, so the orchestrator
+    (and its Reflector) see the numbers exactly as the tools returned them."""
     trace: list[dict] = []
-    answer = run(NEWS_SYSTEM, NEWS_TOOLS, [{"role": "user", "content": question}], trace)
-    return json.dumps({"answer": answer, "tool_calls": [c["tool"] for c in trace],
+    today = datetime.now(timezone.utc).date().isoformat()
+    answer = run(system + f"\nToday is {today}.", tools, [{"role": "user", "content": question}], trace, role)
+    return json.dumps({"specialist": role, "answer": answer, "tool_calls": [c["tool"] for c in trace],
                        "evidence": [c["result"] for c in trace if c["tool"] != "reflector"]}, ensure_ascii=False)
 
 
-TOOLS = [lookup_term, describe_concept, run_cypher, propose_term, find_sheets, describe_sheet, describe_formulas, read_range, propose_extraction_spec, ask_news_agent,
-         resolve_entity, ocp_assets, ocp_exposure, diagnose_variance, submit_diagnosis, calc]
+IMPACT_TOOLS = [lookup_term, describe_concept, run_cypher, ocp_exposure, diagnose_variance, submit_diagnosis, ask_news_agent, calc]
+WORKBOOK_TOOLS = [lookup_term, describe_concept, find_sheets, describe_sheet, describe_formulas, read_range, propose_extraction_spec,
+                  propose_term]
 
 
-def ask_anthropic(system: str, tools: list, history: list[dict], trace: list[dict]) -> str:
+@beta_tool
+def ask_impact_analyst(question: str) -> str:
+    """Delegate to the impact analyst: why a price, margin or OCP's position moved, what hit OCP in a period (exposure walk:
+    events -> routes, suppliers, markets, competitors -> OCP products and sites), variance of a metric in a month, what an event
+    means for OCP. Returns its answer with the raw tool results as evidence.
+
+    Args:
+        question: Self-contained question with products, places and period, e.g. "What hit OCP between 2026-01-01 and
+            2026-10-09? Headwinds, tailwinds, and what cannot be said."
+    """
+    return specialist("impact", IMPACT_SYSTEM, IMPACT_TOOLS, question)
+
+
+@beta_tool
+def ask_workbook_agent(question: str) -> str:
+    """Delegate to the workbook specialist: find which Excel sheets hold a fact, describe a sheet or a branch workbook's formulas,
+    propose or fix an extraction spec (it runs the spec and its checks). Returns its answer with the raw tool results.
+
+    Args:
+        question: Self-contained question, e.g. "Which sheets hold monthly DAP fob Morocco prices? Propose a spec for the best one."
+    """
+    return specialist("workbook", WORKBOOK_SYSTEM, WORKBOOK_TOOLS, question)
+
+
+TOOLS = [lookup_term, describe_concept, run_cypher, propose_term, resolve_entity, ocp_assets, ask_impact_analyst, ask_workbook_agent,
+         ask_news_agent, calc]
+
+
+def ask_anthropic(system: str, tools: list, history: list[dict], trace: list[dict], role: str = "orchestrator") -> str:
     runner = anthropic.Anthropic().beta.messages.tool_runner(
-        model=MODEL,
+        model=os.environ.get(f"ANTHROPIC_{role.upper()}_MODEL") or MODEL,
         max_tokens=16000,
         system=system,
         tools=tools,
@@ -234,19 +303,21 @@ def ask_anthropic(system: str, tools: list, history: list[dict], trace: list[dic
     return "".join(b.text for b in final.content if b.type == "text")
 
 
-def ask_azure(system: str, tools: list, history: list[dict], trace: list[dict]) -> str:
+def ask_azure(system: str, tools: list, history: list[dict], trace: list[dict], role: str = "orchestrator") -> str:
     client = openai.AzureOpenAI(
         azure_endpoint=os.environ["AZURE_OPENAI_ENDPOINT"],
         api_key=os.environ["AZURE_OPENAI_API_KEY"],
         api_version=os.environ["AZURE_OPENAI_API_VERSION"],
     )
-    return tool_loop(client, os.environ["AZURE_OPENAI_AGENT_DEPLOYMENT"], {}, system, tools, history, trace)
+    deployment = os.environ.get(f"AZURE_OPENAI_{role.upper()}_DEPLOYMENT") or os.environ["AZURE_OPENAI_AGENT_DEPLOYMENT"]
+    return tool_loop(client, deployment, {}, system, tools, history, trace)
 
 
-def ask_bifrost(system: str, tools: list, history: list[dict], trace: list[dict]) -> str:
+def ask_bifrost(system: str, tools: list, history: list[dict], trace: list[dict], role: str = "orchestrator") -> str:
     """Qwen behind the Bifrost gateway, Chat Completions with thinking (see gateway.py)."""
     import gateway
-    return tool_loop(gateway.client(), gateway.model("chat"), gateway.extra_body("chat"), system, tools, history, trace)
+    model = os.environ.get(f"BIFROST_{role.upper()}_MODEL") or gateway.model("chat")
+    return tool_loop(gateway.client(), model, gateway.extra_body("chat"), system, tools, history, trace)
 
 
 def tool_loop(client, model: str, extra_body: dict, system: str, tools: list, history: list[dict], trace: list[dict]) -> str:
@@ -264,12 +335,16 @@ def tool_loop(client, model: str, extra_body: dict, system: str, tools: list, hi
         if turn.get("content"):
             turn["content"] = strip_thinking(turn["content"])
         messages.append(turn)
-        for call in msg.tool_calls:
+        def execute(call):
             print(f"  [tool] {call.function.name}({call.function.arguments[:150]})")
             try:
-                result = by_name[call.function.name].call(json.loads(call.function.arguments))
+                return by_name[call.function.name].call(json.loads(call.function.arguments))
             except Exception as e:  # tool errors go back to the model so it can correct itself
-                result = f"Tool error: {e}"
+                return f"Tool error: {e}"
+        # several calls in one turn (e.g. two specialists) run in parallel; results keep the order of the calls
+        with ThreadPoolExecutor(max_workers=4) as pool:
+            results = list(pool.map(execute, msg.tool_calls))
+        for call, result in zip(msg.tool_calls, results):
             trace.append({"tool": call.function.name, "input": call.function.arguments, "result": result})
             messages.append({"role": "tool", "tool_call_id": call.id, "content": result})
     raise AssertionError(f"no answer after {MAX_TOOL_ROUNDS} tool rounds")
@@ -294,19 +369,19 @@ def reflect(answer: str, trace: list[dict]) -> list[str]:
     return problems
 
 
-def run(system: str, tools: list, history: list[dict], trace: list[dict]) -> str:
+def run(system: str, tools: list, history: list[dict], trace: list[dict], role: str = "orchestrator") -> str:
     """Tool loop, then the Reflector; failed checks go back to the model (REFLECTION_ROUNDS times)."""
     ask_provider = {"azure_openai": ask_azure, "bifrost": ask_bifrost}.get(os.environ["LLM_PROVIDER"], ask_anthropic)
     messages = list(history)
     for _ in range(REFLECTION_ROUNDS):
-        answer = ask_provider(system, tools, messages, trace)
+        answer = ask_provider(system, tools, messages, trace, role)
         problems = reflect(answer, trace)
         if not problems:
             return answer
         trace.append({"tool": "reflector", "input": problems, "result": ""})
         messages += [{"role": "assistant", "content": answer}, {"role": "user", "content": "Reflector (automatic check): " + " ".join(problems)
                      + " Rewrite your complete answer for the user. Do not mention this check or that you corrected anything."}]
-    answer = ask_provider(system, tools, messages, trace)
+    answer = ask_provider(system, tools, messages, trace, role)
     problems = reflect(answer, trace)
     return answer + (f"\n\n[Reflector: unresolved: {' '.join(problems)}]" if problems else "")
 
