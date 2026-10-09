@@ -1,6 +1,20 @@
 # Sub-Agents with Their Own Graphs: Design Proposal
 
-*2026-09-25. Status: proposal. Today's code has one agent with Excel and graph tools; this is the target shape.*
+*2026-09-25. Status: proposal, now partly built.*
+
+**Built (2026-10-09), `src/agent.py`:** an orchestrator (10 tools, about 500 words of instructions: vocabulary, entities,
+routing, the final answer) and three specialists exposed to it as tools, each with its own prompt, tools and optional model:
+
+| Specialist | Tools | Model setting |
+|---|---|---|
+| `ask_impact_analyst` | `ocp_exposure`, `diagnose_variance`, `submit_diagnosis`, `ask_news_agent`, graph lookups, `calc` | `AZURE_OPENAI_IMPACT_DEPLOYMENT` |
+| `ask_workbook_agent` | `find_sheets`, `describe_sheet`, `describe_formulas`, `read_range`, `propose_extraction_spec`, `propose_term` | `AZURE_OPENAI_WORKBOOK_DEPLOYMENT` |
+| `ask_news_agent` | news, events, Argus prices | `AZURE_OPENAI_NEWS_DEPLOYMENT` |
+
+A specialist returns its answer plus the raw tool results as evidence, so the orchestrator's Reflector checks the final numbers
+against the tools themselves, not against another model's prose. Calls made in the same turn run in parallel. Each specialist
+runs its own Reflector too. Tests: `tests/test_agents.py` (fake model: routing, model per role, evidence, parallelism, prompts
+that only name their own tools). The market, entity and business agents below remain proposals.
 
 ## Idea
 

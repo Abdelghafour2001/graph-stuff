@@ -1,6 +1,7 @@
 """Agent tools for variance questions: diagnose_variance (deterministic report) and submit_diagnosis (Reflector checks on the
 LLM's JSON, then the review queue). Design: docs/08-variance-diagnosis.md; the computation is in variance.py."""
 import json
+import threading
 from datetime import datetime, timezone
 from pathlib import Path
 
@@ -16,7 +17,14 @@ ROOT = Path(__file__).parent.parent
 CONFIG = yaml.safe_load((ROOT / "knowledge" / "driver_series.yaml").read_text(encoding="utf-8"))
 DIAGNOSES = ROOT / "data" / "diagnoses"
 BASELINE_N = 3
-_last: dict = {}  # the latest diagnosis, which submit_diagnosis checks the answer against
+_local = threading.local()  # per thread: concurrent questions and parallel specialists each keep their own latest diagnosis
+
+
+def _latest() -> dict:
+    """The latest diagnosis of this thread, which submit_diagnosis checks the answer against."""
+    if not hasattr(_local, "last"):
+        _local.last = {}
+    return _local.last
 
 
 def read_all(query: str, **params) -> list[dict]:
@@ -135,8 +143,8 @@ def diagnose_variance(metric_id: str, product_id: str, period: str, as_of: str =
         as_of: Optional YYYY-MM-DD; nothing published later is used. Default: end of the month.
     """
     diag, incidents, not_ranked = run_diagnosis(metric_id, product_id, period, as_of)
-    _last.clear()
-    _last.update(metric=metric_id, product=product_id, diag=diag, incidents=incidents)
+    _latest().clear()
+    _latest().update(metric=metric_id, product=product_id, diag=diag, incidents=incidents)
     return v.report(diag, metric_id, product_id, incidents, not_ranked) + "\n\n" + v.ANSWER_SCHEMA
 
 
@@ -149,6 +157,7 @@ def submit_diagnosis(answer_json: str) -> str:
     Args:
         answer_json: The JSON object described at the end of the diagnose_variance report.
     """
+    _last = _latest()
     assert _last, "call diagnose_variance first"
     answer = json.loads(answer_json)
     problems = v.check_answer(answer, _last["diag"], path_exists, _last["incidents"])
