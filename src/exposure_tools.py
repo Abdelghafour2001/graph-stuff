@@ -50,7 +50,9 @@ def monthly_prices(items: list[str], date_from: str, date_to: str) -> dict[str, 
 def run_exposure(scope: str, date_from: str, date_to: str) -> dict:
     lanes, made_from, sites = graph_snapshot()
     if not lanes:
-        return {"error": "No supply-chain lanes in the graph: run src/load_supply_chain.py (after import_referentials.py)."}
+        return {"error": "No supply-chain lanes in the graph. Load them with: podman compose run --rm api python "
+                         "/app/src/load_supply_chain.py (local Python: python src/load_supply_chain.py), then reload the "
+                         "events with news_extract.py load."}
     items = sorted({lane["item"] for lane in lanes} | {b for _, b in made_from} | set(sites))
     aliases = route_aliases()
     touch = sorted({t for lane in lanes for t in [lane["origin"], lane.get("destination"), *lane["via"]] if t}
