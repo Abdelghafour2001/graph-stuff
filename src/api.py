@@ -1,8 +1,11 @@
 """HTTP API over the agent, the workbook graph and the spec review queue. Run: uvicorn api:app --port 8010 (from src/)."""
 import json
+import os
 import shutil
+from urllib.parse import urlparse
 from pathlib import Path
 
+import openai
 import yaml
 from fastapi import FastAPI, HTTPException, Query
 from pydantic import BaseModel
@@ -36,8 +39,32 @@ def health() -> dict:
 @app.post("/ask")
 def ask(req: AskRequest) -> dict:
     history = list(req.history)
-    answer, trace = agent.ask(history, req.question)
+    try:
+        answer, trace = agent.ask(history, req.question)
+    except openai.APIError as e:
+        raise HTTPException(502, llm_error(e)) from e
     return {"answer": answer, "trace": trace, "history": history}
+
+
+def llm_error(e: openai.APIError) -> str:
+    """What failed when calling the LLM provider, and what to change in .env."""
+    provider = os.environ.get("LLM_PROVIDER", "")
+    if provider == "azure_openai":
+        where = urlparse(os.environ.get("AZURE_OPENAI_ENDPOINT", "")).hostname or "AZURE_OPENAI_ENDPOINT (empty)"
+        model = os.environ.get("AZURE_OPENAI_AGENT_DEPLOYMENT", "")
+        fix_model = ("set AZURE_OPENAI_AGENT_DEPLOYMENT to a deployment name listed in Azure AI Foundry > Deployments "
+                     "for this resource (the deployment name, not the model name)")
+    else:
+        where, model, fix_model = "the LLM endpoint", "", "check the model settings in .env"
+    if isinstance(e, openai.APIConnectionError):
+        return (f"Cannot reach {where}: {str(e.__cause__ or e).rstrip('.')}. Check the endpoint in .env, and that this machine (or the "
+                "container: DNS, VPN, proxy) can resolve and reach it. Test with: python scripts/check_azure.py")
+    if isinstance(e, openai.NotFoundError):
+        return f"Deployment '{model}' not found on {where}: {fix_model}. Test with: python scripts/check_azure.py"
+    if isinstance(e, openai.AuthenticationError):
+        return f"Rejected by {where} (401): check AZURE_OPENAI_API_KEY belongs to this resource."
+    status = getattr(e, "status_code", "")
+    return f"LLM call to {where} failed {status}: {getattr(e, 'message', e)}"
 
 
 @app.get("/concepts")

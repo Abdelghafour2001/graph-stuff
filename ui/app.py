@@ -43,11 +43,19 @@ with chat:
                 for call in turn["trace"]:
                     st.code(f"{call['tool']}({json.dumps(call['input'], ensure_ascii=False) if isinstance(call['input'], dict) else call['input']})")
     if question := st.chat_input("Ask about OCP products, sites, workbooks, or ask for an extraction spec"):
-        with st.spinner("Agent working, tool calls can take a minute…"):
-            res = post("/ask", {"question": question, "history": st.session_state.history})
-        st.session_state.history = res["history"]
-        st.session_state.turns.append({"question": question, "answer": res["answer"], "trace": res["trace"]})
-        st.rerun()
+        try:
+            with st.spinner("Agent working, tool calls can take a minute…"):
+                res = post("/ask", {"question": question, "history": st.session_state.history})
+        except requests.HTTPError as e:
+            try:
+                detail = e.response.json().get("detail", e.response.text)
+            except ValueError:
+                detail = e.response.text[:500]
+            st.error(f"The agent could not answer. {detail}")
+        else:
+            st.session_state.history = res["history"]
+            st.session_state.turns.append({"question": question, "answer": res["answer"], "trace": res["trace"]})
+            st.rerun()
 
 with variance_tab:
     st.markdown("**Why did a metric move?** Deterministic ranking of drivers (no LLM). Signal mode: ranked by how unusual each "

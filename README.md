@@ -51,6 +51,7 @@ podman compose up -d --build     # neo4j, market-intel-db (existing volume), loa
 - **API:** http://localhost:8010/docs (FastAPI Swagger).
 - **Graph:** http://localhost:7474 (Neo4j Browser; neo4j / ocp-poc-password).
 - `.env` must define `EXCEL_DIR` (host folder of the market-intel workbooks), the LLM provider settings, and the rest of `.env.example`.
+- **Azure OpenAI check:** `python scripts/check_azure.py` (or `podman compose run --rm api python /app/scripts/check_azure.py` to test from inside the container) checks DNS, the key, both deployment names and tool calling. `AZURE_OPENAI_DEPLOYMENT` and `AZURE_OPENAI_AGENT_DEPLOYMENT` are deployment names from Azure AI Foundry, not model names.
 - **LLM provider:** `LLM_PROVIDER=azure_openai`, `bifrost` (Qwen behind the Bifrost gateway; check it first with `python scripts/check_gateway.py` on the office network) or anything else for the Claude API.
 - The market-intel Postgres volume `corporate-geni-strategy-intel_postgresql` is reused as-is (external volume). Don't run the market-intel project's own Postgres at the same time.
 
