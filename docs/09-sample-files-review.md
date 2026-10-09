@@ -46,6 +46,7 @@ Value for us: 129 ammonia, 140 phosphates, 193 sulphur and 311 urea loadings are
 ### 5. Smaller source errors to flag, not fix
 - DAP Trade Balance (Argus Sep 2025) column headers read `1Q25 | 2Q26 | 3Q26`; the first is almost certainly `1Q26`.
 - Argus phosphates dates from Apr-2026 drift by a day per month (`2026-04-02`, `05-03`, `06-04`, …); Argus ammonia has three `2022-0x-22` dates. Normalise monthly dates to the 1st.
+- Argus phosphates `Price Forecast` row 69 is dated **Mar-2018** between Feb-2019 and Apr-2019; it is Mar-2019 (caught by the new `row_periods_in_order` check, which would otherwise have loaded a second March 2018).
 - S&P `LT Price Fcst` is titled "February 2024" in the Feb 2025 file.
 - CRU `Price History` says "January 2000 – November 2024" but runs to Mar-2025: the last months are probably estimates.
 - CRU `Annual Prices` has a stray backtick (`` ` ``) as the 2000 Black Sea value.
@@ -65,9 +66,18 @@ Value for us: 129 ammonia, 140 phosphates, 193 sulphur and 311 urea loadings are
 
 Once forecast rows are flagged (finding 1), these should replace the news-based series for those drivers.
 
+## Done (2026-10-09)
+- **Forecast status** on every extracted row (`status: forecast | actual`), from the cell number format (`"f"`) and from an optional `published` date for providers that do not mark forecasts (Argus trade balances).
+- **Anchors**: specs carry `anchor: {cell, text}` (added automatically when the agent proposes a spec); the executor re-locates the table when an edition shifts rows and refuses the spec when the text is gone. Replayed on these files: DAP Trade Balance and Price Forecast re-locate by -1 row and pass.
+- **`missing_values`**: provider markers (0, NM, n/a, blank) are skipped instead of being read as values.
+- **Period-order checks** (`column_periods_in_order`, `row_periods_in_order`): they catch the `1Q25` header and the Mar-2018 row above.
+- Tests: `tests/test_spec_executor.py` (synthetic workbooks).
+
+Still to do: exclude `status: forecast` rows from history and "as of" queries when spec outputs are loaded as series, and replace news-based driver series with the provider series below.
+
 ## Next steps
-1. Executor: read the date-column number format, emit `status`, and exclude forecasts from history and "as of" queries.
-2. Specs: content anchors instead of absolute rows; re-check every new file before load.
-3. Provider rules for missing values (0, NM, n/a, blank).
+1. ~~Executor: forecast status~~ (done); load spec outputs as series with status, actuals only for history.
+2. ~~Specs: content anchors~~ (done); re-check every new file before load.
+3. ~~Provider rules for missing values~~ (done as `missing_values` per spec).
 4. A record extractor for the vessel tracker (normalised dates, ports to countries, Gulf / Hormuz flag, OCP shipments).
 5. Load S&P plant capacity into the entity graph (competitor plants, status, start/closure).
