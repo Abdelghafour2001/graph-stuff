@@ -12,6 +12,7 @@ import openai
 from anthropic import beta_tool
 
 from entity_tools import ocp_assets, resolve_entity
+from exposure_tools import ocp_exposure
 from excel_tools import describe_formulas, describe_sheet, find_sheets, propose_extraction_spec, read_range
 from graph import driver, read_graph
 from news_tools import event_timeline, price_assessments, price_monthly, price_routes, read_article, search_articles
@@ -68,6 +69,20 @@ Impact playbook (e.g. "how did event X affect the price of product P, and what d
 3. Answer with: a dated timeline, a before/during table per route (numbers only from tools), the transmission channels (supply via the route,
    input costs, freight), then OCP implications split into "supported by evidence" and "hypotheses to verify". Cite article ids.
    Check OCP facts in the graph before stating them (e.g. OCP sites are in Morocco and its exports do not transit hormuz).
+OCP results playbook ("OCP lost/earned a lot this year, why?", "what hit OCP in 2026?", "how exposed is DAP to the Red Sea?"):
+0. The graph has NO OCP results, volumes or costs. Say so in your first sentence: you cannot confirm or size a loss, you can show
+   which events reached OCP, through which link, and how market prices moved. Never state an OCP loss or gain figure.
+1. Call ocp_exposure(scope, date_from, date_to) for the period asked ("this year" = January 1 of the current year to today;
+   scope "" for all of OCP, or a product id).
+2. Answer with three parts, numbers only from tool results:
+   - Headwinds, largest first: for each, the chain event -> route/country -> what OCP buys or sells -> OCP products and sites,
+     the dated incidents with article ids, and the item's market price move (from_avg -> to_avg, change_pct, peak).
+   - Tailwinds the same way (e.g. a competitor's exports cut by the same event that raised OCP's input costs).
+   - What cannot be said: the net effect in $, which needs OCP volumes and results; lanes marked "public knowledge, not
+     confirmed by OCP"; items in no_event_found_for (no event found, not "no effect").
+3. For detail on one chain (more incidents, quotes, other routes' prices), ask_news_agent one precise question.
+4. If the user then asks about one month of one product's margin, use the variance playbook below.
+
 Variance playbook ("why did metric M of product P move in month X?"):
 1. Resolve M, P and the month with lookup_term. Call diagnose_variance(metric_id, product_id, period).
 2. Read its report: ranked drivers with their moves, earlier moves still passing through, analogs, incidents, and drivers
@@ -184,7 +199,7 @@ def ask_news_agent(question: str) -> str:
 
 
 TOOLS = [lookup_term, describe_concept, run_cypher, propose_term, find_sheets, describe_sheet, describe_formulas, read_range, propose_extraction_spec, ask_news_agent,
-         resolve_entity, ocp_assets, diagnose_variance, submit_diagnosis, calc]
+         resolve_entity, ocp_assets, ocp_exposure, diagnose_variance, submit_diagnosis, calc]
 
 
 def ask_anthropic(system: str, tools: list, history: list[dict], trace: list[dict]) -> str:
@@ -293,7 +308,8 @@ def ask(history: list[dict], question: str) -> tuple[str, list[dict]]:
     """Answer a question with the orchestrator; returns the answer and its tool calls. Appends both turns to history."""
     history.append({"role": "user", "content": question})
     trace: list[dict] = []
-    answer = run(SYSTEM, TOOLS, history, trace)
+    today = datetime.now(timezone.utc).date().isoformat()
+    answer = run(SYSTEM + f"\nToday is {today}.", TOOLS, history, trace)
     history.append({"role": "assistant", "content": answer})
     return answer, trace
 
