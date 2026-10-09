@@ -14,6 +14,7 @@ The goal is agentic P&L computation across OCP branches and BUs on top of a Neo4
 - [Sample files review (Argus, CRU, S&P, vessel tracker)](docs/09-sample-files-review.md)
 - [P&L agent: branch submissions without templates, structure discovery, P&L engine (design + prototype)](docs/10-pnl-agent.md); try `python scripts/sample_branch.py /tmp/b.xlsx && python scripts/discover_submission.py /tmp/b.xlsx`
 - [Variance diagnosis: why a margin moved (design, with animated architecture)](docs/08-variance-diagnosis.md)
+- [From world events to OCP: the exposure walk ("OCP lost a lot this year, why?")](docs/11-exposure.md): events → routes and countries → what OCP buys, sells and competes with → products and sites; lanes in `knowledge/supply_chain.yaml`
 - Architecture figures (French, SVG importable into Figma): [agentic architecture](docs/figures/01-architecture-agentique.svg), [data flows](docs/figures/02-flux-de-donnees.svg), [graph creation process](docs/figures/03-creation-du-graphe.svg), [branch submission discovery and P&L](docs/figures/04-decouverte-pnl.svg); regenerate with `python docs/figures/build_figures.py`
 - UI design: [DESIGN.md](DESIGN.md) (IBM Carbon tokens adapted to a data product; theme in `.streamlit/config.toml`). Skills in `.claude/skills/`: `web-design-guidelines` (review UI changes for accessibility and UX, rules vendored from Vercel Labs) and `taste-skill` (for docs pages and redesigns, not for data tables). Source style: [docs/design/ibm-carbon.DESIGN.md](docs/design/ibm-carbon.DESIGN.md) from VoltAgent/awesome-design-md
 
@@ -51,6 +52,7 @@ podman compose up -d --build     # neo4j, market-intel-db (existing volume), loa
 - **API:** http://localhost:8010/docs (FastAPI Swagger).
 - **Graph:** http://localhost:7474 (Neo4j Browser; neo4j / ocp-poc-password).
 - `.env` must define `EXCEL_DIR` (host folder of the market-intel workbooks), the LLM provider settings, and the rest of `.env.example`.
+- **Azure OpenAI check:** `python scripts/check_azure.py` (or `podman compose run --rm api python /app/scripts/check_azure.py` to test from inside the container) checks DNS, the key, both deployment names and tool calling. `AZURE_OPENAI_DEPLOYMENT` and `AZURE_OPENAI_AGENT_DEPLOYMENT` are deployment names from Azure AI Foundry, not model names.
 - **LLM provider:** `LLM_PROVIDER=azure_openai`, `bifrost` (Qwen behind the Bifrost gateway; check it first with `python scripts/check_gateway.py` on the office network) or anything else for the Claude API.
 - The market-intel Postgres volume `corporate-geni-strategy-intel_postgresql` is reused as-is (external volume). Don't run the market-intel project's own Postgres at the same time.
 

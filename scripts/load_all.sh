@@ -8,6 +8,7 @@ python load_knowledge.py
 python import_referentials.py
 python import_referential_yaml.py
 python load_term_additions.py
+python load_supply_chain.py       # lanes: what OCP buys, sells, competes with, and the routes between
 python workbook_graph.py
 python import_caster_knowledge.py
 python news_graph.py

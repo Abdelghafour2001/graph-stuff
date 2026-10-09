@@ -1,0 +1,59 @@
+# Where OCP buys its inputs, where it sells, who it competes with, and the shipping routes in between.
+# Loaded by src/load_supply_chain.py as (:Lane) nodes; read by the ocp_exposure tool (src/exposure.py).
+#
+# status:  public    = general public knowledge about the trade, NOT confirmed by OCP. The agent says so.
+#          confirmed = confirmed by OCP procurement / sales (then fill share: fraction of OCP's purchases or sales, 0..1).
+# share is null until OCP gives it. Nothing here is a number the agent may quote as OCP data.
+#
+# A lane is one flow:
+#   supply      OCP buys `item` from `origin`, shipped via `via` to an OCP site     -> disruption = cost / availability risk for OCP
+#   export      OCP sells `item` to `destination`, shipped via `via`                -> disruption = sales, freight, delay risk for OCP
+#   competitor  another exporter ships `item` from `origin` via `via`               -> disruption = less competing supply, price support for OCP
+# Origins and destinations are country ids of the market-intel referential (country_<name>); via are route concepts of ontology.yaml.
+
+lanes:
+  # ---------- inputs OCP buys ----------
+  - {role: supply, item: sulfur, origin: country_united_arab_emirates, via: [hormuz, bab_el_mandeb, suez], to: jorf_lasfar,
+     status: public, share: null, basis: "Gulf refineries and gas plants are the main seaborne sulphur exporters; Morocco is a leading importer"}
+  - {role: supply, item: sulfur, origin: country_saudi_arabia, via: [hormuz, bab_el_mandeb, suez], to: jorf_lasfar,
+     status: public, share: null, basis: "Saudi sulphur loads at Gulf ports (Jubail, Ras Al-Khair)"}
+  - {role: supply, item: sulfur, origin: country_qatar, via: [hormuz, bab_el_mandeb, suez], to: jorf_lasfar,
+     status: public, share: null, basis: "Qatar is a major sulphur exporter from Gulf ports"}
+  - {role: supply, item: sulfur, origin: country_kuwait, via: [hormuz, bab_el_mandeb, suez], to: jorf_lasfar,
+     status: public, share: null, basis: "Kuwait exports sulphur from Gulf ports"}
+  - {role: supply, item: sulfur, origin: country_russia, via: [turkish_straits], to: jorf_lasfar,
+     status: public, share: null, basis: "Russian sulphur partly exported through Black Sea ports; to verify for OCP"}
+  - {role: supply, item: ammonia, origin: country_trinidad_and_tobago, via: [], to: jorf_lasfar,
+     status: public, share: null, basis: "Trinidad is a large Atlantic ammonia exporter; no chokepoint on the way to Morocco"}
+  - {role: supply, item: ammonia, origin: country_russia, via: [turkish_straits], to: jorf_lasfar,
+     status: public, share: null, basis: "Russian ammonia exported through Black Sea terminals; to verify for OCP"}
+  - {role: supply, item: ammonia, origin: country_saudi_arabia, via: [hormuz, bab_el_mandeb, suez], to: jorf_lasfar,
+     status: public, share: null, basis: "Saudi ammonia loads at Jubail on the Gulf"}
+
+  # ---------- OCP's own products to its markets ----------
+  - {role: export, item: dap, origin: country_morocco, destination: country_india, via: [suez, bab_el_mandeb],
+     status: public, share: null, basis: "India is a major phosphate fertilizer importer; Morocco to India goes through Suez and the Red Sea or round the Cape"}
+  - {role: export, item: map, origin: country_morocco, destination: country_brazil, via: [],
+     status: public, share: null, basis: "Brazil is the largest MAP importer; Atlantic route, no chokepoint"}
+  - {role: export, item: tsp, origin: country_morocco, destination: country_brazil, via: [],
+     status: public, share: null, basis: "Brazil imports TSP; Atlantic route"}
+  - {role: export, item: dap, origin: country_morocco, destination: country_bangladesh, via: [suez, bab_el_mandeb],
+     status: public, share: null, basis: "South Asian importers are reached through the Red Sea or round the Cape"}
+  - {role: export, item: phosphoric_acid, origin: country_morocco, destination: country_india, via: [suez, bab_el_mandeb],
+     status: public, share: null, basis: "India imports phosphoric acid; to verify for OCP"}
+  - {role: export, item: dap, origin: country_morocco, destination: country_united_states, via: [],
+     status: public, share: null, basis: "US countervailing duties on Moroccan phosphate fertilizers since 2021 (policy channel)"}
+
+  # ---------- other exporters of OCP's products ----------
+  - {role: competitor, item: dap, origin: country_saudi_arabia, via: [hormuz],
+     status: public, share: null, basis: "Ma'aden exports DAP/MAP from Ras Al-Khair on the Gulf"}
+  - {role: competitor, item: map, origin: country_saudi_arabia, via: [hormuz],
+     status: public, share: null, basis: "Ma'aden exports DAP/MAP from Ras Al-Khair on the Gulf"}
+  - {role: competitor, item: dap, origin: country_china, via: [],
+     status: public, share: null, basis: "Chinese phosphate exports are periodically restricted by export quotas and inspections (policy channel)"}
+  - {role: competitor, item: map, origin: country_china, via: [],
+     status: public, share: null, basis: "Chinese phosphate exports are periodically restricted (policy channel)"}
+  - {role: competitor, item: dap, origin: country_russia, via: [],
+     status: public, share: null, basis: "Russia (PhosAgro) is a major MAP/DAP exporter; sanctions and logistics affect flows"}
+  - {role: competitor, item: phosphate_rock, origin: country_jordan, via: [bab_el_mandeb],
+     status: public, share: null, basis: "Jordan exports rock from Aqaba on the Red Sea"}

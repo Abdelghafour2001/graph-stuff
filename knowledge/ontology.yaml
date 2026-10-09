@@ -256,8 +256,32 @@ concepts:
   - id: hormuz
     kind: route
     name: Strait of Hormuz
-    definition: Gulf chokepoint. A large share of world sulphur, urea, ammonia and part of phosphate exports (Saudi Arabia/Maaden) transit it. Not on OCP's Morocco export routes.
+    definition: Gulf chokepoint. A large share of world sulphur, urea, ammonia and part of phosphate exports (Saudi Arabia/Maaden) transit it. OCP's own exports from Morocco do not; its sulphur and ammonia bought from Gulf suppliers do (see knowledge/supply_chain.yaml).
     terms: [Hormuz, Strait of Hormuz, Ormuz, détroit d'Ormuz]
+
+  - id: bab_el_mandeb
+    kind: route
+    name: Bab el-Mandeb / Red Sea
+    definition: Southern entrance of the Red Sea. Gulf cargoes to the Mediterranean and Morocco, and Morocco cargoes to India and South Asia, pass it unless ships go round the Cape of Good Hope.
+    terms: [Bab el-Mandeb, Bab al-Mandab, Red Sea, mer Rouge, Houthi, Houthis]
+
+  - id: suez
+    kind: route
+    name: Suez Canal
+    definition: Link between the Red Sea and the Mediterranean, on the same lanes as Bab el-Mandeb.
+    terms: [Suez, Suez Canal, canal de Suez]
+
+  - id: cape_of_good_hope
+    kind: route
+    name: Cape of Good Hope
+    definition: Diversion route round Africa when the Red Sea or Suez is avoided; longer voyages, higher freight.
+    terms: [Cape of Good Hope, cap de Bonne-Espérance, Cape route]
+
+  - id: turkish_straits
+    kind: route
+    name: Turkish Straits / Black Sea
+    definition: Bosphorus and Dardanelles, the exit of Black Sea ports (Russian ammonia, sulphur and fertilizer exports).
+    terms: [Bosphorus, Bosporus, Dardanelles, Turkish Straits, Black Sea, mer Noire]
 
 # [from, TYPE, to]
 relations:
