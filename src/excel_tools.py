@@ -9,6 +9,7 @@ import yaml
 from anthropic import beta_tool
 from openpyxl.utils import get_column_letter, range_boundaries
 
+import formula_graph
 from graph import read_graph
 from spec_executor import check, execute, validate
 
@@ -84,6 +85,46 @@ def read_range(file: str, sheet: str, cell_range: str) -> str:
     return out
 
 
+def default_anchor(spec: dict) -> dict | None:
+    """First text cell of the first label column, from the top of the table: what the layout is recognised by."""
+    min_col, min_row, max_col, max_row = range_boundaries(spec["table_range"])
+    col = spec["label_columns"][0]
+    ci = openpyxl.utils.column_index_from_string(col)
+    wb = openpyxl.load_workbook(EXCEL_DIR / spec["file"], read_only=True)
+    cells = list(wb[spec["sheet"]].iter_rows(min_row=min_row, max_row=min(max_row, min_row + 10), min_col=ci, max_col=ci, values_only=True))
+    wb.close()
+    return next(({"cell": f"{col}{min_row + i}", "text": str(v[0]).strip()} for i, v in enumerate(cells)
+                 if isinstance(v[0], str) and v[0].strip()), None)
+
+
+_harvests: dict = {}
+
+
+@beta_tool
+def describe_formulas(file: str, sheet: str = "") -> str:
+    """The calculation structure of a workbook recovered from its formulas: per sheet, row rules such as
+    "Revenue[row] = Volume[row] * Price[row]" or "SUM([block above])" (with how many rows follow each rule), which sheets feed
+    which, and links to workbooks we do not have. Use it on a branch's own spreadsheet to learn its model before mapping
+    its rows to concepts, and to ask the branch about inputs that come from outside the file.
+
+    Args:
+        file: Workbook file name.
+        sheet: Optional sheet name; empty for every sheet (rules covering 3+ rows only).
+    """
+    path = EXCEL_DIR / file
+    key = (str(path), path.stat().st_mtime)
+    if key not in _harvests:
+        _harvests[key] = formula_graph.harvest(path)
+    h = _harvests[key]
+    if sheet:
+        assert sheet in h["sheets"], f"unknown sheet {sheet}"
+        sheets = {sheet: {**h["sheets"][sheet], "rules": h["sheets"][sheet]["rules"][:30]}}
+    else:
+        sheets = {n: {"formulas": s["formulas"], "rules": [r for r in s["rules"] if r["rows"] >= 3][:8]} for n, s in h["sheets"].items() if s["formulas"]}
+    deps = [d for d in h["depends_on"] if not sheet or sheet in (d["sheet"], d["uses"])]
+    return json.dumps({"sheets": sheets, "depends_on": deps[:60], "external_links": h["external_links"]}, ensure_ascii=False)
+
+
 @beta_tool
 def propose_extraction_spec(spec_yaml: str) -> str:
     """Propose how to turn a sheet into long rows (one value per row). The spec is executed immediately and checked
@@ -99,8 +140,17 @@ def propose_extraction_spec(spec_yaml: str) -> str:
             operators (list of {op, args}: ffill {target: header|labels} for merged/blank-repeated cells;
                 subtitle {dimension, rows: {row_number: value}} when one sheet stacks sections, e.g. exports then imports; stack last),
             value_unit (unit from the ingestion referential, e.g. kiloton, kiloton_p2o5, million_ton, usd_per_ton, usd_per_short_ton, percent; aliases like kt, $/t accepted), fixed (dict, e.g. {product: dap, year: 2024}), notes.
+            Optional: published (edition date, YYYY-MM-DD: later periods are flagged forecast even without a marker);
+            missing_values (provider "no market" markers, e.g. [0, NM, n/a]: use 0 only for prices, never for volumes);
+            anchor ({cell, text}; added automatically from the first label cell if you leave it out).
+            Every extracted row gets status forecast|actual from the cell formats (e.g. Argus "mmm-yy f").
     """
     spec = yaml.safe_load(spec_yaml)
+    if "anchor" not in spec:  # pin the layout so a later edition with shifted rows is re-located or refused
+        anchor = default_anchor(spec)
+        if anchor:
+            spec["anchor"] = anchor
+            spec_yaml = spec_yaml.rstrip() + "\n" + yaml.safe_dump({"anchor": anchor}, allow_unicode=True)
     validate(spec)
     rows, ctx = execute(spec)
     results = check(spec, rows, ctx)

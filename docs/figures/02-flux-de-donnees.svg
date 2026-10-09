@@ -1,0 +1,140 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1700" height="1000" viewBox="0 0 1700 1000">
+<rect width="1700" height="1000" fill="#FFFFFF"/>
+<text x="64" y="88" font-family="Inter" font-size="32" font-weight="700" fill="#13202F" text-anchor="start">Flux de données — des sources au graphe</text>
+<text x="64" y="116" font-family="Inter" font-size="15" font-weight="400" fill="#4B5768" text-anchor="start">Chargements idempotents · étapes LLM manuelles et mises en cache · toute requête temporelle est « as of » une date de publication</text>
+<g id="Groupe — Sources">
+<rect x="64" y="170" width="440" height="530" rx="12" fill="#EDF2F7" stroke="#D2DDE8" stroke-width="1"/>
+<rect x="85.5" y="188" width="14" height="14" rx="3" fill="#3A5878"/>
+<text x="109.5" y="199.5" font-family="Inter" font-size="12" font-weight="700" fill="#3A5878" text-anchor="start" letter-spacing="0.6">SOURCES</text>
+<g id="Classeurs Excel market intelligence">
+<rect x="85.5" y="216.5" width="397" height="104" rx="8" fill="#FFFFFF" stroke="#D6DCE4" stroke-width="1"/>
+<rect x="100.5" y="231.5" width="26" height="26" rx="6" fill="#3A5878"/>
+<text x="113.5" y="249.0" font-family="Inter" font-size="10" font-weight="700" fill="#FFFFFF" text-anchor="middle">XL</text>
+<text x="136.5" y="249.5" font-family="Inter" font-size="14.5" font-weight="600" fill="#13202F" text-anchor="start">Classeurs Excel market intelligence</text>
+<text x="100.5" y="277.5" font-family="Inter" font-size="12" font-weight="400" fill="#4B5768" text-anchor="start">40 fichiers, 739 feuilles (Argus, CRU, S&amp;P) ; mises en</text>
+<text x="100.5" y="293.7" font-family="Inter" font-size="12" font-weight="400" fill="#4B5768" text-anchor="start">page hétérogènes, formules, totaux</text>
+</g>
+<g id="Base market intelligence (Postgres)">
+<rect x="85.5" y="334.5" width="397" height="104" rx="8" fill="#FFFFFF" stroke="#D6DCE4" stroke-width="1"/>
+<rect x="100.5" y="349.5" width="26" height="26" rx="6" fill="#3A5878"/>
+<text x="113.5" y="367.0" font-family="Inter" font-size="10" font-weight="700" fill="#FFFFFF" text-anchor="middle">PG</text>
+<text x="136.5" y="367.5" font-family="Inter" font-size="14.5" font-weight="600" fill="#13202F" text-anchor="start">Base market intelligence (Postgres)</text>
+<text x="100.5" y="395.5" font-family="Inter" font-size="12" font-weight="400" fill="#4B5768" text-anchor="start">5,8 M métriques de l’ancien pipeline, référentiels</text>
+<text x="100.5" y="411.7" font-family="Inter" font-size="12" font-weight="400" fill="#4B5768" text-anchor="start">pays, régions, produits, entités</text>
+</g>
+<g id="Actualités Argus">
+<rect x="85.5" y="452.5" width="397" height="104" rx="8" fill="#FFFFFF" stroke="#D6DCE4" stroke-width="1"/>
+<rect x="100.5" y="467.5" width="26" height="26" rx="6" fill="#3A5878"/>
+<text x="113.5" y="485.0" font-family="Inter" font-size="10" font-weight="700" fill="#FFFFFF" text-anchor="middle">AR</text>
+<text x="136.5" y="485.5" font-family="Inter" font-size="14.5" font-weight="600" fill="#13202F" text-anchor="start">Actualités Argus</text>
+<text x="100.5" y="513.5" font-family="Inter" font-size="12" font-weight="400" fill="#4B5768" text-anchor="start">37,6 k articles (corporate_data.argus_news), texte</text>
+<text x="100.5" y="529.7" font-family="Inter" font-size="12" font-weight="400" fill="#4B5768" text-anchor="start">conservé dans Postgres</text>
+</g>
+<g id="Connaissance curée (YAML)">
+<rect x="85.5" y="570.5" width="397" height="104" rx="8" fill="#FFFFFF" stroke="#D6DCE4" stroke-width="1"/>
+<rect x="100.5" y="585.5" width="26" height="26" rx="6" fill="#3A5878"/>
+<text x="113.5" y="603.0" font-family="Inter" font-size="10" font-weight="700" fill="#FFFFFF" text-anchor="middle">YM</text>
+<text x="136.5" y="603.5" font-family="Inter" font-size="14.5" font-weight="600" fill="#13202F" text-anchor="start">Connaissance curée (YAML)</text>
+<text x="100.5" y="631.5" font-family="Inter" font-size="12" font-weight="400" fill="#4B5768" text-anchor="start">ontology.yaml, term_additions.yaml, référentiel</text>
+<text x="100.5" y="647.7" font-family="Inter" font-size="12" font-weight="400" fill="#4B5768" text-anchor="start">d’ingestion, documentation des casters</text>
+</g>
+</g>
+<g id="Groupe — Graphe Neo4j">
+<rect x="1196" y="170" width="440" height="530" rx="12" fill="#EEF4FB" stroke="#D3E2F3" stroke-width="1"/>
+<rect x="1217.5" y="188" width="14" height="14" rx="3" fill="#2F6FB3"/>
+<text x="1241.5" y="199.5" font-family="Inter" font-size="12" font-weight="700" fill="#2F6FB3" text-anchor="start" letter-spacing="0.6">GRAPHE NEO4J</text>
+<g id="Cœur — concepts et termes">
+<rect x="1217.5" y="216.5" width="397" height="104" rx="8" fill="#FFFFFF" stroke="#D6DCE4" stroke-width="1"/>
+<rect x="1232.5" y="231.5" width="26" height="26" rx="6" fill="#2F6FB3"/>
+<text x="1245.5" y="249.0" font-family="Inter" font-size="10" font-weight="700" fill="#FFFFFF" text-anchor="middle">CO</text>
+<text x="1268.5" y="249.5" font-family="Inter" font-size="14.5" font-weight="600" fill="#13202F" text-anchor="start">Cœur — concepts et termes</text>
+<text x="1232.5" y="277.5" font-family="Inter" font-size="12" font-weight="400" fill="#4B5768" text-anchor="start">Org, sites, produits, intrants, métriques, pays,</text>
+<text x="1232.5" y="293.7" font-family="Inter" font-size="12" font-weight="400" fill="#4B5768" text-anchor="start">régions, routes ; termes FR / EN</text>
+</g>
+<g id="Graphe des classeurs">
+<rect x="1217.5" y="334.5" width="397" height="104" rx="8" fill="#FFFFFF" stroke="#D6DCE4" stroke-width="1"/>
+<rect x="1232.5" y="349.5" width="26" height="26" rx="6" fill="#2F6FB3"/>
+<text x="1245.5" y="367.0" font-family="Inter" font-size="10" font-weight="700" fill="#FFFFFF" text-anchor="middle">WB</text>
+<text x="1268.5" y="367.5" font-family="Inter" font-size="14.5" font-weight="600" fill="#13202F" text-anchor="start">Graphe des classeurs</text>
+<text x="1232.5" y="395.5" font-family="Inter" font-size="12" font-weight="400" fill="#4B5768" text-anchor="start">Workbook → Sheet → MENTIONS → Concept ; ROUTED_TO →</text>
+<text x="1232.5" y="411.7" font-family="Inter" font-size="12" font-weight="400" fill="#4B5768" text-anchor="start">Caster ; specs</text>
+</g>
+<g id="Sous-graphe news">
+<rect x="1217.5" y="452.5" width="397" height="104" rx="8" fill="#FFFFFF" stroke="#D6DCE4" stroke-width="1"/>
+<rect x="1232.5" y="467.5" width="26" height="26" rx="6" fill="#2F6FB3"/>
+<text x="1245.5" y="485.0" font-family="Inter" font-size="10" font-weight="700" fill="#FFFFFF" text-anchor="middle">NW</text>
+<text x="1268.5" y="485.5" font-family="Inter" font-size="14.5" font-weight="600" fill="#13202F" text-anchor="start">Sous-graphe news</text>
+<text x="1232.5" y="513.5" font-family="Inter" font-size="12" font-weight="400" fill="#4B5768" text-anchor="start">Article, Event, Incident, PriceAssessment ; AFFECTS,</text>
+<text x="1232.5" y="529.7" font-family="Inter" font-size="12" font-weight="400" fill="#4B5768" text-anchor="start">OF, AT, BASIS</text>
+</g>
+<g id="Sous-graphe entités">
+<rect x="1217.5" y="570.5" width="397" height="104" rx="8" fill="#FFFFFF" stroke="#D6DCE4" stroke-width="1"/>
+<rect x="1232.5" y="585.5" width="26" height="26" rx="6" fill="#2F6FB3"/>
+<text x="1245.5" y="603.0" font-family="Inter" font-size="10" font-weight="700" fill="#FFFFFF" text-anchor="middle">EN</text>
+<text x="1268.5" y="603.5" font-family="Inter" font-size="14.5" font-weight="600" fill="#13202F" text-anchor="start">Sous-graphe entités</text>
+<text x="1232.5" y="631.5" font-family="Inter" font-size="12" font-weight="400" fill="#4B5768" text-anchor="start">SourceEntity → SAME_AS {statut} → Asset → LOCATED_AT →</text>
+<text x="1232.5" y="647.7" font-family="Inter" font-size="12" font-weight="400" fill="#4B5768" text-anchor="start">site</text>
+</g>
+</g>
+<g id="Flux 1 — classeurs → graphe des classeurs">
+<rect x="580" y="216.5" width="520" height="104" rx="8" fill="#FFFFFF" stroke="#D6DCE4" stroke-width="1"/>
+<rect x="580" y="216.5" width="4" height="104" rx="2" fill="#1E7A6C"/>
+<text x="599" y="246.5" font-family="Inter" font-size="14" font-weight="600" fill="#13202F" text-anchor="start">Flux 1 — classeurs → graphe des classeurs</text>
+<text x="599" y="271.5" font-family="Inter" font-size="12" font-weight="400" fill="#4B5768" text-anchor="start">profile_excels.py profile chaque feuille ; workbook_graph.py relie</text>
+<text x="599" y="287.7" font-family="Inter" font-size="12" font-weight="400" fill="#4B5768" text-anchor="start">en-têtes et libellés aux concepts.</text>
+</g>
+<line x1="512" y1="268.5" x2="578" y2="268.5" stroke="#8A96A6" stroke-width="1.5"/>
+<polygon points="578,268.5 567,262.5 567,274.5" fill="#8A96A6"/>
+<line x1="1112" y1="268.5" x2="1194" y2="268.5" stroke="#8A96A6" stroke-width="1.5"/>
+<polygon points="1194,268.5 1183,262.5 1183,274.5" fill="#8A96A6"/>
+<g id="Flux 2 — référentiels → cœur">
+<rect x="580" y="336.5" width="520" height="104" rx="8" fill="#FFFFFF" stroke="#D6DCE4" stroke-width="1"/>
+<rect x="580" y="336.5" width="4" height="104" rx="2" fill="#1E7A6C"/>
+<text x="599" y="366.5" font-family="Inter" font-size="14" font-weight="600" fill="#13202F" text-anchor="start">Flux 2 — référentiels → cœur</text>
+<text x="599" y="391.5" font-family="Inter" font-size="12" font-weight="400" fill="#4B5768" text-anchor="start">import_referentials et import_referential_yaml : pays, régions, alias</text>
+<text x="599" y="407.7" font-family="Inter" font-size="12" font-weight="400" fill="#4B5768" text-anchor="start">de produits, sociétés.</text>
+</g>
+<line x1="512" y1="388.5" x2="578" y2="388.5" stroke="#8A96A6" stroke-width="1.5"/>
+<polygon points="578,388.5 567,382.5 567,394.5" fill="#8A96A6"/>
+<line x1="1112" y1="388.5" x2="1194" y2="388.5" stroke="#8A96A6" stroke-width="1.5"/>
+<polygon points="1194,388.5 1183,382.5 1183,394.5" fill="#8A96A6"/>
+<g id="Flux 3 — articles → sous-graphe news">
+<rect x="580" y="456.5" width="520" height="104" rx="8" fill="#FFFFFF" stroke="#D6DCE4" stroke-width="1"/>
+<rect x="580" y="456.5" width="4" height="104" rx="2" fill="#B7831A"/>
+<text x="599" y="486.5" font-family="Inter" font-size="14" font-weight="600" fill="#13202F" text-anchor="start">Flux 3 — articles → sous-graphe news</text>
+<text x="599" y="511.5" font-family="Inter" font-size="12" font-weight="400" fill="#4B5768" text-anchor="start">news_graph relie les articles aux concepts ; news_extract ne garde que</text>
+<text x="599" y="527.7" font-family="Inter" font-size="12" font-weight="400" fill="#4B5768" text-anchor="start">les citations retrouvées mot pour mot.</text>
+</g>
+<line x1="512" y1="508.5" x2="578" y2="508.5" stroke="#8A96A6" stroke-width="1.5"/>
+<polygon points="578,508.5 567,502.5 567,514.5" fill="#8A96A6"/>
+<line x1="1112" y1="508.5" x2="1194" y2="508.5" stroke="#8A96A6" stroke-width="1.5"/>
+<polygon points="1194,508.5 1183,502.5 1183,514.5" fill="#8A96A6"/>
+<g id="Flux 4 — enregistrements → actifs">
+<rect x="580" y="576.5" width="520" height="104" rx="8" fill="#FFFFFF" stroke="#D6DCE4" stroke-width="1"/>
+<rect x="580" y="576.5" width="4" height="104" rx="2" fill="#B7831A"/>
+<text x="599" y="606.5" font-family="Inter" font-size="14" font-weight="600" fill="#13202F" text-anchor="start">Flux 4 — enregistrements → actifs</text>
+<text x="599" y="631.5" font-family="Inter" font-size="12" font-weight="400" fill="#4B5768" text-anchor="start">entity_resolution propose des regroupements (LLM) ; chargement</text>
+<text x="599" y="647.7" font-family="Inter" font-size="12" font-weight="400" fill="#4B5768" text-anchor="start">déterministe au statut « proposé ».</text>
+</g>
+<line x1="512" y1="628.5" x2="578" y2="628.5" stroke="#8A96A6" stroke-width="1.5"/>
+<polygon points="578,628.5 567,622.5 567,634.5" fill="#8A96A6"/>
+<line x1="1112" y1="628.5" x2="1194" y2="628.5" stroke="#8A96A6" stroke-width="1.5"/>
+<polygon points="1194,628.5 1183,622.5 1183,634.5" fill="#8A96A6"/>
+<g id="Restitution et revue (sortant)">
+<rect x="64" y="740" width="1572" height="72" rx="10" fill="#EEF6EC" stroke="#D3E8CE" stroke-width="1"/>
+<text x="85.5" y="769" font-family="Inter" font-size="13" font-weight="700" fill="#3D7F35" text-anchor="start">Restitution et revue (sortant)</text>
+<text x="85.5" y="791.0" font-family="Inter" font-size="12" font-weight="400" fill="#4B5768" text-anchor="start">Réponses citées, specs d’extraction et diagnostics de variance partent en file de revue (specs/, data/diagnoses/, proposals.jsonl) ; une fois validés, ils reviennent dans le graphe au prochain chargement.</text>
+</g>
+<g id="Mécanismes transverses de tous les flux">
+<rect x="64" y="828" width="1572" height="72" rx="10" fill="#EAF5F3" stroke="#C9E5DF" stroke-width="1"/>
+<text x="85.5" y="857" font-family="Inter" font-size="13" font-weight="700" fill="#1E7A6C" text-anchor="start">Mécanismes transverses de tous les flux</text>
+<text x="85.5" y="879.0" font-family="Inter" font-size="12" font-weight="400" fill="#4B5768" text-anchor="start">load_all.sh rejouable · dry-run de l’ontologie avant rechargement · requêtes « as of » sans fuite d’information future · étapes LLM lancées à la main et mises en cache · lecture seule pour les agents.</text>
+</g>
+<g id="Légende">
+<line x1="64" y1="935" x2="92" y2="935" stroke="#1E7A6C" stroke-width="1.5"/>
+<text x="102" y="939" font-family="Inter" font-size="11.5" font-weight="400" fill="#4B5768" text-anchor="start">chargement déterministe</text>
+<line x1="272.6" y1="935" x2="300.6" y2="935" stroke="#B7831A" stroke-width="1.5"/>
+<text x="310.6" y="939" font-family="Inter" font-size="11.5" font-weight="400" fill="#4B5768" text-anchor="start">étape avec extraction LLM vérifiée</text>
+</g>
+<text x="64" y="966" font-family="Inter" font-size="12" font-weight="400" fill="#7A8696" text-anchor="start">Les volumes cités sont ceux de l’exploration du 25-09-2026 ; les routes de prix utilisées par le diagnostic sont à vérifier avec scripts/check_driver_series.py.</text>
+</svg>

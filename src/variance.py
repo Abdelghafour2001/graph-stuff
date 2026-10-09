@@ -223,17 +223,19 @@ def lookback_evidence(cands: list[dict], series: dict, period: str, baseline_n: 
 
 
 def library(cands: list[dict], series: dict, months: list[str], baseline_n: int, outcome: dict[str, float] | None = None,
-            lookback: int = LOOKBACK) -> list[dict]:
-    """One episode per past month: its z-vector over the candidates and its deterministic top driver (a weak label until
-    controllers review diagnoses). outcome: optional {month: change of the metric over the next month}."""
+            lookback: int = LOOKBACK, labels: dict[str, str] | None = None) -> list[dict]:
+    """One episode per past month: its z-vector over the candidates and its top driver. The top driver is the reviewed one
+    when a controller approved or corrected a diagnosis of that month (labels: {month: driver}), else the deterministic
+    top-1, a weak label. outcome: optional {month: change of the metric over the next month}."""
+    labels = labels or {}
     episodes = []
     for m in months:
         ev = month_evidence(cands, series, m, baseline_n)
         scores = kg_scores(cands, ev, lookback_evidence(cands, series, m, baseline_n, lookback))
         if not scores:
             continue
-        top = max(scores, key=scores.get)
-        episodes.append({"period": m, "vector": z_vector(ev), "top": top, "top_score": scores[top],
+        top = labels.get(m) or max(scores, key=scores.get)
+        episodes.append({"period": m, "vector": z_vector(ev), "top": top, "label": "reviewed" if m in labels else "automatic",
                          "next_change": (outcome or {}).get(m)})
     return episodes
 
@@ -291,7 +293,7 @@ def diagnose(cands: list[dict], series: dict, period: str, baseline_n: int = 3, 
         "no_data": sorted(cid for cid in month_ev if month_ev[cid] is None and not before.get(cid)),
         "weekly": weekly,
         "analogs": [{"evidence_id": f"analog:{e['period']}", "period": e["period"], "similarity": e["similarity"],
-                     "top_driver": e["top"], "next_change": e["next_change"]} for e in analogs],
+                     "top_driver": e["top"], "label": e.get("label", "automatic"), "next_change": e["next_change"]} for e in analogs],
     }
 
 
@@ -341,7 +343,7 @@ def report(diag: dict, metric: str, product: str, incidents: list[dict] | None =
     if diag["no_data"]:
         lines.append("No data in the period or baseline for: " + ", ".join(diag["no_data"]))
     for a in diag["analogs"]:
-        lines.append(f"{a['evidence_id']}: similarity {a['similarity']}, top driver then {a['top_driver']}"
+        lines.append(f"{a['evidence_id']}: similarity {a['similarity']}, top driver then {a['top_driver']} ({a['label']})"
                      + (f", metric changed {a['next_change']:+} the following month" if a["next_change"] is not None else ""))
     for i in incidents or []:
         lines.append(f"incident {i['date']} {i['type']}: {i['summary']} (affects {', '.join(i['affects'])}; articles {', '.join(map(str, i['article_ids']))})")

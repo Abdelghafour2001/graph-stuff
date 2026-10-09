@@ -29,7 +29,8 @@ st.sidebar.code("MATCH (p:Product {id:'dap'})-[:MADE_FROM*]->(x) RETURN p, x\n\n
 counts = get("/health")["counts"]
 st.sidebar.dataframe(pd.DataFrame(counts), hide_index=True)
 
-chat, news, entities, workbooks, specs, evals = st.tabs(["Ask the agent", "News & prices", "Entities", "Workbooks", "Spec review", "Eval"])
+chat, variance_tab, news, entities, workbooks, specs, evals = st.tabs(
+    ["Ask the agent", "Variance", "News & prices", "Entities", "Workbooks", "Spec review", "Eval"])
 
 with chat:
     st.session_state.setdefault("history", [])
@@ -42,16 +43,83 @@ with chat:
                 for call in turn["trace"]:
                     st.code(f"{call['tool']}({json.dumps(call['input'], ensure_ascii=False) if isinstance(call['input'], dict) else call['input']})")
     if question := st.chat_input("Ask about OCP products, sites, workbooks, or ask for an extraction spec"):
-        with st.spinner("Agent working (tool calls can take a minute)..."):
+        with st.spinner("Agent working, tool calls can take a minute…"):
             res = post("/ask", {"question": question, "history": st.session_state.history})
         st.session_state.history = res["history"]
         st.session_state.turns.append({"question": question, "answer": res["answer"], "trace": res["trace"]})
         st.rerun()
 
+with variance_tab:
+    st.markdown("**Why did a metric move?** Deterministic ranking of drivers (no LLM). Signal mode: ranked by how unusual each "
+                "driver's move was, not by $/t. Ask the agent for the explained version; its answers land in the review queue below.")
+    c1, c2, c3 = st.columns(3)
+    v_metric = c1.text_input("Metric", "gross_margin", key="v_metric")
+    v_product = c2.text_input("Product", "dap", key="v_product")
+    v_period = c3.text_input("Month (YYYY-MM)", "2026-08", key="v_period")
+    if st.button("Diagnose", key="v_run", type="primary"):
+        try:
+            st.session_state.v_result = get("/variance", metric=v_metric, product=v_product, period=v_period)
+        except requests.HTTPError as e:
+            st.error(f"Diagnosis failed: {e.response.text[:300]}. Check the metric and product ids and the month (YYYY-MM).")
+    res = st.session_state.get("v_result")
+    if res:
+        st.caption(f"{res['period']} vs baseline {res['baseline'][0]} … {res['baseline'][-1]}; earlier moves passing through "
+                   f"searched in {', '.join(res['lookback'])}; as of {res['as_of']}")
+        rows = [{"rank": r["rank"], "driver": r["id"], "role": r["role"], "move %": r.get("pct"), "z": r.get("z"),
+                 "first abnormal": r.get("first_abnormal"),
+                 "earlier move %": (r["earlier_move"] or {}).get("pct") if (r["earlier_move"] or {}).get("first_abnormal") else None,
+                 "score": r["score"], "weekly votes": r["votes"], "path": " → ".join(reversed(r["path"])),
+                 "routes": ", ".join(r["routes"])} for r in res["ranking"]]
+        st.dataframe(pd.DataFrame(rows), hide_index=True, column_config={
+            "move %": st.column_config.NumberColumn(format="%+.1f"), "earlier move %": st.column_config.NumberColumn(format="%+.1f"),
+            "z": st.column_config.NumberColumn(format="%+.2f"), "score": st.column_config.NumberColumn(format="%.3f")})
+        if res["not_ranked"]:
+            st.warning("No price series, so not ranked and not ruled out: " + ", ".join(res["not_ranked"]))
+        left, right = st.columns(2)
+        left.markdown("**Analog months**")
+        left.dataframe(pd.DataFrame(res["analogs"]), hide_index=True)
+        right.markdown("**Incidents on the top drivers**")
+        right.dataframe(pd.DataFrame(res["incidents"]), hide_index=True)
+        with st.expander("Report sent to the LLM"):
+            st.code(res["report"])
+
+    st.markdown("---\n**Review queue**: diagnoses the agent submitted. Approve or correct the top driver; reviewed months become "
+                "labelled analogs for later diagnoses. Reject keeps a month out of the analogs.")
+    queue = pd.DataFrame(get("/diagnoses"))
+    if queue.empty:
+        st.info("No diagnosis submitted yet. Ask the agent a variance question.")
+    else:
+        st.dataframe(queue, hide_index=True)
+        names = list(queue["name"])
+        pick = st.selectbox("Open diagnosis", names, index=None, placeholder="Pick a diagnosis to review", key="v_pick")
+        if pick:
+            d = get(f"/diagnoses/{pick}")
+            ranked = [r["id"] for r in d["diag"]["ranking"]]
+            a, b = st.columns(2)
+            a.markdown("**Model answer**")
+            a.json(d["answer"])
+            b.markdown("**Deterministic ranking**")
+            b.dataframe(pd.DataFrame([{"rank": r["rank"], "driver": r["id"], "score": r["score"], "votes": r["votes"]}
+                                      for r in d["diag"]["ranking"]]), hide_index=True)
+            if d.get("review"):
+                st.success(f"Reviewed: {d['review']['decision']} (top driver {d['review']['top1']}) {d['review']['note']}")
+            decision = st.radio("Decision", ["approved", "corrected", "rejected"], horizontal=True, key="v_decision")
+            true_top = st.selectbox("True top driver", ranked, key="v_true") if decision == "corrected" else ""
+            note = st.text_input("Note (why)", key="v_note")
+            reviewer = st.text_input("Reviewer", key="v_reviewer")
+            if st.button("Save decision", key="v_save", type="primary"):
+                try:
+                    post(f"/diagnoses/{pick}/review", {"decision": decision, "top1": true_top, "note": note, "reviewer": reviewer})
+                    st.rerun()
+                except requests.HTTPError as e:
+                    st.error(f"Not saved: {e.response.text[:300]}. Fill in the reviewer and, for a correction, the true top driver.")
+
 with news:
     word = st.text_input("Product", "DAP")
     found = get("/concepts", q=word)
-    if found:
+    if not found:
+        st.info(f"No concept matches “{word}”. Try a product name such as DAP, MAP or TSP.")
+    else:
         product = found[0]["id"]
         prices = pd.DataFrame(get("/news/prices", product=product))
         if prices.empty:
@@ -64,10 +132,13 @@ with news:
             st.line_chart(chart)
             st.dataframe(prices[prices["route"].isin(chosen)], hide_index=True, height=200)
         extra = [w.strip() for w in st.text_input("Events affecting (comma separated)", "Hormuz, sulphur, ammonia, urea").split(",") if w.strip()]
-        concept_ids = [product] + [get("/concepts", q=w)[0]["id"] for w in extra if get("/concepts", q=w)]
+        concept_ids = [product] + [hits[0]["id"] for hits in (get("/concepts", q=w) for w in extra) if hits]
         events = pd.DataFrame(get("/news/events", concept=concept_ids))
         st.markdown(f"**Events** affecting {', '.join(concept_ids)} ({len(events)})")
-        st.dataframe(events, hide_index=True, height=400)
+        if events.empty:
+            st.info("No events linked to these concepts yet. Load news with the market-intel pipeline, then reload.")
+        else:
+            st.dataframe(events, hide_index=True, height=400)
 
 with entities:
     table = pd.DataFrame(get("/entities/assets"))
@@ -82,7 +153,8 @@ with entities:
             row = table.iloc[labels.index(choice)]
             st.write(row["reason"])
             st.code("\n".join(row["source_names"]))
-            if row["status"] != "approved" and st.button("Approve merge (human decision)"):
+            sure = row["status"] != "approved" and st.checkbox("I checked the source records above", key="e_sure")
+            if row["status"] != "approved" and st.button("Approve merge", type="primary", disabled=not sure):
                 post(f"/entities/assets/{row['asset_id']}/approve", {})
                 st.rerun()
 
@@ -113,7 +185,10 @@ with workbooks:
             st.markdown("**Skeleton (first non-empty rows, 16 columns)**")
             st.code("\n".join(info["skeleton_first_16_cols"]))
             st.markdown("**Linked concepts**")
-            st.dataframe(pd.DataFrame(info["mentions"]).sort_values("n", ascending=False), hide_index=True, height=250)
+            if info["mentions"]:
+                st.dataframe(pd.DataFrame(info["mentions"]).sort_values("n", ascending=False), hide_index=True, height=250)
+            else:
+                st.caption("No concept found on this sheet.")
             cells = st.text_input("Read range (A1)", "A1:H20")
             if st.button("Read"):
                 st.code(get("/sheet/range", file=row["file"], name=row["sheet"], cells=cells)["text"])
@@ -136,7 +211,8 @@ with specs:
             right.dataframe(pd.DataFrame(detail["checks"]), hide_index=True)
             st.markdown(f"**Sample rows** ({detail['rows']} total)")
             st.dataframe(pd.DataFrame(detail["sample"]), hide_index=True)
-            if s["status"] != "approved" and st.button("Approve (human decision)"):
+            sure = s["status"] != "approved" and st.checkbox("I checked the spec, the checks and the sample rows", key="s_sure")
+            if s["status"] != "approved" and st.button("Approve spec", type="primary", disabled=not sure):
                 post(f"/specs/{s['status']}/{s['name']}/approve", {})
                 st.rerun()
             if st.button("Compare with old pipeline (DB)"):
@@ -156,6 +232,6 @@ with evals:
         st.metric("Specs passing all checks", f"{passed}/{len(df)}")
         st.dataframe(df[["sheet", "file", "attempts", "final_status", "final_failed", "db_diff", "rows", "seconds"]], hide_index=True)
         for r in results:
-            with st.expander(f"{r['sheet']} — {r['final_status']}"):
+            with st.expander(f"{r['sheet']}: {r['final_status']}"):
                 st.write(r["answer"])
                 st.dataframe(pd.DataFrame(r["history"]), hide_index=True)

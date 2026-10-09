@@ -203,8 +203,22 @@ Read them carefully:
 - **Analogs add nothing yet** (`no_analogs` scores the same). Their labels are the tool's own past top-1s; they need reviewed diagnoses before they can help.
 - The synthetic market is a test bench with made-up pass-through coefficients and lags. Next: run `--graph` on the real Argus series, then build labelled real episodes (2026 Hormuz) with controllers.
 
+## Running it on the real graph
+
+```bash
+python scripts/smoke_variance.py                    # 1 routes check, 2 eval on real series, 3 diagnosis report
+python scripts/smoke_variance.py --period 2026-08 --ask   # + 4 the agent answers (calls the LLM)
+python scripts/check_driver_series.py --write       # switch drivers whose configured route has little data to the best-covered one
+```
+
+`check_driver_series.py` prints, for every driver, the configured route with its number of assessments and months, and the best-covered routes for that product. Review the diff of `knowledge/driver_series.yaml` after `--write`.
+
+## Review loop (UI tab "Variance")
+- **Diagnose**: the deterministic ranking for a metric, product and month (`GET /variance`): moves, earlier moves still passing through, paths, analogs, incidents, and the drivers that have no series.
+- **Review queue**: diagnoses the agent submitted (`data/diagnoses/`). A controller **approves** the model's top driver, **corrects** it (picks the true top driver from the ranking, with a note), or **rejects** it. API: `GET /diagnoses`, `GET /diagnoses/{name}`, `POST /diagnoses/{name}/review`.
+- Approved and corrected months become **labelled analogs**: later diagnoses of the same metric and product use the reviewed top driver for those months instead of the tool's own top-1, and the report marks each analog `reviewed` or `automatic`. Rejected months fall back to the automatic label.
+
 ## Next
-1. Run `python scripts/eval_variance.py --graph` on the real series after checking the routes in `driver_series.yaml` with `price_routes`.
-2. UI tab: ranked drivers, the path on the graph, evidence table, analogs, approve/correct (corrections become labelled analogs).
-3. Attribution mode: validated consumption ratios on `MADE_FROM`, then the fidelity check (step 8.7).
-4. `FOLLOWED_BY_MOVE` on incidents, so analogs can come from events as well as from months.
+1. Attribution mode: validated consumption ratios on `MADE_FROM`, then the fidelity check (step 8.7).
+2. `FOLLOWED_BY_MOVE` on incidents, so analogs can come from events as well as from months.
+3. Once there are a few dozen reviewed months, re-run the evaluation with `alpha` < 1 to see whether analogs start to help.

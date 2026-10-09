@@ -1,0 +1,257 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1640" height="1530" viewBox="0 0 1640 1530">
+<rect width="1640" height="1530" fill="#FFFFFF"/>
+<text x="64" y="88" font-family="Inter" font-size="32" font-weight="700" fill="#13202F" text-anchor="start">Architecture agentique — graphe P&amp;L OCP</text>
+<text x="64" y="116" font-family="Inter" font-size="15" font-weight="400" fill="#4B5768" text-anchor="start">Un orchestrateur LLM et des agents spécialistes sur un graphe Neo4j · le LLM choisit et explique, du code déterministe calcule</text>
+<g id="Couche — Utilisateurs">
+<rect x="64" y="160" width="1116" height="165.7" rx="12" fill="#F3F5F8" stroke="#DCE2EA" stroke-width="1"/>
+<rect x="85.5" y="178" width="14" height="14" rx="3" fill="#5B6B80"/>
+<text x="109.5" y="189.5" font-family="Inter" font-size="12" font-weight="700" fill="#5B6B80" text-anchor="start" letter-spacing="0.6">UTILISATEURS</text>
+<g id="Contrôleur de gestion">
+<rect x="85.5" y="206.5" width="348.3" height="99.2" rx="8" fill="#FFFFFF" stroke="#D6DCE4" stroke-width="1"/>
+<rect x="100.5" y="221.5" width="26" height="26" rx="6" fill="#5B6B80"/>
+<text x="113.5" y="239.0" font-family="Inter" font-size="10" font-weight="700" fill="#FFFFFF" text-anchor="middle">CG</text>
+<text x="136.5" y="239.5" font-family="Inter" font-size="14.5" font-weight="600" fill="#13202F" text-anchor="start">Contrôleur de gestion</text>
+<text x="100.5" y="267.5" font-family="Inter" font-size="12" font-weight="400" fill="#4B5768" text-anchor="start">Questions de P&amp;L, de marges et d’écarts par BU</text>
+<text x="100.5" y="283.7" font-family="Inter" font-size="12" font-weight="400" fill="#4B5768" text-anchor="start">ou par site</text>
+</g>
+<g id="Analyste market intelligence">
+<rect x="447.8" y="206.5" width="348.3" height="99.2" rx="8" fill="#FFFFFF" stroke="#D6DCE4" stroke-width="1"/>
+<rect x="462.8" y="221.5" width="26" height="26" rx="6" fill="#5B6B80"/>
+<text x="475.8" y="239.0" font-family="Inter" font-size="10" font-weight="700" fill="#FFFFFF" text-anchor="middle">MI</text>
+<text x="498.8" y="239.5" font-family="Inter" font-size="14.5" font-weight="600" fill="#13202F" text-anchor="start">Analyste market intelligence</text>
+<text x="462.8" y="267.5" font-family="Inter" font-size="12" font-weight="400" fill="#4B5768" text-anchor="start">Classeurs Argus / CRU / S&amp;P, prix, événements</text>
+<text x="462.8" y="283.7" font-family="Inter" font-size="12" font-weight="400" fill="#4B5768" text-anchor="start">de marché</text>
+</g>
+<g id="Relecteur métier">
+<rect x="810.2" y="206.5" width="348.3" height="99.2" rx="8" fill="#FFFFFF" stroke="#D6DCE4" stroke-width="1"/>
+<rect x="825.2" y="221.5" width="26" height="26" rx="6" fill="#5B6B80"/>
+<text x="838.2" y="239.0" font-family="Inter" font-size="10" font-weight="700" fill="#FFFFFF" text-anchor="middle">RV</text>
+<text x="861.2" y="239.5" font-family="Inter" font-size="14.5" font-weight="600" fill="#13202F" text-anchor="start">Relecteur métier</text>
+<text x="825.2" y="267.5" font-family="Inter" font-size="12" font-weight="400" fill="#4B5768" text-anchor="start">Valide les termes, les specs, les fusions et</text>
+<text x="825.2" y="283.7" font-family="Inter" font-size="12" font-weight="400" fill="#4B5768" text-anchor="start">les diagnostics</text>
+</g>
+</g>
+<line x1="622.0" y1="329.7" x2="622.0" y2="367.7" stroke="#8A96A6" stroke-width="1.5"/>
+<polygon points="622.0,367.7 616.0,356.7 628.0,356.7" fill="#8A96A6"/>
+<g id="Couche — Présentation">
+<rect x="64" y="371.7" width="1116" height="165.7" rx="12" fill="#EEF4FB" stroke="#D3E2F3" stroke-width="1"/>
+<rect x="85.5" y="389.7" width="14" height="14" rx="3" fill="#2F6FB3"/>
+<text x="109.5" y="401.2" font-family="Inter" font-size="12" font-weight="700" fill="#2F6FB3" text-anchor="start" letter-spacing="0.6">PRÉSENTATION</text>
+<g id="Interface Streamlit">
+<rect x="85.5" y="418.2" width="348.3" height="99.2" rx="8" fill="#FFFFFF" stroke="#D6DCE4" stroke-width="1"/>
+<rect x="100.5" y="433.2" width="26" height="26" rx="6" fill="#2F6FB3"/>
+<text x="113.5" y="450.7" font-family="Inter" font-size="10" font-weight="700" fill="#FFFFFF" text-anchor="middle">UI</text>
+<text x="136.5" y="451.2" font-family="Inter" font-size="14.5" font-weight="600" fill="#13202F" text-anchor="start">Interface Streamlit</text>
+<text x="100.5" y="479.2" font-family="Inter" font-size="12" font-weight="400" fill="#4B5768" text-anchor="start">Chat, Variance, News et prix, Entités,</text>
+<text x="100.5" y="495.4" font-family="Inter" font-size="12" font-weight="400" fill="#4B5768" text-anchor="start">Classeurs, Specs, Évaluation</text>
+</g>
+<g id="API FastAPI">
+<rect x="447.8" y="418.2" width="348.3" height="99.2" rx="8" fill="#FFFFFF" stroke="#D6DCE4" stroke-width="1"/>
+<rect x="462.8" y="433.2" width="26" height="26" rx="6" fill="#2F6FB3"/>
+<text x="475.8" y="450.7" font-family="Inter" font-size="10" font-weight="700" fill="#FFFFFF" text-anchor="middle">API</text>
+<text x="498.8" y="451.2" font-family="Inter" font-size="14.5" font-weight="600" fill="#13202F" text-anchor="start">API FastAPI</text>
+<text x="462.8" y="479.2" font-family="Inter" font-size="12" font-weight="400" fill="#4B5768" text-anchor="start">/ask · /variance · /diagnoses · /specs · /news</text>
+<text x="462.8" y="495.4" font-family="Inter" font-size="12" font-weight="400" fill="#4B5768" text-anchor="start">· /entities</text>
+</g>
+<g id="Neo4j Browser">
+<rect x="810.2" y="418.2" width="348.3" height="99.2" rx="8" fill="#FFFFFF" stroke="#D6DCE4" stroke-width="1"/>
+<rect x="825.2" y="433.2" width="26" height="26" rx="6" fill="#2F6FB3"/>
+<text x="838.2" y="450.7" font-family="Inter" font-size="10" font-weight="700" fill="#FFFFFF" text-anchor="middle">NB</text>
+<text x="861.2" y="451.2" font-family="Inter" font-size="14.5" font-weight="600" fill="#13202F" text-anchor="start">Neo4j Browser</text>
+<text x="825.2" y="479.2" font-family="Inter" font-size="12" font-weight="400" fill="#4B5768" text-anchor="start">Exploration directe du graphe, en lecture</text>
+</g>
+</g>
+<line x1="622.0" y1="541.4" x2="622.0" y2="579.4" stroke="#8A96A6" stroke-width="1.5"/>
+<polygon points="622.0,579.4 616.0,568.4 628.0,568.4" fill="#8A96A6"/>
+<g id="Couche — Orchestrateur (LLM)">
+<rect x="64" y="583.4" width="1116" height="165.7" rx="12" fill="#FCF5E6" stroke="#F0DFB5" stroke-width="1"/>
+<rect x="85.5" y="601.4" width="14" height="14" rx="3" fill="#B7831A"/>
+<text x="109.5" y="612.9" font-family="Inter" font-size="12" font-weight="700" fill="#B7831A" text-anchor="start" letter-spacing="0.6">ORCHESTRATEUR (LLM)</text>
+<g id="Orchestrateur">
+<rect x="85.5" y="629.9" width="348.3" height="99.2" rx="8" fill="#FFFFFF" stroke="#D6DCE4" stroke-width="1"/>
+<rect x="100.5" y="644.9" width="26" height="26" rx="6" fill="#B7831A"/>
+<text x="113.5" y="662.4" font-family="Inter" font-size="10" font-weight="700" fill="#FFFFFF" text-anchor="middle">OR</text>
+<text x="136.5" y="662.9" font-family="Inter" font-size="14.5" font-weight="600" fill="#13202F" text-anchor="start">Orchestrateur</text>
+<text x="100.5" y="690.9" font-family="Inter" font-size="12" font-weight="400" fill="#4B5768" text-anchor="start">Résout le vocabulaire, choisit les outils,</text>
+<text x="100.5" y="707.1" font-family="Inter" font-size="12" font-weight="400" fill="#4B5768" text-anchor="start">assemble une réponse citée</text>
+</g>
+<g id="Playbooks">
+<rect x="447.8" y="629.9" width="348.3" height="99.2" rx="8" fill="#FFFFFF" stroke="#D6DCE4" stroke-width="1"/>
+<rect x="462.8" y="644.9" width="26" height="26" rx="6" fill="#B7831A"/>
+<text x="475.8" y="662.4" font-family="Inter" font-size="10" font-weight="700" fill="#FFFFFF" text-anchor="middle">PB</text>
+<text x="498.8" y="662.9" font-family="Inter" font-size="14.5" font-weight="600" fill="#13202F" text-anchor="start">Playbooks</text>
+<text x="462.8" y="690.9" font-family="Inter" font-size="12" font-weight="400" fill="#4B5768" text-anchor="start">Impact d’un événement · écart d’une marge ·</text>
+<text x="462.8" y="707.1" font-family="Inter" font-size="12" font-weight="400" fill="#4B5768" text-anchor="start">extraction d’une feuille</text>
+</g>
+<g id="Reflector">
+<rect x="810.2" y="629.9" width="348.3" height="99.2" rx="8" fill="#FFFFFF" stroke="#D6DCE4" stroke-width="1"/>
+<rect x="825.2" y="644.9" width="26" height="26" rx="6" fill="#B7831A"/>
+<text x="838.2" y="662.4" font-family="Inter" font-size="10" font-weight="700" fill="#FFFFFF" text-anchor="middle">RF</text>
+<text x="861.2" y="662.9" font-family="Inter" font-size="14.5" font-weight="600" fill="#13202F" text-anchor="start">Reflector</text>
+<text x="825.2" y="690.9" font-family="Inter" font-size="12" font-weight="400" fill="#4B5768" text-anchor="start">Rejette tout nombre absent des résultats</text>
+<text x="825.2" y="707.1" font-family="Inter" font-size="12" font-weight="400" fill="#4B5768" text-anchor="start">d’outils et toute réponse sans article cité</text>
+</g>
+</g>
+<line x1="622.0" y1="753.0999999999999" x2="622.0" y2="791.0999999999999" stroke="#8A96A6" stroke-width="1.5"/>
+<polygon points="622.0,791.0999999999999 616.0,780.0999999999999 628.0,780.0999999999999" fill="#8A96A6"/>
+<g id="Couche — Agents spécialistes">
+<rect x="64" y="795.0999999999999" width="1116" height="181.9" rx="12" fill="#F4F1FB" stroke="#E0D8F2" stroke-width="1"/>
+<rect x="85.5" y="813.0999999999999" width="14" height="14" rx="3" fill="#6A4FB3"/>
+<text x="109.5" y="824.5999999999999" font-family="Inter" font-size="12" font-weight="700" fill="#6A4FB3" text-anchor="start" letter-spacing="0.6">AGENTS SPÉCIALISTES</text>
+<g id="Agent classeurs">
+<rect x="85.5" y="841.5999999999999" width="257.8" height="115.4" rx="8" fill="#FFFFFF" stroke="#D6DCE4" stroke-width="1"/>
+<rect x="100.5" y="856.5999999999999" width="26" height="26" rx="6" fill="#6A4FB3"/>
+<text x="113.5" y="874.0999999999999" font-family="Inter" font-size="10" font-weight="700" fill="#FFFFFF" text-anchor="middle">WB</text>
+<text x="136.5" y="874.5999999999999" font-family="Inter" font-size="14.5" font-weight="600" fill="#13202F" text-anchor="start">Agent classeurs</text>
+<text x="100.5" y="902.5999999999999" font-family="Inter" font-size="12" font-weight="400" fill="#4B5768" text-anchor="start">Trouve les feuilles, lit les</text>
+<text x="100.5" y="918.8" font-family="Inter" font-size="12" font-weight="400" fill="#4B5768" text-anchor="start">plages, propose des specs</text>
+<text x="100.5" y="934.9999999999999" font-family="Inter" font-size="12" font-weight="400" fill="#4B5768" text-anchor="start">d’extraction</text>
+</g>
+<g id="Agent news">
+<rect x="357.2" y="841.5999999999999" width="257.8" height="115.4" rx="8" fill="#FFFFFF" stroke="#D6DCE4" stroke-width="1"/>
+<rect x="372.2" y="856.5999999999999" width="26" height="26" rx="6" fill="#6A4FB3"/>
+<text x="385.2" y="874.0999999999999" font-family="Inter" font-size="10" font-weight="700" fill="#FFFFFF" text-anchor="middle">NW</text>
+<text x="408.2" y="874.5999999999999" font-family="Inter" font-size="14.5" font-weight="600" fill="#13202F" text-anchor="start">Agent news</text>
+<text x="372.2" y="902.5999999999999" font-family="Inter" font-size="12" font-weight="400" fill="#4B5768" text-anchor="start">Articles, incidents, prix</text>
+<text x="372.2" y="918.8" font-family="Inter" font-size="12" font-weight="400" fill="#4B5768" text-anchor="start">vérifiés, toujours « as of » une</text>
+<text x="372.2" y="934.9999999999999" font-family="Inter" font-size="12" font-weight="400" fill="#4B5768" text-anchor="start">date</text>
+</g>
+<g id="Agent entités">
+<rect x="629.0" y="841.5999999999999" width="257.8" height="115.4" rx="8" fill="#FFFFFF" stroke="#D6DCE4" stroke-width="1"/>
+<rect x="644.0" y="856.5999999999999" width="26" height="26" rx="6" fill="#6A4FB3"/>
+<text x="657.0" y="874.0999999999999" font-family="Inter" font-size="10" font-weight="700" fill="#FFFFFF" text-anchor="middle">EN</text>
+<text x="680.0" y="874.5999999999999" font-family="Inter" font-size="14.5" font-weight="600" fill="#13202F" text-anchor="start">Agent entités</text>
+<text x="644.0" y="902.5999999999999" font-family="Inter" font-size="12" font-weight="400" fill="#4B5768" text-anchor="start">Actifs OCP et concurrents,</text>
+<text x="644.0" y="918.8" font-family="Inter" font-size="12" font-weight="400" fill="#4B5768" text-anchor="start">fusions de sources à valider</text>
+</g>
+<g id="Agent marché (prévu)">
+<rect x="900.8" y="841.5999999999999" width="257.8" height="115.4" rx="8" fill="#FFFFFF" stroke="#D6DCE4" stroke-width="1"/>
+<rect x="915.8" y="856.5999999999999" width="26" height="26" rx="6" fill="#6A4FB3"/>
+<text x="928.8" y="874.0999999999999" font-family="Inter" font-size="10" font-weight="700" fill="#FFFFFF" text-anchor="middle">MK</text>
+<text x="951.8" y="874.5999999999999" font-family="Inter" font-size="14.5" font-weight="600" fill="#13202F" text-anchor="start">Agent marché (prévu)</text>
+<text x="915.8" y="902.5999999999999" font-family="Inter" font-size="12" font-weight="400" fill="#4B5768" text-anchor="start">Séries de prix et prévisions par</text>
+<text x="915.8" y="918.8" font-family="Inter" font-size="12" font-weight="400" fill="#4B5768" text-anchor="start">modèles déterministes</text>
+</g>
+</g>
+<line x1="622.0" y1="980.9999999999999" x2="622.0" y2="1018.9999999999999" stroke="#8A96A6" stroke-width="1.5"/>
+<polygon points="622.0,1018.9999999999999 616.0,1007.9999999999999 628.0,1007.9999999999999" fill="#8A96A6"/>
+<g id="Couche — Moteurs déterministes">
+<rect x="64" y="1022.9999999999999" width="1116" height="165.7" rx="12" fill="#EAF5F3" stroke="#C9E5DF" stroke-width="1"/>
+<rect x="85.5" y="1041.0" width="14" height="14" rx="3" fill="#1E7A6C"/>
+<text x="109.5" y="1052.5" font-family="Inter" font-size="12" font-weight="700" fill="#1E7A6C" text-anchor="start" letter-spacing="0.6">MOTEURS DÉTERMINISTES</text>
+<g id="Exécuteur de specs">
+<rect x="85.5" y="1069.5" width="348.3" height="99.2" rx="8" fill="#FFFFFF" stroke="#D6DCE4" stroke-width="1"/>
+<rect x="100.5" y="1084.5" width="26" height="26" rx="6" fill="#1E7A6C"/>
+<text x="113.5" y="1102.0" font-family="Inter" font-size="10" font-weight="700" fill="#FFFFFF" text-anchor="middle">SX</text>
+<text x="136.5" y="1102.5" font-family="Inter" font-size="14.5" font-weight="600" fill="#13202F" text-anchor="start">Exécuteur de specs</text>
+<text x="100.5" y="1130.5" font-family="Inter" font-size="12" font-weight="400" fill="#4B5768" text-anchor="start">Rejoue le YAML ; contrôles de totaux, d’unités,</text>
+<text x="100.5" y="1146.7" font-family="Inter" font-size="12" font-weight="400" fill="#4B5768" text-anchor="start">d’orientation ; diff avec la base</text>
+</g>
+<g id="diagnose_variance">
+<rect x="447.8" y="1069.5" width="348.3" height="99.2" rx="8" fill="#FFFFFF" stroke="#D6DCE4" stroke-width="1"/>
+<rect x="462.8" y="1084.5" width="26" height="26" rx="6" fill="#1E7A6C"/>
+<text x="475.8" y="1102.0" font-family="Inter" font-size="10" font-weight="700" fill="#FFFFFF" text-anchor="middle">DV</text>
+<text x="498.8" y="1102.5" font-family="Inter" font-size="14.5" font-weight="600" fill="#13202F" text-anchor="start">diagnose_variance</text>
+<text x="462.8" y="1130.5" font-family="Inter" font-size="12" font-weight="400" fill="#4B5768" text-anchor="start">Candidats du graphe, écarts, explication par</text>
+<text x="462.8" y="1146.7" font-family="Inter" font-size="12" font-weight="400" fill="#4B5768" text-anchor="start">l’amont, mois analogues</text>
+</g>
+<g id="Calcul et Cypher en lecture">
+<rect x="810.2" y="1069.5" width="348.3" height="99.2" rx="8" fill="#FFFFFF" stroke="#D6DCE4" stroke-width="1"/>
+<rect x="825.2" y="1084.5" width="26" height="26" rx="6" fill="#1E7A6C"/>
+<text x="838.2" y="1102.0" font-family="Inter" font-size="10" font-weight="700" fill="#FFFFFF" text-anchor="middle">CA</text>
+<text x="861.2" y="1102.5" font-family="Inter" font-size="14.5" font-weight="600" fill="#13202F" text-anchor="start">Calcul et Cypher en lecture</text>
+<text x="825.2" y="1130.5" font-family="Inter" font-size="12" font-weight="400" fill="#4B5768" text-anchor="start">Toute arithmétique hors du LLM ; requêtes en</text>
+<text x="825.2" y="1146.7" font-family="Inter" font-size="12" font-weight="400" fill="#4B5768" text-anchor="start">transaction de lecture</text>
+</g>
+</g>
+<line x1="622.0" y1="1192.6999999999998" x2="622.0" y2="1230.6999999999998" stroke="#8A96A6" stroke-width="1.5"/>
+<polygon points="622.0,1230.6999999999998 616.0,1219.6999999999998 628.0,1219.6999999999998" fill="#8A96A6"/>
+<g id="Couche — Données">
+<rect x="64" y="1234.6999999999998" width="1116" height="165.7" rx="12" fill="#EDF2F7" stroke="#D2DDE8" stroke-width="1"/>
+<rect x="85.5" y="1252.6999999999998" width="14" height="14" rx="3" fill="#3A5878"/>
+<text x="109.5" y="1264.1999999999998" font-family="Inter" font-size="12" font-weight="700" fill="#3A5878" text-anchor="start" letter-spacing="0.6">DONNÉES</text>
+<g id="Neo4j — graphe de connaissances">
+<rect x="85.5" y="1281.1999999999998" width="348.3" height="99.2" rx="8" fill="#FFFFFF" stroke="#D6DCE4" stroke-width="1"/>
+<rect x="100.5" y="1296.1999999999998" width="26" height="26" rx="6" fill="#3A5878"/>
+<text x="113.5" y="1313.6999999999998" font-family="Inter" font-size="10" font-weight="700" fill="#FFFFFF" text-anchor="middle">NJ</text>
+<text x="136.5" y="1314.1999999999998" font-family="Inter" font-size="14.5" font-weight="600" fill="#13202F" text-anchor="start">Neo4j — graphe de connaissances</text>
+<text x="100.5" y="1342.1999999999998" font-family="Inter" font-size="12" font-weight="400" fill="#4B5768" text-anchor="start">Ontologie et termes, classeurs, news, entités,</text>
+<text x="100.5" y="1358.3999999999999" font-family="Inter" font-size="12" font-weight="400" fill="#4B5768" text-anchor="start">diagnostics</text>
+</g>
+<g id="Postgres market intelligence">
+<rect x="447.8" y="1281.1999999999998" width="348.3" height="99.2" rx="8" fill="#FFFFFF" stroke="#D6DCE4" stroke-width="1"/>
+<rect x="462.8" y="1296.1999999999998" width="26" height="26" rx="6" fill="#3A5878"/>
+<text x="475.8" y="1313.6999999999998" font-family="Inter" font-size="10" font-weight="700" fill="#FFFFFF" text-anchor="middle">PG</text>
+<text x="498.8" y="1314.1999999999998" font-family="Inter" font-size="14.5" font-weight="600" fill="#13202F" text-anchor="start">Postgres market intelligence</text>
+<text x="462.8" y="1342.1999999999998" font-family="Inter" font-size="12" font-weight="400" fill="#4B5768" text-anchor="start">5,8 M métriques, référentiels, 37,6 k articles</text>
+<text x="462.8" y="1358.3999999999999" font-family="Inter" font-size="12" font-weight="400" fill="#4B5768" text-anchor="start">Argus</text>
+</g>
+<g id="Fichiers et files de revue">
+<rect x="810.2" y="1281.1999999999998" width="348.3" height="99.2" rx="8" fill="#FFFFFF" stroke="#D6DCE4" stroke-width="1"/>
+<rect x="825.2" y="1296.1999999999998" width="26" height="26" rx="6" fill="#3A5878"/>
+<text x="838.2" y="1313.6999999999998" font-family="Inter" font-size="10" font-weight="700" fill="#FFFFFF" text-anchor="middle">FS</text>
+<text x="861.2" y="1314.1999999999998" font-family="Inter" font-size="14.5" font-weight="600" fill="#13202F" text-anchor="start">Fichiers et files de revue</text>
+<text x="825.2" y="1342.1999999999998" font-family="Inter" font-size="12" font-weight="400" fill="#4B5768" text-anchor="start">Classeurs Excel, specs/, data/diagnoses/,</text>
+<text x="825.2" y="1358.3999999999999" font-family="Inter" font-size="12" font-weight="400" fill="#4B5768" text-anchor="start">proposals.jsonl</text>
+</g>
+</g>
+<g id="Panneau — Fournisseurs LLM">
+<rect x="1216" y="583.4" width="360" height="343.5" rx="12" fill="#FCF5E6" stroke="#F0DFB5" stroke-width="1"/>
+<rect x="1237.5" y="601.4" width="14" height="14" rx="3" fill="#B7831A"/>
+<text x="1261.5" y="612.9" font-family="Inter" font-size="12" font-weight="700" fill="#B7831A" text-anchor="start" letter-spacing="0.6">FOURNISSEURS LLM</text>
+<g id="Claude API">
+<rect x="1237.5" y="629.9" width="317" height="83.0" rx="8" fill="#FFFFFF" stroke="#D6DCE4" stroke-width="1"/>
+<rect x="1252.5" y="644.9" width="26" height="26" rx="6" fill="#B7831A"/>
+<text x="1265.5" y="662.4" font-family="Inter" font-size="10" font-weight="700" fill="#FFFFFF" text-anchor="middle">CL</text>
+<text x="1288.5" y="662.9" font-family="Inter" font-size="14.5" font-weight="600" fill="#13202F" text-anchor="start">Claude API</text>
+<text x="1252.5" y="690.9" font-family="Inter" font-size="12" font-weight="400" fill="#4B5768" text-anchor="start">Orchestrateur et sous-agents (tool runner)</text>
+</g>
+<g id="Azure OpenAI">
+<rect x="1237.5" y="726.9" width="317" height="83.0" rx="8" fill="#FFFFFF" stroke="#D6DCE4" stroke-width="1"/>
+<rect x="1252.5" y="741.9" width="26" height="26" rx="6" fill="#B7831A"/>
+<text x="1265.5" y="759.4" font-family="Inter" font-size="10" font-weight="700" fill="#FFFFFF" text-anchor="middle">AZ</text>
+<text x="1288.5" y="759.9" font-family="Inter" font-size="14.5" font-weight="600" fill="#13202F" text-anchor="start">Azure OpenAI</text>
+<text x="1252.5" y="787.9" font-family="Inter" font-size="12" font-weight="400" fill="#4B5768" text-anchor="start">Agents gpt-5.4, extraction gpt-4.1-mini</text>
+</g>
+<g id="Passerelle on-premise">
+<rect x="1237.5" y="823.9" width="317" height="83.0" rx="8" fill="#FFFFFF" stroke="#D6DCE4" stroke-width="1"/>
+<rect x="1252.5" y="838.9" width="26" height="26" rx="6" fill="#B7831A"/>
+<text x="1265.5" y="856.4" font-family="Inter" font-size="10" font-weight="700" fill="#FFFFFF" text-anchor="middle">OP</text>
+<text x="1288.5" y="856.9" font-family="Inter" font-size="14.5" font-weight="600" fill="#13202F" text-anchor="start">Passerelle on-premise</text>
+<text x="1252.5" y="884.9" font-family="Inter" font-size="12" font-weight="400" fill="#4B5768" text-anchor="start">Option OCP, API compatible OpenAI</text>
+</g>
+</g>
+<line x1="1212" y1="655.4" x2="1184" y2="655.4" stroke="#8A96A6" stroke-width="1.5"/>
+<polygon points="1184,655.4 1195,649.4 1195,661.4" fill="#8A96A6"/>
+<g id="Panneau — Revue humaine">
+<rect x="1216" y="1022.9999999999999" width="360" height="278.9" rx="12" fill="#EEF6EC" stroke="#D3E8CE" stroke-width="1"/>
+<rect x="1237.5" y="1041.0" width="14" height="14" rx="3" fill="#3D7F35"/>
+<text x="1261.5" y="1052.5" font-family="Inter" font-size="12" font-weight="700" fill="#3D7F35" text-anchor="start" letter-spacing="0.6">REVUE HUMAINE</text>
+<g id="Files de revue">
+<rect x="1237.5" y="1069.5" width="317" height="99.2" rx="8" fill="#FFFFFF" stroke="#D6DCE4" stroke-width="1"/>
+<rect x="1252.5" y="1084.5" width="26" height="26" rx="6" fill="#3D7F35"/>
+<text x="1265.5" y="1102.0" font-family="Inter" font-size="10" font-weight="700" fill="#FFFFFF" text-anchor="middle">RQ</text>
+<text x="1288.5" y="1102.5" font-family="Inter" font-size="14.5" font-weight="600" fill="#13202F" text-anchor="start">Files de revue</text>
+<text x="1252.5" y="1130.5" font-family="Inter" font-size="12" font-weight="400" fill="#4B5768" text-anchor="start">Termes, specs, fusions, diagnostics :</text>
+<text x="1252.5" y="1146.7" font-family="Inter" font-size="12" font-weight="400" fill="#4B5768" text-anchor="start">approuver, corriger, rejeter</text>
+</g>
+<g id="Rechargement">
+<rect x="1237.5" y="1182.7" width="317" height="99.2" rx="8" fill="#FFFFFF" stroke="#D6DCE4" stroke-width="1"/>
+<rect x="1252.5" y="1197.7" width="26" height="26" rx="6" fill="#3D7F35"/>
+<text x="1265.5" y="1215.2" font-family="Inter" font-size="10" font-weight="700" fill="#FFFFFF" text-anchor="middle">RL</text>
+<text x="1288.5" y="1215.7" font-family="Inter" font-size="14.5" font-weight="600" fill="#13202F" text-anchor="start">Rechargement</text>
+<text x="1252.5" y="1243.7" font-family="Inter" font-size="12" font-weight="400" fill="#4B5768" text-anchor="start">Les décisions reviennent dans le graphe,</text>
+<text x="1252.5" y="1259.9" font-family="Inter" font-size="12" font-weight="400" fill="#4B5768" text-anchor="start">avec un dry-run avant</text>
+</g>
+</g>
+<line x1="1184" y1="1095.0" x2="1212" y2="1095.0" stroke="#8A96A6" stroke-width="1.5" stroke-dasharray="6 5"/>
+<polygon points="1212,1095.0 1201,1089.0 1201,1101.0" fill="#8A96A6"/>
+<g id="Légende">
+<line x1="64" y1="1440.3999999999999" x2="92" y2="1440.3999999999999" stroke="#8A96A6" stroke-width="1.5"/>
+<text x="102" y="1444.3999999999999" font-family="Inter" font-size="11.5" font-weight="400" fill="#4B5768" text-anchor="start">appel synchrone</text>
+<line x1="223.0" y1="1440.3999999999999" x2="251.0" y2="1440.3999999999999" stroke="#8A96A6" stroke-width="1.5" stroke-dasharray="6 5"/>
+<text x="261.0" y="1444.3999999999999" font-family="Inter" font-size="11.5" font-weight="400" fill="#4B5768" text-anchor="start">proposition vers une file de revue (validation humaine)</text>
+</g>
+<text x="64" y="1476.3999999999999" font-family="Inter" font-size="12.5" font-weight="400" fill="#4B5768" text-anchor="start">Le LLM ne calcule ni n’invente aucun nombre : il résout les termes, choisit les outils et explique. Les chiffres viennent des moteurs déterministes et des données, chaque affirmation cite un nœud, une cellule ou un</text>
+<text x="64" y="1493.2749999999999" font-family="Inter" font-size="12.5" font-weight="400" fill="#4B5768" text-anchor="start">article, et toute écriture dans le graphe passe par une revue humaine.</text>
+</svg>

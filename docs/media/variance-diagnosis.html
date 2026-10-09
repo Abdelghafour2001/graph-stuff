@@ -70,7 +70,10 @@ pre.code{font-family:var(--mono);font-size:12px;line-height:1.45;background:var(
 .controls .pos{font-family:var(--mono);font-size:12px;color:var(--ink-2);font-variant-numeric:tabular-nums}
 ol.steps{margin:0;padding-left:0;list-style:none;display:grid;gap:4px;columns:2;column-gap:40px;font-size:14px;color:var(--ink-2)}
 @media (max-width:760px){ol.steps{columns:1}}
-ol.steps li{break-inside:avoid;cursor:pointer}
+ol.steps li{break-inside:avoid}
+ol.steps button{font:inherit;color:inherit;background:none;border:0;padding:2px 0;text-align:left;cursor:pointer}
+ol.steps button:hover{color:var(--ink)}
+ol.steps button:focus-visible{outline:2px solid var(--live);outline-offset:2px}
 ol.steps li.on{color:var(--ink);font-weight:600}
 /* SVG */
 .node rect{fill:var(--surface);stroke:var(--line);stroke-width:1.5}
@@ -296,7 +299,7 @@ for (const n of NODES) {
 const starts = []; let total = 0;
 for (const s of STEPS) { starts.push(total); total += s.dur; }
 const list = $("steps");
-STEPS.forEach((s, i) => { const li = document.createElement("li"); li.textContent = s.title; li.onclick = () => seek(starts[i] + 1); list.appendChild(li); });
+STEPS.forEach((s, i) => { const li = document.createElement("li"); const b = document.createElement("button"); b.type = "button"; b.textContent = s.title; b.onclick = () => { setPlaying(false); seek(starts[i] + 1); }; li.appendChild(b); list.appendChild(li); });
 
 const reduced = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
 const record = location.hash === "#record";
@@ -349,7 +352,8 @@ function frame(now) {
   requestAnimationFrame(frame);
 }
 function seek(time) { t = Math.max(0, Math.min(total - 1, time)); render(); }
-function setPlaying(p) { playing = p; $("play").textContent = p ? "Pause" : "Play"; }
+// announce steps to screen readers only when the viewer moves through them, not on every autoplay tick
+function setPlaying(p) { playing = p; $("play").textContent = p ? "Pause" : "Play"; document.querySelector(".reader").setAttribute("aria-live", p ? "off" : "polite"); }
 
 $("play").onclick = () => setPlaying(!playing);
 $("prev").onclick = () => { setPlaying(false); seek(starts[Math.max(0, stepAt(t) - 1)] + 1); };
