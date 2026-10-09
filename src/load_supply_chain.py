@@ -44,6 +44,11 @@ def load_lanes() -> list[dict]:
     return lanes
 
 
+def route_aliases() -> dict[str, list[str]]:
+    """{route id: [region ids whose news counts as news on the route]}."""
+    return yaml.safe_load(FILE.read_text(encoding="utf-8")).get("route_aliases") or {}
+
+
 def main() -> None:
     lanes = load_lanes()
     if "--check" in sys.argv:

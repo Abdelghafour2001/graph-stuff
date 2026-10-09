@@ -11,6 +11,12 @@
 #   competitor  another exporter ships `item` from `origin` via `via`               -> disruption = less competing supply, price support for OCP
 # Origins and destinations are country ids of the market-intel referential (country_<name>); via are route concepts of ontology.yaml.
 
+# News about these market regions counts as news about the route (the region names are price locations, so they cannot also
+# be terms of the route concepts: one word must resolve to one concept).
+route_aliases:
+  bab_el_mandeb: [region_red_sea]
+  turkish_straits: [region_black_sea, region_baltic_sea_black_sea]
+
 lanes:
   # ---------- inputs OCP buys ----------
   - {role: supply, item: sulfur, origin: country_united_arab_emirates, via: [hormuz, bab_el_mandeb, suez], to: jorf_lasfar,

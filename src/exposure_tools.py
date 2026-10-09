@@ -3,6 +3,8 @@ import json
 
 from anthropic import beta_tool
 
+from load_supply_chain import route_aliases
+
 import exposure as x
 from variance_tools import load_series, read_all
 
@@ -50,10 +52,11 @@ def run_exposure(scope: str, date_from: str, date_to: str) -> dict:
     if not lanes:
         return {"error": "No supply-chain lanes in the graph: run src/load_supply_chain.py (after import_referentials.py)."}
     items = sorted({lane["item"] for lane in lanes} | {b for _, b in made_from} | set(sites))
+    aliases = route_aliases()
     touch = sorted({t for lane in lanes for t in [lane["origin"], lane.get("destination"), *lane["via"]] if t}
-                   | set(items) | {s for ss in sites.values() for s in ss})
+                   | set(items) | {s for ss in sites.values() for s in ss} | {a for names in aliases.values() for a in names})
     report = x.exposure(lanes, made_from, sites, events_on(touch, date_from, date_to),
-                        monthly_prices(items, date_from, date_to), scope or None)
+                        monthly_prices(items, date_from, date_to), scope or None, aliases)
     report["period"] = [date_from, date_to]
     return report
 

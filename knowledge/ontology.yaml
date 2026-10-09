@@ -263,7 +263,7 @@ concepts:
     kind: route
     name: Bab el-Mandeb / Red Sea
     definition: Southern entrance of the Red Sea. Gulf cargoes to the Mediterranean and Morocco, and Morocco cargoes to India and South Asia, pass it unless ships go round the Cape of Good Hope.
-    terms: [Bab el-Mandeb, Bab al-Mandab, Red Sea, mer Rouge, Houthi, Houthis]
+    terms: [Bab el-Mandeb, Bab al-Mandab, Houthi, Houthis]  # not "Red Sea": that is a price location (region_red_sea); exposure.py maps it here
 
   - id: suez
     kind: route
@@ -281,7 +281,7 @@ concepts:
     kind: route
     name: Turkish Straits / Black Sea
     definition: Bosphorus and Dardanelles, the exit of Black Sea ports (Russian ammonia, sulphur and fertilizer exports).
-    terms: [Bosphorus, Bosporus, Dardanelles, Turkish Straits, Black Sea, mer Noire]
+    terms: [Bosphorus, Bosporus, Dardanelles, Turkish Straits]  # not "Black Sea": that is a price location (region_black_sea)
 
 # [from, TYPE, to]
 relations:
