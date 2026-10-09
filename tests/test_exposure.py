@@ -82,3 +82,23 @@ def test_dominant_direction_per_incident():
     rows = [ev("i1", "2026-03-02", "hormuz", "disrupted"), ev("i1", "2026-03-02", "hormuz", "disrupted"), ev("i1", "2026-03-03", "hormuz", "unclear")]
     (one,) = x.dominant(rows)
     assert one["direction"] == "disrupted"
+
+
+def test_ontology_terms_do_not_name_places():
+    """A word must resolve to one concept: price locations and event places are matched by name, first match wins.
+    Checks every ontology term against what the referential imports load as concepts (countries, regions, aliases, companies)."""
+    ref = yaml.safe_load((ROOT / "knowledge" / "market_intel_referential.yaml").read_text(encoding="utf-8"))
+    names = set(ref["country"]) | set(ref["regions"]) | set(ref["region_aliases"].values()) | set(ref["country_region_mapping"].values())
+    names |= set(ref["region_aliases"]) | set(ref["country_aliases"]) | set(ref["companies"])
+    loaded = {str(n).replace("_", " ").strip().lower() for n in names}
+    clashes = {(c["id"], t) for c in ONTO["concepts"] for t in c["terms"] if t.strip().lower() in loaded}
+    # older ones, also company names (or a 2-letter code the news matcher skips); lookup_term returns both concepts for them
+    known = {("ocp_group", "OCP"), ("jorf_lasfar", "Jorf Lasfar"), ("jorf_lasfar", "Jorf"), ("sulfuric_acid", "AS")}
+    assert clashes == known, sorted(clashes - known) or f"fixed, remove from known: {sorted(known - clashes)}"
+
+
+def test_region_news_counts_on_the_route():
+    events = [ev("i-rs", "2026-02-10", "region_red_sea", "disrupted", "Red Sea attacks")]
+    r = x.exposure(LANES, MADE_FROM, SITES, events, {}, aliases=load_supply_chain.route_aliases())
+    assert find(r, "headwind", "export", "dap")["events"][0]["touch"] == "bab_el_mandeb"
+    assert x.exposure(LANES, MADE_FROM, SITES, events, {})["headwind"] == []  # without the alias it is not on any lane

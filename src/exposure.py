@@ -54,10 +54,11 @@ def price_move(monthly: dict[str, float] | None) -> dict | None:
 
 
 def exposure(lanes: list[dict], made_from: list[tuple[str, str]], sites: dict[str, list[str]], events: list[dict],
-             prices: dict[str, dict[str, float]], scope: str | None = None) -> dict:
+             prices: dict[str, dict[str, float]], scope: str | None = None, aliases: dict[str, list[str]] | None = None) -> dict:
     """lanes: [{id, role, item, origin, destination, via, status, share}]; sites: {OCP product: [sites]};
     events: [{incident, date, type, summary, concept, direction, channel, article_ids}]; prices: {item: {YYYY-MM: avg}}.
-    scope: an OCP product id to keep only what reaches it, or None for all of OCP."""
+    scope: an OCP product id to keep only what reaches it, or None for all of OCP.
+    aliases: {route: [region ids]} whose events count as events on the route."""
     ocp_products = set(sites)
     bought = {inp for _, inp in made_from} - ocp_products
 
@@ -66,8 +67,9 @@ def exposure(lanes: list[dict], made_from: list[tuple[str, str]], sites: dict[st
         return sorted(set(own + downstream(item, made_from, ocp_products)))
 
     by_touch = defaultdict(list)
+    alias_of = {a: route for route, names in (aliases or {}).items() for a in names}  # region_red_sea -> bab_el_mandeb
     for e in events:
-        by_touch[e["concept"]].append(e)
+        by_touch[alias_of.get(e["concept"], e["concept"])].append(e)
 
     links = defaultdict(lambda: {"events": {}, "lanes": set(), "status": set(), "why": set()})
     for lane in lanes:
