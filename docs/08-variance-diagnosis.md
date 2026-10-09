@@ -1,6 +1,6 @@
 # Variance Diagnosis: Design Note
 
-*2026-10-09. Status: design, prototype next. Answers the demo question of the [roadmap](03-roadmap.md):*
+*2026-10-09. Status: prototype built (`src/variance.py`, `src/variance_tools.py`, `scripts/eval_variance.py`); see [Prototype results](#prototype-results). Answers the demo question of the [roadmap](03-roadmap.md):*
 
 > "Pourquoi la marge DAP de Jorf a baissé en août, et que prévoir pour Q4 ?"
 
@@ -92,6 +92,7 @@ Walk `DEPENDS_ON*` and `MADE_FROM*` from the metric, then `TRANSITS` to routes. 
 The candidate set is closed. The LLM cannot name a driver outside it.
 
 ### 2. Evidence (deterministic, no LLM)
+*As built, the reference is the last baseline month and the scale is the driver's volatility; see [what the evaluation changed](#what-the-evaluation-changed-in-the-design).*
 For each candidate series *x* over the period window *W*, against the baseline *B*:
 
 - raw deviation `Δμ = mean_W(x) − mean_B(x)`, in the series unit, with its sign;
@@ -103,6 +104,7 @@ For each candidate series *x* over the period window *W*, against the baseline *
 Weekly windows inside the period are scored separately, then combined by rank voting (step 5).
 
 ### 3. KG score
+*As built, the graph explains away rather than weighting roles; see [what the evaluation changed](#what-the-evaluation-changed-in-the-design).*
 `S_evid(c) = w_p·S_p(c) + w_d·S_d(c) + w_g·S_g(c)`, with `S_*` the clipped abnormality score of the candidate's own series and of the series on its path, weighted by role (defaults w_p = 1.0, w_d = 0.7, w_g = 0.3). Propagation evidence can confirm a path but must not outrank a clear direct mover. Weights live in config. They are not tuned by the LLM.
 
 ### 4. Analogs (case retrieval)
@@ -170,8 +172,39 @@ Then a small set of real, labelled episodes: the 2026 Hormuz disruption (sulphur
 | `FOLLOWED_BY_MOVE` | To compute (deterministic) |
 | Reflector | Built for numbers and article ids; add checks 2, 3, 5, 6, 7 |
 
-## Prototype plan
-1. `src/variance.py`: candidates (Cypher), evidence, scores, analogs, ranking. Pure functions over series dicts, so they can be tested without Neo4j.
-2. `scripts/eval_variance.py`: injected-shock evaluation, Top-1 / Top-3 / MRR.
-3. Agent tool `diagnose_variance` returning the evidence report; the orchestrator does the rerank call and the new Reflector checks.
-4. UI tab: ranked drivers, path on the graph, evidence table, analogs.
+## Prototype results
+
+### What was built
+| File | What it does |
+|---|---|
+| `src/variance.py` | Pure functions: candidates from graph edges, evidence, scores, analogs, diagnosis, report, `check_answer`. No Neo4j needed |
+| `src/variance_tools.py` | Agent tools `diagnose_variance` (report + JSON schema) and `submit_diagnosis` (checks, then `data/diagnoses/` for review); loads Argus series per `knowledge/driver_series.yaml` |
+| `src/api.py` | `GET /variance?metric=gross_margin&product=dap&period=2026-08`: the deterministic part, no LLM |
+| `scripts/eval_variance.py` | Injected-shock evaluation on a synthetic linked market (`--lag 1` for causes that started a month earlier), or on real series (`--graph`) |
+| `tests/test_variance.py` | Unit tests (`python -m pytest tests`) |
+
+### What the evaluation changed in the design
+The first version followed steps 2 and 3 above literally and lost to a naive baseline (largest % change vs the previous month): 0.75 vs 0.92 top-1. Three changes fixed it:
+
+1. **Reference level, not baseline mean.** Prices drift like random walks, so a move is measured from the last baseline month, scaled by the driver's own volatility (std of log returns between baseline observations). Comparing with the three-month mean counted ordinary drift as a shock.
+2. **The graph explains away instead of weighting roles.** Fixed role weights (primary > direct > propagation) penalised real causes that sit far from the product. The graph is now used the way the paper uses propagation evidence: a downstream move is discounted when an upstream driver moved first, the same way, and at least as strongly. A falling input never explains a rising product.
+3. **Two hypotheses per driver.** "Moved now" (scored on the month), and "moved in the previous month and is passing through", which counts only when downstream products move now in the same direction. This is what lets the tool answer the realistic question, where the cause started before the month asked about.
+
+Weekly windows vote only when something in them is abnormal. Abnormality uses a log scale up to z = 30 instead of a hard cap at 6, which made a 30% jump tie with an ordinary move.
+
+### Numbers (synthetic market, 3 seeds, 18 months, 6 drivers x 3 shock sizes x 2 onsets)
+| Case | Method | Top-1 | Top-3 | MRR | Naive top-1 | Naive top-3 |
+|---|---|---|---|---|---|---|
+| Shock in the month diagnosed (648 cases) | full | 0.90 | 0.99 | 0.95 | 0.92 | 0.99 |
+| Shock one month earlier, still passing through (416 well-posed cases) | full | 0.70 | 0.93 | 0.82 | 0.18 | 0.69 |
+
+Read them carefully:
+- When the cause moves inside the month, the method is **on par** with the naive baseline, not better. The value is in the second row: causes that started earlier and reach the product through the graph, which is the question controllers actually ask.
+- **Analogs add nothing yet** (`no_analogs` scores the same). Their labels are the tool's own past top-1s; they need reviewed diagnoses before they can help.
+- The synthetic market is a test bench with made-up pass-through coefficients and lags. Next: run `--graph` on the real Argus series, then build labelled real episodes (2026 Hormuz) with controllers.
+
+## Next
+1. Run `python scripts/eval_variance.py --graph` on the real series after checking the routes in `driver_series.yaml` with `price_routes`.
+2. UI tab: ranked drivers, the path on the graph, evidence table, analogs, approve/correct (corrections become labelled analogs).
+3. Attribution mode: validated consumption ratios on `MADE_FROM`, then the fidelity check (step 8.7).
+4. `FOLLOWED_BY_MOVE` on incidents, so analogs can come from events as well as from months.

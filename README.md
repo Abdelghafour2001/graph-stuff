@@ -24,6 +24,8 @@ src/load_knowledge.py     validates the ontology and loads it into Neo4j
 src/agent.py              Claude agent with graph tools
 src/excel_tools.py        find_sheets / describe_sheet / read_range / propose_extraction_spec
 src/workbook_graph.py     Workbook -> Sheet -> Concept graph from the Excel profile
+src/variance.py           why a metric moved: ranked drivers, deterministic (tools in src/variance_tools.py)
+scripts/eval_variance.py  injected-shock evaluation of the variance diagnosis
 scripts/profile_excels.py layout profiler (headers, blocks, formulas, merged cells)
 ```
 
@@ -70,6 +72,9 @@ Try these questions:
 - "Si le prix du soufre monte, quelles marges sont touchées ?"
 - "What does PCI mean and why does it matter for group consolidation?"
 - An unknown term, e.g. "What is the BL of Khouribga?", should make the agent say it does not know and queue a proposal.
+- "Pourquoi la marge DAP a baissé en août 2026 ?" runs the variance playbook (diagnose_variance, then submit_diagnosis).
+
+Tests: `python -m pytest tests` (no database needed).
 
 ## Before showing to finance
 

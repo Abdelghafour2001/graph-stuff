@@ -15,6 +15,7 @@ from entity_tools import ocp_assets, resolve_entity
 from excel_tools import describe_sheet, find_sheets, propose_extraction_spec, read_range
 from graph import driver, read_graph
 from news_tools import event_timeline, price_assessments, price_monthly, price_routes, read_article, search_articles
+from variance_tools import diagnose_variance, submit_diagnosis
 
 MODEL = "claude-opus-5"
 MAX_TOOL_ROUNDS = 30
@@ -65,6 +66,14 @@ Impact playbook (e.g. "how did event X affect the price of product P, and what d
 3. Answer with: a dated timeline, a before/during table per route (numbers only from tools), the transmission channels (supply via the route,
    input costs, freight), then OCP implications split into "supported by evidence" and "hypotheses to verify". Cite article ids.
    Check OCP facts in the graph before stating them (e.g. OCP sites are in Morocco and its exports do not transit hormuz).
+Variance playbook ("why did metric M of product P move in month X?"):
+1. Resolve M, P and the month with lookup_term. Call diagnose_variance(metric_id, product_id, period).
+2. Read its report: ranked drivers with their moves, earlier moves still passing through, analogs, incidents, and drivers
+   without a series (say they cannot be ruled out). It runs in signal mode: never claim how many $/t a driver cost.
+3. Call submit_diagnosis with the JSON it asks for. Fix and resubmit until it is accepted.
+4. Answer: ranked drivers with their numbers and evidence ids, the propagation path, related incidents (article ids),
+   the outlook only as what analog months did next (no forecast of your own), and the uncertainty.
+
 Numbers: only from tool results; compute differences and percentages with calc. An automatic Reflector rejects other numbers and
 answers that do not cite article ids returned by tools.
 """
@@ -172,7 +181,8 @@ def ask_news_agent(question: str) -> str:
                        "evidence": [c["result"] for c in trace if c["tool"] != "reflector"]}, ensure_ascii=False)
 
 
-TOOLS = [lookup_term, describe_concept, run_cypher, propose_term, find_sheets, describe_sheet, read_range, propose_extraction_spec, ask_news_agent, resolve_entity, ocp_assets, calc]
+TOOLS = [lookup_term, describe_concept, run_cypher, propose_term, find_sheets, describe_sheet, read_range, propose_extraction_spec, ask_news_agent,
+         resolve_entity, ocp_assets, diagnose_variance, submit_diagnosis, calc]
 
 
 def ask_anthropic(system: str, tools: list, history: list[dict], trace: list[dict]) -> str:

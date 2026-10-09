@@ -1,0 +1,23 @@
+# Which price series stands for each driver concept in diagnose_variance (see docs/08-variance-diagnosis.md).
+# A series is the verified Argus price assessments (PriceAssessment nodes) of one product at one location and incoterm.
+# Pick routes that have data: ask the agent "price_routes for sulfur" or run price_routes(product_id) in the API.
+# The locations below are first guesses: check them against price_routes before trusting a diagnosis.
+series:
+  dap:             {product: dap, location: country_morocco, incoterm: fob}
+  phosphoric_acid: {product: phosphoric_acid, location: country_india, incoterm: cfr}
+  sulfuric_acid:   {product: sulfuric_acid, location: region_middle_east, incoterm: fob}
+  sulfur:          {product: sulfur, location: region_middle_east, incoterm: fob}
+  ammonia:         {product: ammonia, location: region_middle_east, incoterm: fob}
+  phosphate_rock:  {product: phosphate_rock, location: country_morocco, incoterm: fob}
+
+# Concepts a series already stands for, so they are not reported as "no series": revenue is the product's own price.
+covered: [revenue]
+
+# Market proxy for the margin of a product, used while P&L actuals are not available:
+#   proxy_margin = price(product) - sum(ratio * price(input))
+# ILLUSTRATIVE tonnes of input per tonne of product, NOT validated. Replace with OCP industrial ratios.
+# While these are illustrative the tool runs in "signal" mode: it ranks drivers by how unusual their moves were
+# and does not claim how many $/t each one cost.
+proxy_ratios:
+  validated: false
+  dap: {ammonia: 0.22, sulfur: 0.40, phosphate_rock: 1.60}
