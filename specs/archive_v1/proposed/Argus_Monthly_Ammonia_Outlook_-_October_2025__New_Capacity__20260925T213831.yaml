@@ -1,0 +1,19 @@
+file: Argus Monthly Ammonia Outlook - October 2025.xlsx
+sheet: New Capacity
+table_range: A6:D13
+header_rows: [6]
+label_columns: [A, B, C]
+row_dimensions: [company, location, date_expected]
+column_dimension: capacity_t_yr
+drop_rows: []
+drop_columns: [E-T]
+skip_rows_matching: [total, summary, subtotal]
+operators:
+  - op: ffill
+    args:
+      target: labels
+  - op: stack
+    args: {}
+fixed: {}
+value_unit: kt_ammonia_per_year
+notes: Notes column (E+) is excluded as it contains mainly text explanations and extra details.

@@ -1,0 +1,172 @@
+{
+ "checks": [
+  {
+   "check": "values_parse",
+   "ok": true,
+   "detail": "3040 numeric values, 0 non-numeric cells in value columns"
+  },
+  {
+   "check": "unit_evidence",
+   "ok": true,
+   "detail": "value_unit 'usd/t_product' (read as usd/t); units evidenced in preamble/header text: ['t', 'usd/t', 'usd/st']"
+  },
+  {
+   "check": "no_total_rows",
+   "ok": true,
+   "detail": "rows equal to the sum of the other rows (drop them): []"
+  },
+  {
+   "check": "no_total_columns",
+   "ok": true,
+   "detail": "columns equal to the sum of the other columns (drop them): []"
+  },
+  {
+   "check": "no_subtotal_labels",
+   "ok": true,
+   "detail": "region rows mixed with country rows (subtotals, per graph IN_REGION): []; rows labelled total: []"
+  }
+ ],
+ "rows": 3040,
+ "sample": [
+  {
+   "period": "2014-02-01 00:00:00",
+   "variable": "Low | 441",
+   "value": 495.0,
+   "unit": "usd/t_product",
+   "cell": "B8"
+  },
+  {
+   "period": "2014-02-01 00:00:00",
+   "variable": "High | 461",
+   "value": 507.5,
+   "unit": "usd/t_product",
+   "cell": "C8"
+  },
+  {
+   "period": "2014-02-01 00:00:00",
+   "variable": "Low | 433.6",
+   "value": 485.0,
+   "unit": "usd/t_product",
+   "cell": "D8"
+  },
+  {
+   "period": "2014-02-01 00:00:00",
+   "variable": "High | 442",
+   "value": 490.0,
+   "unit": "usd/t_product",
+   "cell": "E8"
+  },
+  {
+   "period": "2014-02-01 00:00:00",
+   "variable": "Low | 390",
+   "value": 432.5,
+   "unit": "usd/t_product",
+   "cell": "F8"
+  },
+  {
+   "period": "2014-02-01 00:00:00",
+   "variable": "High | 405",
+   "value": 438.75,
+   "unit": "usd/t_product",
+   "cell": "G8"
+  },
+  {
+   "period": "2014-02-01 00:00:00",
+   "variable": "Low | 405",
+   "value": 440.0,
+   "unit": "usd/t_product",
+   "cell": "H8"
+  },
+  {
+   "period": "2014-02-01 00:00:00",
+   "variable": "High | 425",
+   "value": 482.5,
+   "unit": "usd/t_product",
+   "cell": "I8"
+  },
+  {
+   "period": "2014-02-01 00:00:00",
+   "variable": "Low | 428",
+   "value": 470.0,
+   "unit": "usd/t_product",
+   "cell": "J8"
+  },
+  {
+   "period": "2014-02-01 00:00:00",
+   "variable": "High | 440",
+   "value": 485.0,
+   "unit": "usd/t_product",
+   "cell": "K8"
+  },
+  {
+   "period": "2014-02-01 00:00:00",
+   "variable": "Low | 464",
+   "value": 513.75,
+   "unit": "usd/t_product",
+   "cell": "L8"
+  },
+  {
+   "period": "2014-02-01 00:00:00",
+   "variable": "High | 476",
+   "value": 518.75,
+   "unit": "usd/t_product",
+   "cell": "M8"
+  },
+  {
+   "period": "2014-02-01 00:00:00",
+   "variable": "Low | 609",
+   "value": 662.25,
+   "unit": "usd/t_product",
+   "cell": "N8"
+  },
+  {
+   "period": "2014-02-01 00:00:00",
+   "variable": "High | 609",
+   "value": 662.25,
+   "unit": "usd/t_product",
+   "cell": "O8"
+  },
+  {
+   "period": "2014-02-01 00:00:00",
+   "variable": "Low | 85",
+   "value": 87.5,
+   "unit": "usd/t_product",
+   "cell": "P8"
+  },
+  {
+   "period": "2014-02-01 00:00:00",
+   "variable": "High | 130",
+   "value": 130.0,
+   "unit": "usd/t_product",
+   "cell": "Q8"
+  },
+  {
+   "period": "2014-02-01 00:00:00",
+   "variable": "Low | 410.8",
+   "value": 468.25,
+   "unit": "usd/t_product",
+   "cell": "R8"
+  },
+  {
+   "period": "2014-02-01 00:00:00",
+   "variable": "High | 421.4",
+   "value": 482.5,
+   "unit": "usd/t_product",
+   "cell": "S8"
+  },
+  {
+   "period": "2014-02-01 00:00:00",
+   "variable": "Low | 404.2",
+   "value": 425.0,
+   "unit": "usd/t_product",
+   "cell": "T8"
+  },
+  {
+   "period": "2014-02-01 00:00:00",
+   "variable": "High | 406",
+   "value": 430.0,
+   "unit": "usd/t_product",
+   "cell": "U8"
+  }
+ ]
+}

@@ -1,0 +1,18 @@
+file: PhosphateOutlook_2025M10_Datafile_Costs_Prices.xlsx
+sheet: Yearly Price Forecast
+table_range: A11:DB31
+header_rows: [11,12]
+label_columns: [A]
+row_dimensions: [year]
+column_dimension: product_region_incoterm
+drop_rows: []
+drop_columns: []
+skip_rows_matching: ["total"]
+skip_label_kinds: []
+operators:
+  - op: ffill
+    args: {target: header}
+  - op: stack
+value_unit: usd/t_product
+fixed: {}
+notes: "Prices nominal USD per metric tonne as per header description at r8"

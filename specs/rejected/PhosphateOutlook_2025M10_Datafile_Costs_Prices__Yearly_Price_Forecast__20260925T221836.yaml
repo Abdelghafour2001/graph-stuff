@@ -1,0 +1,20 @@
+file: PhosphateOutlook_2025M10_Datafile_Costs_Prices.xlsx
+sheet: Yearly Price Forecast
+table_range: A11:EG138
+header_rows: [11, 12]
+label_columns: [A]
+row_dimensions: [year]
+column_dimension: price_type
+drop_rows: []
+drop_columns: []
+skip_rows_matching: [total]
+skip_label_kinds: []
+operators:
+  - op: ffill
+    args:
+      target: header
+  - op: stack
+    args: []
+value_unit: usd/t
+fixed: {}
+notes: 'Prices forecast for various phosphate products by year and price location/incoterm.'

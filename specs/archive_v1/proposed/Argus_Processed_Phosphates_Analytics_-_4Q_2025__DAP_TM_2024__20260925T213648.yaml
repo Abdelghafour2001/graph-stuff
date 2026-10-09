@@ -1,0 +1,22 @@
+file: Argus Processed Phosphates Analytics - 4Q 2025.xlsx
+sheet: DAP TM 2024
+table_range: A6:AM105
+header_rows: [6]
+label_columns: [A]
+row_dimensions: [importer]
+column_dimension: exporter
+drop_rows: []
+drop_columns: [T]  # Drop the 'Total' header column
+skip_rows_matching: []
+operators:
+  - op: ffill
+    args:
+      target: labels
+  - op: stack
+value_unit: kt_product
+fixed: {product: dap, year: 2024}
+notes: |
+  Annual trade matrix of DAP imports and exports by country.
+  Data row from 7, first row (6) is header with exporter countries.
+  Data units are 000 tonnes as indicated on row 5.
+  Drop 'Total' column to avoid double counting.

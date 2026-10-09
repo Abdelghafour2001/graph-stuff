@@ -1,0 +1,26 @@
+file: Argus Monthly Phosphates Outlook - Sep 2025.xlsx
+sheet: Price Forecast
+table_range: A6:DV165
+header_rows: [6, 7]
+label_columns: [A]
+row_dimensions: [period]
+column_dimension: variable
+drop_rows: []
+drop_columns: []
+skip_rows_matching: ["total"]
+value_unit: usd/t_product
+notes: |
+  - Prices for various phosphate products forecast by month.
+  - Two header rows: Low and High prices for each product/location pair.
+  - Each period is monthly starting in column A.
+  - Prices are in USD per ton.
+  - No total rows detected by layout inspection.
+  - 122 columns wide, wide but consistent rectangular table.
+
+operators:
+  - op: ffill
+    args:
+      target: header
+  - op: stack
+    args: {}
+fixed: {}

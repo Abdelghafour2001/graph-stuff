@@ -1,0 +1,30 @@
+# Reviewed vocabulary additions: terms seen in workbooks or proposed by the agent (knowledge/proposals.jsonl) and approved by a human.
+# Loaded last by src/load_term_additions.py. Every concept id must already exist in the graph.
+terms:
+  - text: "E Europe, C Asia"
+    concept: region_europe_cis
+    note: Argus region grouping "Eastern Europe & Central Asia" (EECA), used as a subtotal in trade balance sheets.
+  - text: EECA
+    concept: region_europe_cis
+    note: Argus abbreviation of Eastern Europe & Central Asia.
+  - text: "East and SE Asia"
+    concept: region_asia
+    note: Argus region grouping used as a subtotal in trade balance sheets. Mapped to Asia (closest referential region).
+  - text: Mainland China
+    concept: country_china
+    note: Argus wording for Chinese export prices (DAP/MAP fob Mainland China).
+  - text: China Domestic
+    concept: country_china
+    note: Argus Chinese domestic market prices (usually exw/cpt, RMB converted).
+  - text: US Nola
+    concept: region_us_gulf
+    note: New Orleans barge market (Nola), US Gulf.
+  - text: US, Nola
+    concept: region_us_gulf
+    note: New Orleans barge market (Nola), US Gulf.
+  - text: Nola
+    concept: region_us_gulf
+    note: New Orleans barge market, US Gulf.
+  - text: Tampa
+    concept: region_us_gulf
+    note: Tampa, Florida, US Gulf phosphate/sulphur port.

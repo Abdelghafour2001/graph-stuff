@@ -1,0 +1,17 @@
+file: Argus Monthly Ammonia Outlook - October 2025.xlsx
+sheet: New Capacity
+table_range: A6:D13
+header_rows: [6]
+label_columns: [A]
+row_dimensions: [company]
+column_dimension: capacity_thousand_t_per_year
+drop_rows: []
+drop_columns: []
+skip_rows_matching: []
+skip_label_kinds: []
+operators:
+  - op: stack
+    args: []
+value_unit: kt
+fixed: {}
+notes: "Extract planned and under construction ammonia capacity data, company names as rows, capacity in '000 t/yr'"

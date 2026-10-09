@@ -1,0 +1,21 @@
+file: Argus Monthly Phosphates Outlook - Sep 2025.xlsx
+sheet: Price Forecast
+table_range: A6:EO165
+header_rows: [6, 7]
+label_columns: [A]
+row_dimensions: [date]
+column_dimension: price_type
+drop_rows: []
+drop_columns: []
+operators:
+  - op: ffill
+    args: {target: header}
+  - op: ffill
+    args: {target: labels}
+  - op: stack
+    args: {}
+fixed: {unit: usd_per_short_ton}
+notes: "Extract monthly prices, low and high forecasts for phosphates at various locations priced in USD per short ton."
+value_unit: usd_per_short_ton
+skip_rows_matching: ["total", "forecast"]
+skip_label_kinds: []

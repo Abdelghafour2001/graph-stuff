@@ -1,0 +1,20 @@
+file: Argus Processed Phosphates Analytics - 4Q 2025.xlsx
+sheet: DAP TM 2024
+table_range: A6:AM681
+header_rows: [6]
+label_columns: [A]
+row_dimensions: [importer]
+column_dimension: exporter
+drop_rows: [7]
+drop_columns: [B]
+skip_rows_matching: [total, Total]
+skip_label_kinds: [region]
+operators: [{op: stack}]
+value_unit: kiloton
+fixed: {}
+notes: |
+  Data in 000 tonnes product as per row 5. Importers in rows and exporters in columns based on header row 6.
+  Dropped row 7 and column B which are totals for avoid summing twice.
+  Skipped rows and labels matching total and regions.
+  Used importer as row dimension and exporter as column dimension.
+  Format expects no merged cells in the data range.

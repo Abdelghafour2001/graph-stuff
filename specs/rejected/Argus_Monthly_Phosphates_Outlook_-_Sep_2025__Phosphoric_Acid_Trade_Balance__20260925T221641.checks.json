@@ -1,0 +1,187 @@
+{
+ "checks": [
+  {
+   "check": "values_parse",
+   "ok": true,
+   "detail": "120 numeric values, 0 non-numeric cells in value columns"
+  },
+  {
+   "check": "covers_whole_table",
+   "ok": true,
+   "detail": "numeric cells just outside table_range: 0 in the 3 rows below, 0 in the 2 columns to the right. Extend the range or confirm a separate table starts there"
+  },
+  {
+   "check": "unit_evidence",
+   "ok": true,
+   "detail": "value_unit 'kt_phosphoric_acid' (read as kt); units evidenced in preamble/header text: ['kt']"
+  },
+  {
+   "check": "no_total_rows",
+   "ok": true,
+   "detail": "rows equal to the sum of the other rows (drop them): []"
+  },
+  {
+   "check": "no_total_columns",
+   "ok": true,
+   "detail": "columns equal to the sum of the other columns (drop them): []"
+  },
+  {
+   "check": "dropped_columns_are_totals_or_empty",
+   "ok": true,
+   "detail": "dropped columns that hold real data (not a total, not empty): []"
+  },
+  {
+   "check": "dropped_rows_are_totals_or_empty",
+   "ok": false,
+   "detail": "dropped rows that are neither empty nor the sum of the kept rows: [26]"
+  },
+  {
+   "check": "no_subtotal_labels",
+   "ok": false,
+   "detail": "most specific label column mixes regions (subtotals) with countries: ['africa', 'east asia', 'middle east', 'north america', 'oceania', 'south asia', 'west europe']; rows labelled total: ['export total', 'import total']. Use skip_label_kinds: [region] and/or skip_rows_matching"
+  }
+ ],
+ "rows": 120,
+ "sample": [
+  {
+   "region_or_country": "Export total",
+   "period": "2025-10-01 00:00:00",
+   "value": 361.7749083438711,
+   "unit": "kt_phosphoric_acid",
+   "cell": "B6"
+  },
+  {
+   "region_or_country": "Export total",
+   "period": "2025-11-01 00:00:00",
+   "value": 368.02865145866093,
+   "unit": "kt_phosphoric_acid",
+   "cell": "C6"
+  },
+  {
+   "region_or_country": "Export total",
+   "period": "2025-12-01 00:00:00",
+   "value": 360.08616314673054,
+   "unit": "kt_phosphoric_acid",
+   "cell": "D6"
+  },
+  {
+   "region_or_country": "Export total",
+   "period": "1Q25",
+   "value": 1106.8534973004857,
+   "unit": "kt_phosphoric_acid",
+   "cell": "E6"
+  },
+  {
+   "region_or_country": "Export total",
+   "period": "2Q26",
+   "value": 1248.7653478889229,
+   "unit": "kt_phosphoric_acid",
+   "cell": "F6"
+  },
+  {
+   "region_or_country": "Export total",
+   "period": "3Q26",
+   "value": 1240.6236166037074,
+   "unit": "kt_phosphoric_acid",
+   "cell": "G6"
+  },
+  {
+   "region_or_country": "Morocco",
+   "period": "2025-10-01 00:00:00",
+   "value": 180.77273741034648,
+   "unit": "kt_phosphoric_acid",
+   "cell": "B7"
+  },
+  {
+   "region_or_country": "Morocco",
+   "period": "2025-11-01 00:00:00",
+   "value": 197.869095663812,
+   "unit": "kt_phosphoric_acid",
+   "cell": "C7"
+  },
+  {
+   "region_or_country": "Morocco",
+   "period": "2025-12-01 00:00:00",
+   "value": 175.84828468574787,
+   "unit": "kt_phosphoric_acid",
+   "cell": "D7"
+  },
+  {
+   "region_or_country": "Morocco",
+   "period": "1Q25",
+   "value": 487.9683647142459,
+   "unit": "kt_phosphoric_acid",
+   "cell": "E7"
+  },
+  {
+   "region_or_country": "Morocco",
+   "period": "2Q26",
+   "value": 582.5630138900294,
+   "unit": "kt_phosphoric_acid",
+   "cell": "F7"
+  },
+  {
+   "region_or_country": "Morocco",
+   "period": "3Q26",
+   "value": 638.6179354113029,
+   "unit": "kt_phosphoric_acid",
+   "cell": "G7"
+  },
+  {
+   "region_or_country": "Tunisia",
+   "period": "2025-10-01 00:00:00",
+   "value": 14.481782195469375,
+   "unit": "kt_phosphoric_acid",
+   "cell": "B8"
+  },
+  {
+   "region_or_country": "Tunisia",
+   "period": "2025-11-01 00:00:00",
+   "value": 14.377895711291643,
+   "unit": "kt_phosphoric_acid",
+   "cell": "C8"
+  },
+  {
+   "region_or_country": "Tunisia",
+   "period": "2025-12-01 00:00:00",
+   "value": 6.206340022453914,
+   "unit": "kt_phosphoric_acid",
+   "cell": "D8"
+  },
+  {
+   "region_or_country": "Tunisia",
+   "period": "1Q25",
+   "value": 63.294159566221914,
+   "unit": "kt_phosphoric_acid",
+   "cell": "E8"
+  },
+  {
+   "region_or_country": "Tunisia",
+   "period": "2Q26",
+   "value": 88.63507728346411,
+   "unit": "kt_phosphoric_acid",
+   "cell": "F8"
+  },
+  {
+   "region_or_country": "Tunisia",
+   "period": "3Q26",
+   "value": 56.357430135134315,
+   "unit": "kt_phosphoric_acid",
+   "cell": "G8"
+  },
+  {
+   "region_or_country": "Jordan",
+   "period": "2025-10-01 00:00:00",
+   "value": 48.718277941707896,
+   "unit": "kt_phosphoric_acid",
+   "cell": "B9"
+  },
+  {
+   "region_or_country": "Jordan",
+   "period": "2025-11-01 00:00:00",
+   "value": 38.18317946978085,
+   "unit": "kt_phosphoric_acid",
+   "cell": "C9"
+  }
+ ]
+}

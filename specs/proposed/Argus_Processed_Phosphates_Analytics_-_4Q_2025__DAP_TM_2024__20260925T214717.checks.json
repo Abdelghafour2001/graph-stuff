@@ -1,0 +1,222 @@
+{
+ "checks": [
+  {
+   "check": "values_parse",
+   "ok": true,
+   "detail": "2970 numeric values, 0 non-numeric cells in value columns"
+  },
+  {
+   "check": "covers_whole_table",
+   "ok": true,
+   "detail": "non-empty cells just outside table_range: 0 in the 3 rows below, 0 in the 2 columns to the right. Extend the range or confirm a separate table starts there"
+  },
+  {
+   "check": "unit_evidence",
+   "ok": true,
+   "detail": "value_unit 'kt_product' (read as kt); units evidenced in preamble/header text: ['kt', 't']"
+  },
+  {
+   "check": "corner_orientation",
+   "ok": true,
+   "detail": "corner cell 'Importers\\Exporters' means rows=importers, columns=exporters; spec has rows=importer, columns=exporter"
+  },
+  {
+   "check": "no_total_rows",
+   "ok": true,
+   "detail": "rows equal to the sum of the other rows (drop them): []"
+  },
+  {
+   "check": "no_total_columns",
+   "ok": true,
+   "detail": "columns equal to the sum of the other columns (drop them): []"
+  },
+  {
+   "check": "no_subtotal_labels",
+   "ok": true,
+   "detail": "most specific label column mixes regions (subtotals) with countries: []; rows labelled total: []. Use skip_label_kinds: [region] and/or skip_rows_matching"
+  }
+ ],
+ "rows": 2970,
+ "sample": [
+  {
+   "product": "dap",
+   "year": 2024,
+   "importer": "Afghanistan",
+   "exporter": "Total",
+   "value": 25.0,
+   "unit": "kt_product",
+   "cell": "B8"
+  },
+  {
+   "product": "dap",
+   "year": 2024,
+   "importer": "Afghanistan",
+   "exporter": "Australia",
+   "value": 0.0,
+   "unit": "kt_product",
+   "cell": "C8"
+  },
+  {
+   "product": "dap",
+   "year": 2024,
+   "importer": "Afghanistan",
+   "exporter": "Austria",
+   "value": 0.0,
+   "unit": "kt_product",
+   "cell": "D8"
+  },
+  {
+   "product": "dap",
+   "year": 2024,
+   "importer": "Afghanistan",
+   "exporter": "Belgium",
+   "value": 0.0,
+   "unit": "kt_product",
+   "cell": "E8"
+  },
+  {
+   "product": "dap",
+   "year": 2024,
+   "importer": "Afghanistan",
+   "exporter": "Bulgaria",
+   "value": 0.0,
+   "unit": "kt_product",
+   "cell": "F8"
+  },
+  {
+   "product": "dap",
+   "year": 2024,
+   "importer": "Afghanistan",
+   "exporter": "China",
+   "value": 0.0,
+   "unit": "kt_product",
+   "cell": "G8"
+  },
+  {
+   "product": "dap",
+   "year": 2024,
+   "importer": "Afghanistan",
+   "exporter": "Colombia",
+   "value": 0.0,
+   "unit": "kt_product",
+   "cell": "H8"
+  },
+  {
+   "product": "dap",
+   "year": 2024,
+   "importer": "Afghanistan",
+   "exporter": "Egypt",
+   "value": 0.0,
+   "unit": "kt_product",
+   "cell": "I8"
+  },
+  {
+   "product": "dap",
+   "year": 2024,
+   "importer": "Afghanistan",
+   "exporter": "Jordan",
+   "value": 0.0,
+   "unit": "kt_product",
+   "cell": "K8"
+  },
+  {
+   "product": "dap",
+   "year": 2024,
+   "importer": "Afghanistan",
+   "exporter": "Lithuania",
+   "value": 0.0,
+   "unit": "kt_product",
+   "cell": "L8"
+  },
+  {
+   "product": "dap",
+   "year": 2024,
+   "importer": "Afghanistan",
+   "exporter": "Mexico",
+   "value": 0.0,
+   "unit": "kt_product",
+   "cell": "M8"
+  },
+  {
+   "product": "dap",
+   "year": 2024,
+   "importer": "Afghanistan",
+   "exporter": "Morocco",
+   "value": 0.0,
+   "unit": "kt_product",
+   "cell": "N8"
+  },
+  {
+   "product": "dap",
+   "year": 2024,
+   "importer": "Afghanistan",
+   "exporter": "Philippines",
+   "value": 0.0,
+   "unit": "kt_product",
+   "cell": "O8"
+  },
+  {
+   "product": "dap",
+   "year": 2024,
+   "importer": "Afghanistan",
+   "exporter": "Poland",
+   "value": 0.0,
+   "unit": "kt_product",
+   "cell": "P8"
+  },
+  {
+   "product": "dap",
+   "year": 2024,
+   "importer": "Afghanistan",
+   "exporter": "Russia",
+   "value": 0.0,
+   "unit": "kt_product",
+   "cell": "Q8"
+  },
+  {
+   "product": "dap",
+   "year": 2024,
+   "importer": "Afghanistan",
+   "exporter": "Saudi Arabia",
+   "value": 0.0,
+   "unit": "kt_product",
+   "cell": "R8"
+  },
+  {
+   "product": "dap",
+   "year": 2024,
+   "importer": "Afghanistan",
+   "exporter": "Senegal",
+   "value": 0.0,
+   "unit": "kt_product",
+   "cell": "S8"
+  },
+  {
+   "product": "dap",
+   "year": 2024,
+   "importer": "Afghanistan",
+   "exporter": "South Korea",
+   "value": 0.0,
+   "unit": "kt_product",
+   "cell": "T8"
+  },
+  {
+   "product": "dap",
+   "year": 2024,
+   "importer": "Afghanistan",
+   "exporter": "Tunisia",
+   "value": 0.0,
+   "unit": "kt_product",
+   "cell": "U8"
+  },
+  {
+   "product": "dap",
+   "year": 2024,
+   "importer": "Afghanistan",
+   "exporter": "Turkey",
+   "value": 25.0,
+   "unit": "kt_product",
+   "cell": "V8"
+  }
+ ]
+}

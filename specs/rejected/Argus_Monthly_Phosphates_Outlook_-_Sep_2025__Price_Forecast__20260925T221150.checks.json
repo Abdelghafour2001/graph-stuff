@@ -1,0 +1,187 @@
+{
+ "checks": [
+  {
+   "check": "values_parse",
+   "ok": true,
+   "detail": "540 numeric values, 0 non-numeric cells in value columns"
+  },
+  {
+   "check": "covers_whole_table",
+   "ok": false,
+   "detail": "non-empty cells just outside table_range: 63 in the 3 rows below, 0 in the 2 columns to the right. Extend the range or confirm a separate table starts there"
+  },
+  {
+   "check": "unit_evidence",
+   "ok": true,
+   "detail": "value_unit 'usd/t_product' (read as usd/t); units evidenced in preamble/header text: ['t', 'usd/t', 'usd/st']"
+  },
+  {
+   "check": "no_total_rows",
+   "ok": true,
+   "detail": "rows equal to the sum of the other rows (drop them): []"
+  },
+  {
+   "check": "no_total_columns",
+   "ok": true,
+   "detail": "columns equal to the sum of the other columns (drop them): []"
+  },
+  {
+   "check": "dropped_columns_are_totals_or_empty",
+   "ok": true,
+   "detail": "dropped columns that hold real data (not a total, not empty): []"
+  },
+  {
+   "check": "dropped_rows_are_totals_or_empty",
+   "ok": true,
+   "detail": "dropped rows that are neither empty nor the sum of the kept rows: []"
+  },
+  {
+   "check": "no_subtotal_labels",
+   "ok": true,
+   "detail": "most specific label column mixes regions (subtotals) with countries: []; rows labelled total: []. Use skip_label_kinds: [region] and/or skip_rows_matching"
+  }
+ ],
+ "rows": 540,
+ "sample": [
+  {
+   "date": "2014-01-01 00:00:00",
+   "price_type": "DAP Morocco fob | Low",
+   "value": 441.0,
+   "unit": "usd/t_product",
+   "cell": "B7"
+  },
+  {
+   "date": "2014-01-01 00:00:00",
+   "price_type": "DAP Morocco fob | High",
+   "value": 461.0,
+   "unit": "usd/t_product",
+   "cell": "C7"
+  },
+  {
+   "date": "2014-01-01 00:00:00",
+   "price_type": "DAP/MAP US Gulf fob | Low",
+   "value": 433.6,
+   "unit": "usd/t_product",
+   "cell": "D7"
+  },
+  {
+   "date": "2014-01-01 00:00:00",
+   "price_type": "DAP/MAP US Gulf fob | High",
+   "value": 442.0,
+   "unit": "usd/t_product",
+   "cell": "E7"
+  },
+  {
+   "date": "2014-01-01 00:00:00",
+   "price_type": "DAP Saudi Arabia fob | Low",
+   "value": 390.0,
+   "unit": "usd/t_product",
+   "cell": "F7"
+  },
+  {
+   "date": "2014-01-01 00:00:00",
+   "price_type": "DAP Saudi Arabia fob | High",
+   "value": 405.0,
+   "unit": "usd/t_product",
+   "cell": "G7"
+  },
+  {
+   "date": "2014-01-01 00:00:00",
+   "price_type": "DAP China fob | Low",
+   "value": 405.0,
+   "unit": "usd/t_product",
+   "cell": "H7"
+  },
+  {
+   "date": "2014-01-01 00:00:00",
+   "price_type": "DAP China fob | High",
+   "value": 425.0,
+   "unit": "usd/t_product",
+   "cell": "I7"
+  },
+  {
+   "date": "2014-01-01 00:00:00",
+   "price_type": "MAP Baltic fob | Low",
+   "value": 428.0,
+   "unit": "usd/t_product",
+   "cell": "J7"
+  },
+  {
+   "date": "2014-01-01 00:00:00",
+   "price_type": "MAP Baltic fob | High",
+   "value": 440.0,
+   "unit": "usd/t_product",
+   "cell": "K7"
+  },
+  {
+   "date": "2014-01-01 00:00:00",
+   "price_type": "MAP Brazil cfr | Low",
+   "value": 464.0,
+   "unit": "usd/t_product",
+   "cell": "L7"
+  },
+  {
+   "date": "2014-01-01 00:00:00",
+   "price_type": "MAP Brazil cfr | High",
+   "value": 476.0,
+   "unit": "usd/t_product",
+   "cell": "M7"
+  },
+  {
+   "date": "2014-01-01 00:00:00",
+   "price_type": "Phosacid India cfr | Low",
+   "value": 609.0,
+   "unit": "usd/t_product",
+   "cell": "N7"
+  },
+  {
+   "date": "2014-01-01 00:00:00",
+   "price_type": "Phosacid India cfr | High",
+   "value": 609.0,
+   "unit": "usd/t_product",
+   "cell": "O7"
+  },
+  {
+   "date": "2014-01-01 00:00:00",
+   "price_type": "Phosrock Morocco fob | Low",
+   "value": 85.0,
+   "unit": "usd/t_product",
+   "cell": "P7"
+  },
+  {
+   "date": "2014-01-01 00:00:00",
+   "price_type": "Phosrock Morocco fob | High",
+   "value": 130.0,
+   "unit": "usd/t_product",
+   "cell": "Q7"
+  },
+  {
+   "date": "2014-01-01 00:00:00",
+   "price_type": "DAP US Gulf barge fob ($/st) | Low",
+   "value": 410.8,
+   "unit": "usd/t_product",
+   "cell": "R7"
+  },
+  {
+   "date": "2014-01-01 00:00:00",
+   "price_type": "DAP US Gulf barge fob ($/st) | High",
+   "value": 421.4,
+   "unit": "usd/t_product",
+   "cell": "S7"
+  },
+  {
+   "date": "2014-01-01 00:00:00",
+   "price_type": "DAP India cfr | Low",
+   "value": 404.2,
+   "unit": "usd/t_product",
+   "cell": "T7"
+  },
+  {
+   "date": "2014-01-01 00:00:00",
+   "price_type": "DAP India cfr | High",
+   "value": 406.0,
+   "unit": "usd/t_product",
+   "cell": "U7"
+  }
+ ]
+}

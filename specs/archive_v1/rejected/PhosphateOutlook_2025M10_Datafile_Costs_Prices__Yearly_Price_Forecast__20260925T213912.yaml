@@ -1,0 +1,19 @@
+file: PhosphateOutlook_2025M10_Datafile_Costs_Prices.xlsx
+sheet: Yearly Price Forecast
+table_range: A10:EO139
+header_rows: [10,11]
+label_columns: [A]
+row_dimensions: [year]
+column_dimension: price_location_product
+drop_rows: []
+drop_columns: []
+skip_rows_matching: ["total"]
+operators:
+- op: ffill
+  args:
+    target: header
+- op: stack
+  args: {}
+value_unit: usd/t
+fixed: {}
+notes: "First row with actual data is 12. Contains DAP, MAP, NPK, NPS, SSP forecasts per region and incoterm."

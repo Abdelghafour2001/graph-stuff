@@ -1,0 +1,61 @@
+# Whole POC stack. Market-intel Postgres reuses the existing volume of the market-intel project (read by import_referentials).
+# EXCEL_DIR (in .env) is the host folder with the market-intel workbooks, mounted read-only.
+services:
+  neo4j:
+    image: docker.io/library/neo4j:5-community
+    ports: ["7474:7474", "7687:7687"]
+    environment:
+      NEO4J_AUTH: neo4j/ocp-poc-password
+    volumes: [neo4j-data:/data]
+
+  market-intel-db:
+    image: docker.io/ankane/pgvector:latest
+    ports: ["5432:5432"]
+    environment:
+      POSTGRES_USER: pgadmin
+      POSTGRES_PASSWORD: pgadmin
+      POSTGRES_DB: postgres
+    volumes: [market-intel-pg:/var/lib/postgresql/data]
+
+  loader:
+    build: .
+    command: sh /app/scripts/load_all.sh
+    env_file: .env
+    environment: &pyenv
+      NEO4J_URI: bolt://neo4j:7687
+      MARKET_INTEL_DSN: postgresql://pgadmin:pgadmin@market-intel-db:5432/postgres
+      EXCEL_DIR: /excel
+    volumes: &pyvolumes
+      - ./:/app
+      - type: bind
+        source: ${EXCEL_DIR}
+        target: /excel
+        read_only: true
+    depends_on: [neo4j, market-intel-db]
+    restart: "no"
+
+  api:
+    build: .
+    working_dir: /app/src
+    command: uvicorn api:app --host 0.0.0.0 --port 8010
+    ports: ["8010:8010"]
+    env_file: .env
+    environment: *pyenv
+    volumes: *pyvolumes
+    depends_on: [neo4j, market-intel-db]
+
+  ui:
+    build: .
+    command: streamlit run ui/app.py --server.port 8501 --server.address 0.0.0.0 --browser.gatherUsageStats false
+    ports: ["8501:8501"]
+    environment:
+      API_URL: http://api:8010
+      NEO4J_BROWSER_URL: http://localhost:7474
+    volumes: [./:/app]
+    depends_on: [api]
+
+volumes:
+  neo4j-data:
+  market-intel-pg:
+    external: true
+    name: corporate-geni-strategy-intel_postgresql

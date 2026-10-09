@@ -1,0 +1,192 @@
+{
+ "checks": [
+  {
+   "check": "values_parse",
+   "ok": true,
+   "detail": "2970 numeric values, 0 non-numeric cells in value columns"
+  },
+  {
+   "check": "covers_whole_table",
+   "ok": true,
+   "detail": "numeric cells just outside table_range: 0 in the 3 rows below, 0 in the 2 columns to the right. Extend the range or confirm a separate table starts there"
+  },
+  {
+   "check": "unit_evidence",
+   "ok": true,
+   "detail": "value_unit 'kiloton' = kiloton; units evidenced in preamble/header text: ['kiloton']; more specific evidenced: []"
+  },
+  {
+   "check": "corner_orientation",
+   "ok": true,
+   "detail": "corner cell 'Importers\\Exporters' means rows=importers, columns=exporters; spec has rows=importer, columns=exporter"
+  },
+  {
+   "check": "no_total_rows",
+   "ok": true,
+   "detail": "rows equal to the sum of the other rows of their section (drop them): []"
+  },
+  {
+   "check": "no_total_columns",
+   "ok": true,
+   "detail": "columns equal to the sum of the other columns (drop them): []"
+  },
+  {
+   "check": "dropped_columns_are_totals_or_empty",
+   "ok": true,
+   "detail": "dropped columns that hold real data (not a total, not empty): []"
+  },
+  {
+   "check": "dropped_rows_are_totals_or_empty",
+   "ok": true,
+   "detail": "dropped rows that are not empty, not labelled total, and match no checksum of their section: []"
+  },
+  {
+   "check": "no_subtotal_labels",
+   "ok": true,
+   "detail": "most specific label column mixes regions (subtotals) with countries: []; rows labelled total: []. Use skip_label_kinds: [region] and/or skip_rows_matching"
+  }
+ ],
+ "rows": 2970,
+ "sample": [
+  {
+   "importer": "Afghanistan",
+   "exporter": "Australia",
+   "value": 0.0,
+   "unit": "kiloton",
+   "cell": "C8"
+  },
+  {
+   "importer": "Afghanistan",
+   "exporter": "Austria",
+   "value": 0.0,
+   "unit": "kiloton",
+   "cell": "D8"
+  },
+  {
+   "importer": "Afghanistan",
+   "exporter": "Belgium",
+   "value": 0.0,
+   "unit": "kiloton",
+   "cell": "E8"
+  },
+  {
+   "importer": "Afghanistan",
+   "exporter": "Bulgaria",
+   "value": 0.0,
+   "unit": "kiloton",
+   "cell": "F8"
+  },
+  {
+   "importer": "Afghanistan",
+   "exporter": "China",
+   "value": 0.0,
+   "unit": "kiloton",
+   "cell": "G8"
+  },
+  {
+   "importer": "Afghanistan",
+   "exporter": "Colombia",
+   "value": 0.0,
+   "unit": "kiloton",
+   "cell": "H8"
+  },
+  {
+   "importer": "Afghanistan",
+   "exporter": "Egypt",
+   "value": 0.0,
+   "unit": "kiloton",
+   "cell": "I8"
+  },
+  {
+   "importer": "Afghanistan",
+   "exporter": "Honduras",
+   "value": 0.0,
+   "unit": "kiloton",
+   "cell": "J8"
+  },
+  {
+   "importer": "Afghanistan",
+   "exporter": "Jordan",
+   "value": 0.0,
+   "unit": "kiloton",
+   "cell": "K8"
+  },
+  {
+   "importer": "Afghanistan",
+   "exporter": "Lithuania",
+   "value": 0.0,
+   "unit": "kiloton",
+   "cell": "L8"
+  },
+  {
+   "importer": "Afghanistan",
+   "exporter": "Mexico",
+   "value": 0.0,
+   "unit": "kiloton",
+   "cell": "M8"
+  },
+  {
+   "importer": "Afghanistan",
+   "exporter": "Morocco",
+   "value": 0.0,
+   "unit": "kiloton",
+   "cell": "N8"
+  },
+  {
+   "importer": "Afghanistan",
+   "exporter": "Philippines",
+   "value": 0.0,
+   "unit": "kiloton",
+   "cell": "O8"
+  },
+  {
+   "importer": "Afghanistan",
+   "exporter": "Poland",
+   "value": 0.0,
+   "unit": "kiloton",
+   "cell": "P8"
+  },
+  {
+   "importer": "Afghanistan",
+   "exporter": "Russia",
+   "value": 0.0,
+   "unit": "kiloton",
+   "cell": "Q8"
+  },
+  {
+   "importer": "Afghanistan",
+   "exporter": "Saudi Arabia",
+   "value": 0.0,
+   "unit": "kiloton",
+   "cell": "R8"
+  },
+  {
+   "importer": "Afghanistan",
+   "exporter": "Senegal",
+   "value": 0.0,
+   "unit": "kiloton",
+   "cell": "S8"
+  },
+  {
+   "importer": "Afghanistan",
+   "exporter": "South Korea",
+   "value": 0.0,
+   "unit": "kiloton",
+   "cell": "T8"
+  },
+  {
+   "importer": "Afghanistan",
+   "exporter": "Tunisia",
+   "value": 0.0,
+   "unit": "kiloton",
+   "cell": "U8"
+  },
+  {
+   "importer": "Afghanistan",
+   "exporter": "Turkey",
+   "value": 25.0,
+   "unit": "kiloton",
+   "cell": "V8"
+  }
+ ]
+}

@@ -1,0 +1,28 @@
+file: phosphate-rock-market-outlook-march-2025-trade-matrices.xlsx
+sheet: Imports
+table_range: A4:AO211
+header_rows: [4, 5, 6]
+label_columns: [A, B, C]
+row_dimensions: [region, subregion, country]
+column_dimension: year
+drop_rows: [211]
+skip_rows_matching: [total]
+skip_label_kinds: [region]
+drop_columns: [AO]
+operators:
+  - op: ffill
+    args:
+      target: labels
+  - op: ffill
+    args:
+      target: header
+  - op: stack
+    args: []
+value_unit: kt_phosphate_rock
+fixed: {}
+notes: |
+  - Multi-row header with year labels in row 6.
+  - Volume data in 000 tonnes of phosphate rock.
+  - Rows with 'total' in label columns skipped to avoid duplicates.
+  - Last column AO appears to be a total or summary column that is dropped.
+  - Dropped last row (211) as it does not belong to the main table.

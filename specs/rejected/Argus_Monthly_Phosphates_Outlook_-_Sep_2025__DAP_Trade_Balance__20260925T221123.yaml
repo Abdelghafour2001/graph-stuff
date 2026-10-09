@@ -1,0 +1,19 @@
+file: Argus Monthly Phosphates Outlook - Sep 2025.xlsx
+sheet: DAP Trade Balance
+table_range: A5:G77
+header_rows: [5]
+label_columns: [A]
+row_dimensions: [country_or_region]
+column_dimension: period
+drop_rows: []
+drop_columns: []
+skip_rows_matching: [total]
+skip_label_kinds: []
+operators:
+  - op: ffill
+    args:
+      target: labels
+  - op: stack
+value_unit: kt_dap
+fixed: {}
+notes: "Data are monthly and quarterly trade balances in kt of DAP across countries and regions."

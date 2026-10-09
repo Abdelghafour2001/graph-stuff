@@ -1,0 +1,19 @@
+file: Argus Monthly Phosphates Outlook - Sep 2025.xlsx
+sheet: Phosphoric Acid Trade Balance
+table_range: A6:H26
+header_rows: [6]
+label_columns: [A]
+row_dimensions: [region_or_country]
+column_dimension: period
+drop_rows: [6, 26]
+skip_rows_matching: ["total"]
+skip_label_kinds: [region]
+drop_columns: []
+operators:
+  - op: ffill
+    args: {target: labels}
+  - op: stack
+    args: {}
+value_unit: kt_p2o5
+fixed: {}
+notes: Trade balance data of phosphoric acid by region/country and period, dropping rows 6 (export total) and 26 (balance), skipping region subtotals and rows with 'total' in labels, using ffill and stack.

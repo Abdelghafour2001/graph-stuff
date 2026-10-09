@@ -1,0 +1,187 @@
+{
+ "checks": [
+  {
+   "check": "values_parse",
+   "ok": true,
+   "detail": "3040 numeric values, 0 non-numeric cells in value columns"
+  },
+  {
+   "check": "covers_whole_table",
+   "ok": true,
+   "detail": "numeric cells just outside table_range: 0 in the 3 rows below, 0 in the 2 columns to the right. Extend the range or confirm a separate table starts there"
+  },
+  {
+   "check": "unit_evidence",
+   "ok": true,
+   "detail": "value_unit 'usd/t' (read as usd/t); units evidenced in preamble/header text: ['t', 'usd/t', 'usd/st']"
+  },
+  {
+   "check": "no_total_rows",
+   "ok": true,
+   "detail": "rows equal to the sum of the other rows (drop them): []"
+  },
+  {
+   "check": "no_total_columns",
+   "ok": true,
+   "detail": "columns equal to the sum of the other columns (drop them): []"
+  },
+  {
+   "check": "dropped_columns_are_totals_or_empty",
+   "ok": true,
+   "detail": "dropped columns that hold real data (not a total, not empty): []"
+  },
+  {
+   "check": "dropped_rows_are_totals_or_empty",
+   "ok": true,
+   "detail": "dropped rows that are neither empty nor the sum of the kept rows: []"
+  },
+  {
+   "check": "no_subtotal_labels",
+   "ok": true,
+   "detail": "most specific label column mixes regions (subtotals) with countries: []; rows labelled total: []. Use skip_label_kinds: [region] and/or skip_rows_matching"
+  }
+ ],
+ "rows": 3040,
+ "sample": [
+  {
+   "date": "2014-02-01 00:00:00",
+   "product_price_type": "Low | 441",
+   "value": 495.0,
+   "unit": "usd/t",
+   "cell": "B8"
+  },
+  {
+   "date": "2014-02-01 00:00:00",
+   "product_price_type": "High | 461",
+   "value": 507.5,
+   "unit": "usd/t",
+   "cell": "C8"
+  },
+  {
+   "date": "2014-02-01 00:00:00",
+   "product_price_type": "Low | 433.6",
+   "value": 485.0,
+   "unit": "usd/t",
+   "cell": "D8"
+  },
+  {
+   "date": "2014-02-01 00:00:00",
+   "product_price_type": "High | 442",
+   "value": 490.0,
+   "unit": "usd/t",
+   "cell": "E8"
+  },
+  {
+   "date": "2014-02-01 00:00:00",
+   "product_price_type": "Low | 390",
+   "value": 432.5,
+   "unit": "usd/t",
+   "cell": "F8"
+  },
+  {
+   "date": "2014-02-01 00:00:00",
+   "product_price_type": "High | 405",
+   "value": 438.75,
+   "unit": "usd/t",
+   "cell": "G8"
+  },
+  {
+   "date": "2014-02-01 00:00:00",
+   "product_price_type": "Low | 405",
+   "value": 440.0,
+   "unit": "usd/t",
+   "cell": "H8"
+  },
+  {
+   "date": "2014-02-01 00:00:00",
+   "product_price_type": "High | 425",
+   "value": 482.5,
+   "unit": "usd/t",
+   "cell": "I8"
+  },
+  {
+   "date": "2014-02-01 00:00:00",
+   "product_price_type": "Low | 428",
+   "value": 470.0,
+   "unit": "usd/t",
+   "cell": "J8"
+  },
+  {
+   "date": "2014-02-01 00:00:00",
+   "product_price_type": "High | 440",
+   "value": 485.0,
+   "unit": "usd/t",
+   "cell": "K8"
+  },
+  {
+   "date": "2014-02-01 00:00:00",
+   "product_price_type": "Low | 464",
+   "value": 513.75,
+   "unit": "usd/t",
+   "cell": "L8"
+  },
+  {
+   "date": "2014-02-01 00:00:00",
+   "product_price_type": "High | 476",
+   "value": 518.75,
+   "unit": "usd/t",
+   "cell": "M8"
+  },
+  {
+   "date": "2014-02-01 00:00:00",
+   "product_price_type": "Low | 609",
+   "value": 662.25,
+   "unit": "usd/t",
+   "cell": "N8"
+  },
+  {
+   "date": "2014-02-01 00:00:00",
+   "product_price_type": "High | 609",
+   "value": 662.25,
+   "unit": "usd/t",
+   "cell": "O8"
+  },
+  {
+   "date": "2014-02-01 00:00:00",
+   "product_price_type": "Low | 85",
+   "value": 87.5,
+   "unit": "usd/t",
+   "cell": "P8"
+  },
+  {
+   "date": "2014-02-01 00:00:00",
+   "product_price_type": "High | 130",
+   "value": 130.0,
+   "unit": "usd/t",
+   "cell": "Q8"
+  },
+  {
+   "date": "2014-02-01 00:00:00",
+   "product_price_type": "Low | 410.8",
+   "value": 468.25,
+   "unit": "usd/t",
+   "cell": "R8"
+  },
+  {
+   "date": "2014-02-01 00:00:00",
+   "product_price_type": "High | 421.4",
+   "value": 482.5,
+   "unit": "usd/t",
+   "cell": "S8"
+  },
+  {
+   "date": "2014-02-01 00:00:00",
+   "product_price_type": "Low | 404.2",
+   "value": 425.0,
+   "unit": "usd/t",
+   "cell": "T8"
+  },
+  {
+   "date": "2014-02-01 00:00:00",
+   "product_price_type": "High | 406",
+   "value": 430.0,
+   "unit": "usd/t",
+   "cell": "U8"
+  }
+ ]
+}

@@ -1,0 +1,187 @@
+{
+ "checks": [
+  {
+   "check": "values_parse",
+   "ok": true,
+   "detail": "2263 numeric values, 97 non-numeric cells in value columns"
+  },
+  {
+   "check": "covers_whole_table",
+   "ok": true,
+   "detail": "numeric cells just outside table_range: 0 in the 3 rows below, 0 in the 2 columns to the right. Extend the range or confirm a separate table starts there"
+  },
+  {
+   "check": "unit_evidence",
+   "ok": true,
+   "detail": "value_unit 'usd' = usd; units evidenced in preamble/header text: ['usd']; more specific evidenced: []"
+  },
+  {
+   "check": "no_total_rows",
+   "ok": true,
+   "detail": "rows equal to the sum of the other rows of their section (drop them): []"
+  },
+  {
+   "check": "no_total_columns",
+   "ok": true,
+   "detail": "columns equal to the sum of the other columns (drop them): []"
+  },
+  {
+   "check": "dropped_columns_are_totals_or_empty",
+   "ok": true,
+   "detail": "dropped columns that hold real data (not a total, not empty): []"
+  },
+  {
+   "check": "dropped_rows_are_totals_or_empty",
+   "ok": true,
+   "detail": "dropped rows that are not empty, not labelled total, and match no checksum of their section: []"
+  },
+  {
+   "check": "no_subtotal_labels",
+   "ok": true,
+   "detail": "most specific label column mixes regions (subtotals) with countries: []; rows labelled total: []. Use skip_label_kinds: [region] and/or skip_rows_matching"
+  }
+ ],
+ "rows": 2263,
+ "sample": [
+  {
+   "year": "",
+   "product_location": "2010",
+   "value": 2011.0,
+   "unit": "usd",
+   "cell": "B13"
+  },
+  {
+   "year": "",
+   "product_location": "497.06188190207445",
+   "value": 618.7214202909734,
+   "unit": "usd",
+   "cell": "C13"
+  },
+  {
+   "year": "",
+   "product_location": "0",
+   "value": 0.0,
+   "unit": "usd",
+   "cell": "D13"
+  },
+  {
+   "year": "",
+   "product_location": "0",
+   "value": 0.0,
+   "unit": "usd",
+   "cell": "E13"
+  },
+  {
+   "year": "",
+   "product_location": "459.90208333333334",
+   "value": 613.2520833333333,
+   "unit": "usd",
+   "cell": "F13"
+  },
+  {
+   "year": "",
+   "product_location": "0",
+   "value": 0.0,
+   "unit": "usd",
+   "cell": "G13"
+  },
+  {
+   "year": "",
+   "product_location": "497.83333333333337",
+   "value": 620.4583333333334,
+   "unit": "usd",
+   "cell": "H13"
+  },
+  {
+   "year": "",
+   "product_location": "499.70833333333337",
+   "value": 652.0833333333334,
+   "unit": "usd",
+   "cell": "I13"
+  },
+  {
+   "year": "",
+   "product_location": "497.95833333333337",
+   "value": 471.4583333333333,
+   "unit": "usd",
+   "cell": "J13"
+  },
+  {
+   "year": "",
+   "product_location": "473.875",
+   "value": 595.375,
+   "unit": "usd",
+   "cell": "K13"
+  },
+  {
+   "year": "",
+   "product_location": "484.83333333333337",
+   "value": 625.375,
+   "unit": "usd",
+   "cell": "L13"
+  },
+  {
+   "year": "",
+   "product_location": "341.7481684981685",
+   "value": 455.01282051282055,
+   "unit": "usd",
+   "cell": "M13"
+  },
+  {
+   "year": "",
+   "product_location": "0",
+   "value": 0.0,
+   "unit": "usd",
+   "cell": "N13"
+  },
+  {
+   "year": "",
+   "product_location": "0",
+   "value": 622.26,
+   "unit": "usd",
+   "cell": "O13"
+  },
+  {
+   "year": "",
+   "product_location": "0",
+   "value": 0.0,
+   "unit": "usd",
+   "cell": "P13"
+  },
+  {
+   "year": "",
+   "product_location": "0",
+   "value": 0.0,
+   "unit": "usd",
+   "cell": "Q13"
+  },
+  {
+   "year": "",
+   "product_location": "547.5050469695142",
+   "value": 442.69330809806263,
+   "unit": "usd",
+   "cell": "R13"
+  },
+  {
+   "year": "",
+   "product_location": "423.8697344322344",
+   "value": 563.3814102564103,
+   "unit": "usd",
+   "cell": "S13"
+  },
+  {
+   "year": "",
+   "product_location": "321.5177015428088",
+   "value": 478.3989842587288,
+   "unit": "usd",
+   "cell": "T13"
+  },
+  {
+   "year": "",
+   "product_location": "327.9308628437165",
+   "value": 480.25193663239145,
+   "unit": "usd",
+   "cell": "U13"
+  }
+ ]
+}

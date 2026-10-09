@@ -1,0 +1,95 @@
+{
+ "checks": [
+  {
+   "check": "values_parse",
+   "ok": true,
+   "detail": "7 numeric values, 0 non-numeric cells in value columns"
+  },
+  {
+   "check": "unit_evidence",
+   "ok": true,
+   "detail": "value_unit 'kt_ammonia_per_year' (read as kt); units evidenced in preamble/header text: ['kt', 't']"
+  },
+  {
+   "check": "no_total_rows",
+   "ok": true,
+   "detail": "rows equal to the sum of the other rows (drop them): []"
+  },
+  {
+   "check": "no_total_columns",
+   "ok": true,
+   "detail": "columns equal to the sum of the other columns (drop them): []"
+  },
+  {
+   "check": "no_subtotal_labels",
+   "ok": true,
+   "detail": "region rows mixed with country rows (subtotals, per graph IN_REGION): []; rows labelled total: []"
+  }
+ ],
+ "rows": 7,
+ "sample": [
+  {
+   "company": "TogliattiAzot",
+   "location": "Togliatti, Russia",
+   "date_expected": "2024",
+   "capacity_t_yr": "Capacity '000 t/yr*",
+   "value": -400.0,
+   "unit": "kt_ammonia_per_year",
+   "cell": "D7"
+  },
+  {
+   "company": "Gulf Coast Ammonia",
+   "location": "Texas City, USA",
+   "date_expected": "2025",
+   "capacity_t_yr": "Capacity '000 t/yr*",
+   "value": 1260.0,
+   "unit": "kt_ammonia_per_year",
+   "cell": "D8"
+  },
+  {
+   "company": "HPC",
+   "location": "Hengam, Iran",
+   "date_expected": "2025",
+   "capacity_t_yr": "Capacity '000 t/yr*",
+   "value": -759.0,
+   "unit": "kt_ammonia_per_year",
+   "cell": "D9"
+  },
+  {
+   "company": "Shchekinoazot",
+   "location": "Tula, Russia",
+   "date_expected": "2025",
+   "capacity_t_yr": "Capacity '000 t/yr*",
+   "value": 119.0,
+   "unit": "kt_ammonia_per_year",
+   "cell": "D10"
+  },
+  {
+   "company": "Gemlik Gubre",
+   "location": "Gemlik, Turkey",
+   "date_expected": "2025",
+   "capacity_t_yr": "Capacity '000 t/yr*",
+   "value": -102.0,
+   "unit": "kt_ammonia_per_year",
+   "cell": "D11"
+  },
+  {
+   "company": "Woodside",
+   "location": "Beaumont, TX, USA",
+   "date_expected": "2025",
+   "capacity_t_yr": "Capacity '000 t/yr*",
+   "value": 1100.0,
+   "unit": "kt_ammonia_per_year",
+   "cell": "D12"
+  },
+  {
+   "company": "Ma'aden",
+   "location": "Ras al-Khair, Saudi Arabia",
+   "date_expected": "2026",
+   "capacity_t_yr": "Capacity '000 t/yr*",
+   "value": -278.0,
+   "unit": "kt_ammonia_per_year",
+   "cell": "D13"
+  }
+ ]
+}

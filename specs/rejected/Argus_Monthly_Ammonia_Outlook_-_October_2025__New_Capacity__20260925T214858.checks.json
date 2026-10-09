@@ -1,0 +1,100 @@
+{
+ "checks": [
+  {
+   "check": "values_parse",
+   "ok": true,
+   "detail": "7 numeric values, 0 non-numeric cells in value columns"
+  },
+  {
+   "check": "covers_whole_table",
+   "ok": false,
+   "detail": "non-empty cells just outside table_range: 0 in the 3 rows below, 8 in the 2 columns to the right. Extend the range or confirm a separate table starts there"
+  },
+  {
+   "check": "unit_evidence",
+   "ok": true,
+   "detail": "value_unit 'kt_ammonia' (read as kt); units evidenced in preamble/header text: ['kt', 't']"
+  },
+  {
+   "check": "no_total_rows",
+   "ok": true,
+   "detail": "rows equal to the sum of the other rows (drop them): []"
+  },
+  {
+   "check": "no_total_columns",
+   "ok": true,
+   "detail": "columns equal to the sum of the other columns (drop them): []"
+  },
+  {
+   "check": "no_subtotal_labels",
+   "ok": true,
+   "detail": "most specific label column mixes regions (subtotals) with countries: []; rows labelled total: []. Use skip_label_kinds: [region] and/or skip_rows_matching"
+  }
+ ],
+ "rows": 7,
+ "sample": [
+  {
+   "unit": "kt_ammonia",
+   "company": "TogliattiAzot",
+   "location": "Togliatti, Russia",
+   "date_expected": "2024",
+   "capacity_000_t_py": "Capacity '000 t/yr*",
+   "value": -400.0,
+   "cell": "D7"
+  },
+  {
+   "unit": "kt_ammonia",
+   "company": "Gulf Coast Ammonia",
+   "location": "Texas City, USA",
+   "date_expected": "2025",
+   "capacity_000_t_py": "Capacity '000 t/yr*",
+   "value": 1260.0,
+   "cell": "D8"
+  },
+  {
+   "unit": "kt_ammonia",
+   "company": "HPC",
+   "location": "Hengam, Iran",
+   "date_expected": "2025",
+   "capacity_000_t_py": "Capacity '000 t/yr*",
+   "value": -759.0,
+   "cell": "D9"
+  },
+  {
+   "unit": "kt_ammonia",
+   "company": "Shchekinoazot",
+   "location": "Tula, Russia",
+   "date_expected": "2025",
+   "capacity_000_t_py": "Capacity '000 t/yr*",
+   "value": 119.0,
+   "cell": "D10"
+  },
+  {
+   "unit": "kt_ammonia",
+   "company": "Gemlik Gubre",
+   "location": "Gemlik, Turkey",
+   "date_expected": "2025",
+   "capacity_000_t_py": "Capacity '000 t/yr*",
+   "value": -102.0,
+   "cell": "D11"
+  },
+  {
+   "unit": "kt_ammonia",
+   "company": "Woodside",
+   "location": "Beaumont, TX, USA",
+   "date_expected": "2025",
+   "capacity_000_t_py": "Capacity '000 t/yr*",
+   "value": 1100.0,
+   "cell": "D12"
+  },
+  {
+   "unit": "kt_ammonia",
+   "company": "Ma'aden",
+   "location": "Ras al-Khair, Saudi Arabia",
+   "date_expected": "2026",
+   "capacity_000_t_py": "Capacity '000 t/yr*",
+   "value": -278.0,
+   "cell": "D13"
+  }
+ ]
+}

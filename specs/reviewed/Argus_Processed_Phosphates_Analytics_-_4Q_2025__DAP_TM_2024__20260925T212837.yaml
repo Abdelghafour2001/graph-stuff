@@ -1,0 +1,25 @@
+file: Argus Processed Phosphates Analytics - 4Q 2025.xlsx
+sheet: DAP TM 2024
+table_range: A6:AM681
+header_rows: [6]
+operators:
+  - op: wide_to_long
+    args: [Importers\Exporters, Total]
+dimensions:
+  exporter: row
+  importer: column
+  product: dap
+value_unit: tonne
+skip_rows_matching: ["total", "f = forecast"]
+notes: |
+  - This sheet is a trade matrix for DAP by country pairs (exporter->importer).
+  - Columns from B onwards are importing countries, rows from 7 down are exporting countries.
+  - The sheet is annual data for the year 2024 (from the sheet name).
+  - The first row (6) is column headers.
+  - Values are in thousand tonnes as suggested by '000 tonnes' in the sheet description.
+  - I am unsure if all 39 columns are countries or if some trailing columns are empty or other metadata.
+  - Extraction assumes the matrix structure with exporters as rows and importers as columns and the header in row 6.
+  - Skipping rows with 'total' or 'forecast' to avoid formula totals or forecasts.
+  - The 'Total' column after 'Importers\Exporters' can be used for quick checks or skipped.
+  - Product fixed to DAP because this sheet is exclusively DAP trade.
+  - The unit suggested is tonnes; confirm if conversion from '000 tonnes' to tonnes is needed.

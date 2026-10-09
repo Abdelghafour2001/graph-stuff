@@ -1,0 +1,187 @@
+{
+ "checks": [
+  {
+   "check": "values_parse",
+   "ok": true,
+   "detail": "267 numeric values, 0 non-numeric cells in value columns"
+  },
+  {
+   "check": "covers_whole_table",
+   "ok": true,
+   "detail": "numeric cells just outside table_range: 0 in the 3 rows below, 0 in the 2 columns to the right. Extend the range or confirm a separate table starts there"
+  },
+  {
+   "check": "unit_evidence",
+   "ok": true,
+   "detail": "value_unit 'kiloton' = kiloton; units evidenced in preamble/header text: ['kiloton']; more specific evidenced: []"
+  },
+  {
+   "check": "no_total_rows",
+   "ok": true,
+   "detail": "rows equal to the sum of the other rows of their section (drop them): []"
+  },
+  {
+   "check": "no_total_columns",
+   "ok": true,
+   "detail": "columns equal to the sum of the other columns (drop them): []"
+  },
+  {
+   "check": "dropped_columns_are_totals_or_empty",
+   "ok": true,
+   "detail": "dropped columns that hold real data (not a total, not empty): []"
+  },
+  {
+   "check": "dropped_rows_are_totals_or_empty",
+   "ok": true,
+   "detail": "dropped rows that are not empty, not labelled total, and match no checksum of their section: []"
+  },
+  {
+   "check": "no_subtotal_labels",
+   "ok": false,
+   "detail": "most specific label column mixes regions (subtotals) with countries: ['africa', 'asia', 'central america', 'e europe, c asia', 'east and se asia', 'latin america', 'middle east', 'north america', 'oceania', 'south america']; rows labelled total: []. Use skip_label_kinds: [region] and/or skip_rows_matching"
+  }
+ ],
+ "rows": 267,
+ "sample": [
+  {
+   "region_or_country": "West Europe",
+   "period": "1769.8669809784733",
+   "value": 45.20240365174239,
+   "unit": "kiloton",
+   "cell": "B7"
+  },
+  {
+   "region_or_country": "West Europe",
+   "period": "1497.0066351291437",
+   "value": 53.99163782587898,
+   "unit": "kiloton",
+   "cell": "C7"
+  },
+  {
+   "region_or_country": "West Europe",
+   "period": "1142.239611662032",
+   "value": 29.66326002163576,
+   "unit": "kiloton",
+   "cell": "D7"
+  },
+  {
+   "region_or_country": "West Europe",
+   "period": "3460.723005923316",
+   "value": 212.28273071687897,
+   "unit": "kiloton",
+   "cell": "E7"
+  },
+  {
+   "region_or_country": "West Europe",
+   "period": "4051.438130154402",
+   "value": 151.32374521907465,
+   "unit": "kiloton",
+   "cell": "F7"
+  },
+  {
+   "region_or_country": "West Europe",
+   "period": "4733.597995268785",
+   "value": 174.04338451475945,
+   "unit": "kiloton",
+   "cell": "G7"
+  },
+  {
+   "region_or_country": "Lithuania",
+   "period": "1769.8669809784733",
+   "value": 32.147360814864676,
+   "unit": "kiloton",
+   "cell": "B8"
+  },
+  {
+   "region_or_country": "Lithuania",
+   "period": "1497.0066351291437",
+   "value": 35.83942043229921,
+   "unit": "kiloton",
+   "cell": "C8"
+  },
+  {
+   "region_or_country": "Lithuania",
+   "period": "1142.239611662032",
+   "value": 17.21082362058315,
+   "unit": "kiloton",
+   "cell": "D8"
+  },
+  {
+   "region_or_country": "Lithuania",
+   "period": "3460.723005923316",
+   "value": 135.56611461075377,
+   "unit": "kiloton",
+   "cell": "E8"
+  },
+  {
+   "region_or_country": "Lithuania",
+   "period": "4051.438130154402",
+   "value": 101.40642156872562,
+   "unit": "kiloton",
+   "cell": "F8"
+  },
+  {
+   "region_or_country": "Lithuania",
+   "period": "4733.597995268785",
+   "value": 122.01071972868665,
+   "unit": "kiloton",
+   "cell": "G8"
+  },
+  {
+   "region_or_country": "E Europe, C Asia",
+   "period": "1769.8669809784733",
+   "value": 185.68173775133934,
+   "unit": "kiloton",
+   "cell": "B9"
+  },
+  {
+   "region_or_country": "E Europe, C Asia",
+   "period": "1497.0066351291437",
+   "value": 204.6603758585323,
+   "unit": "kiloton",
+   "cell": "C9"
+  },
+  {
+   "region_or_country": "E Europe, C Asia",
+   "period": "1142.239611662032",
+   "value": 125.29043596898445,
+   "unit": "kiloton",
+   "cell": "D9"
+  },
+  {
+   "region_or_country": "E Europe, C Asia",
+   "period": "3460.723005923316",
+   "value": 645.9793426338734,
+   "unit": "kiloton",
+   "cell": "E9"
+  },
+  {
+   "region_or_country": "E Europe, C Asia",
+   "period": "4051.438130154402",
+   "value": 554.133462836097,
+   "unit": "kiloton",
+   "cell": "F9"
+  },
+  {
+   "region_or_country": "E Europe, C Asia",
+   "period": "4733.597995268785",
+   "value": 373.3809745243246,
+   "unit": "kiloton",
+   "cell": "G9"
+  },
+  {
+   "region_or_country": "Russia",
+   "period": "1769.8669809784733",
+   "value": 148.460734568511,
+   "unit": "kiloton",
+   "cell": "B10"
+  },
+  {
+   "region_or_country": "Russia",
+   "period": "1497.0066351291437",
+   "value": 164.16332788976834,
+   "unit": "kiloton",
+   "cell": "C10"
+  }
+ ]
+}

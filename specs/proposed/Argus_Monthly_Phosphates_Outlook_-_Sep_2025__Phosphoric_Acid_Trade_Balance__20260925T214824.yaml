@@ -1,0 +1,23 @@
+file: Argus Monthly Phosphates Outlook - Sep 2025.xlsx
+sheet: Phosphoric Acid Trade Balance
+table_range: A6:H26
+header_rows: [6]
+label_columns: [A]
+row_dimensions: [region_or_country]
+column_dimension: period
+drop_rows: [14, 26]
+drop_columns: []
+skip_rows_matching: ['Balance', 'total']
+skip_label_kinds: [region]
+operators:
+  - op: ffill
+    args:
+      target: labels
+  - op: stack
+    args: {}
+value_unit: kt_p2o5
+fixed: {}
+notes: |-
+  Data represents global trade balance for phosphoric acid on a monthly basis, by country and region.
+  'Import total' and 'Balance' rows excluded due to subtotal and net measures.
+  Units indicated as '000t P2O5' in header (thus kt as unit).

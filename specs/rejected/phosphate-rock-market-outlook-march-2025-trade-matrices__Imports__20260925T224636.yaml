@@ -1,0 +1,30 @@
+file: phosphate-rock-market-outlook-march-2025-trade-matrices.xlsx
+sheet: Imports
+table_range: A4:O211
+header_rows: [4,5,6]
+label_columns: [A,B,C]
+row_dimensions: [region,subregion,country]
+column_dimension: year
+drop_rows: []
+drop_columns: []
+skip_rows_matching: ["total"]
+skip_label_kinds: [region]
+operators:
+  - op: ffill
+    args:
+      target: labels
+  - op: ffill
+    args:
+      target: header
+  - op: stack
+value_unit: kiloton
+fixed:
+  product: phosphate_rock
+notes: |-
+  - Header composed of 3 rows with World Total aggregation formulas, skip them with skip_rows_matching.
+  - The data starts at row 7 with regions, subregions and countries in A, B, C columns.
+  - Drop rows with "total" in labels to avoid aggregated rows.
+  - Data are in '000 tonnes rock' as indicated in row 2.
+  - Column headers from 2000 onwards are years.
+  - Filled down merged cells in labels and headers for clarity.
+  - Product fixed as phosphate rock for this sheet.

@@ -1,0 +1,15 @@
+file: Argus Monthly Phosphates Outlook - Sep 2025.xlsx
+sheet: DAP Trade Balance
+table_range: A6:G76
+header_rows: [6]
+label_columns: [A]
+row_dimensions: [region_or_country]
+column_dimension: period
+drop_rows: []
+drop_columns: []
+skip_rows_matching: ['total']
+skip_label_kinds: [region]
+operators: [{op: 'stack', args: {}}]
+value_unit: kiloton
+fixed: {}
+notes: Data in '000t as per header

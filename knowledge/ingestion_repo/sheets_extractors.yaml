@@ -1,0 +1,1309 @@
+version: 1
+
+extractors: 
+  - name: data_and_download_phosrock #done
+    description: Extract argus phosrock data trade
+    extractor_code: "argus_phosrock_trade.py"
+    matches:
+      exact:
+        - value: "TM 2018"
+          data_provider: argus
+        - value: "TM 2019"
+          data_provider: argus
+        - value: "TM 2020"
+          data_provider: argus
+        - value: "TM 2021"
+          data_provider: argus
+        - value: "TM 2022"
+          data_provider: argus
+        - value: "TM 2023"
+          data_provider: argus
+        - value: "TM 2024"
+          data_provider: argus
+        - value: "TM 2025 - Forecast"
+          data_provider: argus
+        #- value: "PA TM 2020"
+        - value: "PA TM 2021"
+          data_provider: argus
+        - value: "PA TM 2022"
+          data_provider: argus
+        - value: "PA TM 2023"
+          data_provider: argus
+        - value: "PA TM 2024"
+          data_provider: argus
+        - value: "PA TM 2025 - Forecast"
+          data_provider: argus
+        #- value: "DAP TM 2020"
+        - value: "DAP TM 2021"
+          data_provider: argus
+        - value: "DAP TM 2022"
+          data_provider: argus
+        - value: "DAP TM 2023"
+          data_provider: argus
+        - value: "DAP TM 2024"
+          data_provider: argus
+        - value: "DAP TM 2025 - Forecast"
+          data_provider: argus
+        #- value: "MAP TM 2020"
+        - value: "MAP TM 2021"
+          data_provider: argus
+        - value: "MAP TM 2022"
+          data_provider: argus
+        - value: "MAP TM 2024"
+          data_provider: argus
+        - value: "MAP TM 2025 - Forecast"
+          data_provider: argus
+        - value: "MAP TM 2023"
+          data_provider: argus
+        #- value: "TSP TM 2020"
+        - value: "TSP TM 2021"
+          data_provider: argus
+        - value: "TSP TM 2022"
+          data_provider: argus
+        - value: "TSP TM 2023"
+          data_provider: argus
+        - value: "TSP TM 2024"
+          data_provider: argus
+        - value: "TSP TM 2025 - Forecast"
+          data_provider: argus
+          
+  - name: "vessel_tracker"
+    description: "Extracteur vessel tracker"
+    extractor_code: "vessel_tracker.py"
+    matches:
+      exact:
+        - value: "Nitrates"
+          data_provider: sp
+  #       - value: "Potash"
+  #         data_provider: sp
+  #       - value: "Sulfur"
+  #         data_provider: sp
+  #       - value: "Phosphates"
+  #         data_provider: sp
+  #       - value: "Urea"
+  #         data_provider: sp
+  #       - value: "Sulfuric Acid"
+  #         data_provider: sp
+ 
+  # - name: "vessel_tracker_ammonia"
+  #   description: "Extracteur vessel tracker"
+  #   extractor_code: "vessel_tracker_ammonia.py"
+ 
+  #   matches:
+  #     exact:
+  #       - value: "Ammonia"
+  #         data_provider: sp  
+  # - name: fertilizer_week_all_frequency
+  #   description: Fertilizer week historical prices averages (All_W/M/Q/A)
+  #   extractor_code: weekly_prices.py
+
+    matches:
+      exact:
+        - value: "Table of Contents"
+          params:
+            skip: true
+
+      regex:
+        - pattern: "^All_W$"
+          params:
+            frequency: weekly
+            data_provider: cru
+
+        - pattern: "^All_M$"
+          params:
+            frequency: monthly
+            data_provider: cru
+
+        - pattern: "^All_Q$"
+          params:
+            frequency: quarterly
+            data_provider: cru
+
+        - pattern: "^All_A$"
+          params:
+            frequency: annual
+            data_provider: cru
+  - name: phosphate_rock_market_outlook_date_flat_database_historical
+    description: Phosphate rock market outlook prices
+    extractor_code: ammonia_sulphure_prices_flatdatabase.py
+
+    matches:
+      exact:
+        - value: "Prices_Quarterly_Forecast"
+          data_provider: cru
+        - value: "Prices_Annual_Forecast"
+          data_provider: cru
+        - value: "Price History"
+          data_provider: cru
+        - value: "Prices_Monthly"
+          data_provider: cru
+  - name: speciality_phosphate_ammended_prices
+    description: Specialty phosphate amended prices
+    extractor_code: ammended_prices.py
+
+    matches:
+      exact:
+        - value: "Prices"
+          data_provider: cru
+          file_regex: "specialty"
+          params:
+            data_provider: cru
+  - name: piec_asset_list
+    description: PIEC asset list sheets
+    extractor_code: piec_asset_list_DATE.py
+
+    matches:
+      regex:
+        - pattern: ".*AssetList.*"
+          params:
+            data_provider: sp
+
+
+  - name: piec_timeseries
+    description: PIEC timeseries for capacity / production / imports / exports / utilization
+    extractor_code: piec_timeseries_DATE.py
+
+    matches:
+      regex:
+        - pattern: "^.+_(P|I|E|D|H|O|UR|NR)$"
+          params:
+            data_provider: sp
+            header_row: 8
+  - name: phosphateoutlook_quarterly_price_forecast
+    description: Phosphate outlook – Quarterly Price Forecast
+    extractor_code: praw_yearly_quarterly_prices.py
+
+    matches:
+      exact:
+        - value: "Quarterly Price Forecast"
+          params:
+            data_provider: sp
+            header_rows: 11
+
+        - value: "Introduction"
+          params:
+            skip: true
+
+        - value: "Cost Curve"
+          params:
+            skip: true
+
+        - value: "CostCurveGenerator"
+          params:
+            skip: true
+  - name: phosphateoutlook_yearly_price_forecast
+    description: Phosphate outlook – Yearly Price Forecast
+    extractor_code: praw_yearly_quarterly_prices.py
+
+    matches:
+      exact:
+        - value: "Yearly Price Forecast"
+          params:
+            data_provider: sp
+            header_rows: 11
+
+  - name: argus_ammonia_prices
+    extractor_code: ammonia_prices.py
+
+    matches:
+      exact:
+        - value: "Prices"
+          data_provider: argus
+          file_regex: "ammonia"
+
+
+  # - name: phosphate_rock_market_outlook_date_flat_database
+  #   description: Monthly phosphate market forecast prices
+  #   extractor_code: monthly_phos_forecast_prices.py
+
+  #   matches:
+  #     exact:
+  #       - value: "Prices"
+  #       - file_regex: "monthly"
+  #       - data_provider: cru
+
+  - name: argus_potash_prices
+    extractor_code: potash_prices.py
+
+    matches:
+      exact:
+        - value: "Prices"
+          data_provider: argus
+          file_regex: "potash"
+
+
+
+  - name: argus_npk_prices
+    extractor_code: npk_prices.py
+
+    matches:
+      exact:
+        - value: "NPK Price Forecasts"
+        - value: "NPS Price Forecasts"
+          data_provider: argus
+          file_regex: "(?i)npk"
+          params:
+            commodity: npk
+
+  - name: argus_urea_prices
+    extractor_code: urea_prices.py
+
+    matches:
+      exact:
+        - value: "Urea Prices"
+          data_provider: argus
+  - name: blue_and_green_ammonia_projects
+    description: Blue and green ammonia projects
+    extractor_code: green_blue_ammonia_projects.py
+
+    matches:
+      exact:
+        - value: "Blue ammonia projects"
+          data_provider: "argus"
+        - value: "Green ammonia projects"
+          data_provider: "argus"
+
+  - name: tenders_npk
+    description: Extract Argus NPK Africa tenders
+    extractor_code: africa_npk_tenders.py
+
+    matches:
+      exact:
+        - value: "Tenders"
+          data_provider: argus
+
+  - name: data_and_download_phosrock #done
+    description: Extract argus phosrock data trade
+    extractor_code: "argus_phosrock_trade.py"
+    matches:
+      exact:
+        - value: "TM 2018"
+        - value: "TM 2019"
+        - value: "TM 2020"
+        - value: "TM 2021"
+        - value: "TM 2022"
+        - value: "TM 2023"
+        - value: "TM 2024"
+        - value: "TM 2025 - Forecast"
+        #- value: "PA TM 2020"
+        - value: "PA TM 2021"
+        - value: "PA TM 2022"
+        - value: "PA TM 2023"
+        - value: "PA TM 2024"
+        - value: "PA TM 2025 - Forecast"
+        #- value: "DAP TM 2020"
+        - value: "DAP TM 2021"
+        - value: "DAP TM 2022"
+        - value: "DAP TM 2023"
+        - value: "DAP TM 2024"
+        - value: "DAP TM 2025 - Forecast"
+        #- value: "MAP TM 2020"
+        - value: "MAP TM 2021"
+        - value: "MAP TM 2022"
+        - value: "MAP TM 2024"
+        - value: "MAP TM 2025 - Forecast"
+        - value: "MAP TM 2023"
+        #- value: "TSP TM 2020"
+        - value: "TSP TM 2021"
+        - value: "TSP TM 2022"
+        - value: "TSP TM 2023"
+        - value: "TSP TM 2024"
+        - value: "TSP TM 2025 - Forecast"
+
+  - name: data_and_download_npk
+    description: Extract Argus NPK trade data
+    extractor_code: argus_npk_trades.py
+
+    matches:
+      exact:
+        - value: "Trade Matrix (Data)"
+          data_provider: argus
+
+  - name: ammonia_futures_forecast_date
+    description: Extract ammonia futures forecast data
+    extractor_code: futures_forecast_sulf_ammo_phosrock_caster.py
+
+    matches:
+      exact:
+        - value: "Monthly ammonia average prices"
+          data_provider: sp
+        - value: "Monthly average sulphur prices"
+          data_provider: sp
+        - value: "Monthly average sulphur prices"
+          data_provider: sp
+
+
+  - name: ammonia_futures_forecast_date
+    description: Extract ammonia futures forecast data (min/max)
+    extractor_code: futures_forecast_sulf_ammo_phosrock_min_max_caster.py
+
+    matches:
+      exact:
+        - value: "Monthly ammonia average prices"
+          data_provider: sp
+        - value: "Monthly phosphate prices"
+          data_provider: sp
+        - value: "Monthly sulphur prices"
+          data_provider: sp
+        - value: "Monthly ammonia prices"
+          data_provider: sp
+
+  - name: ammonia_market_outlook_date_flat_database
+    description: Extract ammonia market outlook prices
+    extractor_code: ann_quar_prices.py
+
+    matches:
+      exact:
+        - value: "Annual Prices"
+          data_provider: cru
+        - value: "Quarterly Prices"
+          data_provider: cru
+
+  - name: phosphate_rock_market_outlook_date_flat_database
+    description: Monthly phosphate market forecast prices
+    extractor_code: monthly_phos_forecast_prices.py
+
+    matches:
+      exact:
+        - value: "Prices"
+          file_regex: "forecast"
+          data_provider: cru
+
+
+  - name: sulphur_outlook_data_date
+    description: Extract sulphur outlook prices
+    extractor_code: sulphure_outlook_data_prices.py
+
+    matches:
+      exact:
+        - value: "Price Forecast_Qrtly"
+          data_provider: sp
+        - value: "Price Forecast Real_LT"
+          data_provider: sp
+        - value: "Price Forecast Nominal_LT"
+          data_provider: sp
+  - name: ammonia_S&P_trades #done
+    description: Extract argus phosrock data trade
+    extractor_code: "argus_phosrock_trade.py"
+    matches:
+      exact:
+        - value: "2021 Trade Matrix"
+          data_provider: argus
+          file_regex: "^Argus Ammonia Analytics.*"
+        - value: "2022 Trade Matrix"
+          data_provider: argus
+          file_regex: "^Argus Ammonia Analytics.*"
+        - value: "2023 Trade Matrix"
+          data_provider: argus
+          file_regex: "^Argus Ammonia Analytics.*"
+        - value: "2024 Trade Matrix"
+          data_provider: argus
+          file_regex: "^Argus Ammonia Analytics.*"
+
+
+  - name: specialty_phosphate_market_trades #done
+    description: Extract specialty_phosphate_market_trades
+    extractor_code: "trades_from_ammended_file.py"
+    matches:
+      exact:
+
+        - value: "PWA TPA 2021 Trade"
+          data_provider: cru
+        - value: "PWA TPA 2022 Trade"
+          data_provider: cru
+        - value: "PWA TPA 2023 Trade"
+          data_provider: cru
+        - value: "tMAP 2021 Trade"
+          data_provider: cru
+        - value: "tMAP 2022 Trade"
+          data_provider: cru
+        - value: "tMAP 2023 Trade"
+          data_provider: cru
+        - value: "P4 2021 Trade"
+          data_provider: cru
+        - value: "P4 2022 Trade"
+          data_provider: cru
+        - value: "P4 2023 Trade"
+          data_provider: cru
+        - value: "STPP 2021 Trade"
+          data_provider: cru
+        - value: "STPP 2022 Trade"
+          data_provider: cru
+        - value: "STPP 2023 Trade"
+          data_provider: cru
+        - value: "DCP 2021 Trade"
+          data_provider: cru
+        - value: "DCP 2022 Trade"
+          data_provider: cru
+        - value: "DCP 2023 Trade"
+          data_provider: cru
+        - value: "MCP_MDCP 2021 Trade"
+          data_provider: cru
+        - value: "MCP_MDCP 2022 Trade"
+          data_provider: cru
+        - value: "MCP_MDCP 2023 Trade"
+          data_provider: cru
+            
+
+    
+
+
+  - name: sulphur_outlook_data_date_trade
+    description: Extract sulphur trade matrix
+    extractor_code: trade_matrix_sulphur_outlook_data.py
+
+    matches:
+      exact:
+        - value: "Sulphur Trade Matrix 2022"
+          data_provider: sp
+        - value: "Sulphur Trade Matrix 2023"
+          data_provider: sp
+        - value: "Sulphur Trade Matrix 2024"
+          data_provider: sp
+  - name: phosphate_rock_market_outlook_long_run_outlook
+    description: Phosphate Rock long run pricing
+    extractor_code: long_run_pricing.py
+    matches:
+      exact:
+        - value: "Long Run Pricing"
+          params:
+            data_provider: "cru"
+  - name: phosphate_fertilizer_tradedata_flat_database
+    description: Phosphate fertilizer trade data
+    extractor_code: trade_data.py
+    matches:
+      exact:
+        - value: "Trade Data"
+          params:
+            data_provider: "cru"
+  # =========================================================
+  # Argus Outlook & Imports
+  # =========================================================
+  - name: argus_monthly_posphate_ammonia_outlook_date
+    description: Extract Argus monthly phosphate & ammonia outlook
+    extractor_code: argus_ammo_phos_prices.py
+
+    matches:
+      exact:
+        - value: "Price Forecast"
+          data_provider: argus
+
+
+  - name: ammonia_outlook_data_file_date
+    description: Extract ammonia short-term prices
+    extractor_code: st_prices_ammonia_data.py
+
+    matches:
+      exact:
+        - value: "ST Price Fcst"
+          data_provider: sp
+
+
+  # =========================================================
+  # Brazil Imports
+  # =========================================================
+  - name: brazil_mop_imports_caster
+    description: Imports of MOP in Brazil
+    extractor_code: brazil_mop_raw_import_data.py
+
+    matches:
+      exact:
+        - value: "Raw Import Data"
+          data_provider: argus
+
+
+  - name: brazil_map_imports
+    description: Extract Brazil MAP imports
+    extractor_code: raw_vessel_data.py
+
+    matches:
+      exact:
+        - value: "Raw Vessel Data"
+          data_provider: argus
+
+  ##########################################################
+
+  - name: phosphate_fertilizer_market_outlook_DATE_npk_capacity_database CRU
+    description: ohosphate_fertilizer_market_outlook_DATE_npk_capacity_database
+    extractor_code: "phosphate_fertilizer_market_outlook_DATE_npk_capacity_database.py"
+    matches:
+      exact:
+      - value: "Capacity Forecasts"
+      - value: "Projects"
+        data_provider: "cru"
+        file_regex: "fertilizer"
+
+  - name: sulphur_market_outlook_capacity_list
+    description: Capacity Forecasts & Projects sheets from Sulphur Market Outlook (CRU)
+    extractor_code: "sulphur_market_outlook_capacity_list_caster.py"
+    matches:
+      exact:
+      - value: "Capacity Forecasts"
+      - value: "Projects"
+        data_provider: "cru"
+        file_regex: "sulphur"
+
+  - name: phosphateoutlook_costdata
+    description: Phosphate outlook – CostData
+    extractor_code: phosphateoutlook_2024m10_datafile_costsprices__costdata.py
+    matches:
+      exact:
+        - value: "CostData"
+          params:
+            data_provider: "sp"
+            header_rows: 6
+
+  - name: cost_service_database
+    description: >
+      Unified caster for CRU cost service flat database "Database" sheets.
+      Covers phosphate-fertilizer and phosphate-rock cost service files.
+      Product auto-detected: from Commodity column or document name.
+      Entity = company (parent) → company_site (child).
+    extractor_code: cru_cost_service_caster.py
+
+    matches:
+      exact:
+        # ---------- CRU: Sheet to SKIP ----------
+        - value: "Table of Contents"
+          data_provider: "cru"
+          params: { skip: true }
+
+        # ---------- CRU: Database sheet (both files) ----------
+        - value: "Database"
+          data_provider: "cru"
+
+  - name: argus_potash_analytics_1q_DATE_capacity_by_plant
+    description: Capacity by plant sheets from Argus analytics for various products
+    extractor_code: argus_potash_analytics_1q_DATE_capacity_by_plant.py
+
+    matches:
+      exact:
+        - value: "NPK Capacity List"
+          data_provider: "argus"
+          file_regex: "(?i).*argus.*potash.*"
+
+  - name: "freight_trades_caster"
+    description: "Extracteur freight trades"
+    extractor_code: "freight_trad_caster.py"
+    file_regex: "(?i)fertilizer.?week|freight"
+    matches:
+      exact:
+        # -----------------------------
+        # A) TOC / Section sheets |Ammonia|UAN|AS|DAP\\-MAP|Phosphoric Acid|Phosphate Rock|MOP|Sulphur|Sulphuric Acid)$
+        # -----------------------------
+        - value: "Ammonia"
+          data_provider: "cru"
+        - value: "UAN"
+          data_provider: "cru"
+        - value: "AS"
+          data_provider: "cru"
+        - value: "DAP-MAP"
+          data_provider: "cru"
+        - value: "Phosphoric Acid"
+          data_provider: "cru"
+        - value: "Phosphate Rock"
+          data_provider: "cru"
+        - value: "MOP"
+          data_provider: "cru"
+        - value: "Sulphur"
+          data_provider: "cru"
+        - value: "Sulphuric Acid"
+          data_provider: "cru"
+
+
+  - name: regional_totals
+    description: >
+      Unified caster for all "Total ..." sheets with Region|Country|Years layout.
+      Supports Argus, S&P, and CRU sources.  Product auto-detected.
+    extractor_code: regional_totals_caster.py
+
+    matches:
+      exact:
+        # ---------- Ammonia (Argus) ----------
+        - value: "Total Gross Capacity"
+          data_provider: "argus"
+        - value: "Total Merchant Capacity"
+          data_provider: "argus"
+        - value: "Total Gross Production"
+          data_provider: "argus"
+        - value: "Total Merchant Production"
+          data_provider: "argus"
+        - value: "Total Gross Consumption"
+          data_provider: "argus"
+        - value: "Total Merchant Consumption"
+          data_provider: "argus"
+        # ---------- Phosphate Rock (Argus) ----------
+        - value: "Total Capacity"
+          data_provider: "argus"
+        - value: "Total Production"
+          data_provider: "argus"
+        - value: "Total Consumption"
+          data_provider: "argus"
+        # ---------- Potash (Argus) ----------
+        - value: "Total MOP Capacity"
+          data_provider: "argus"
+        - value: "Achievable MOP Production"
+          data_provider: "argus"
+        - value: "Total MOP Production"
+          data_provider: "argus"
+        - value: "Total MOP Consumption"
+          data_provider: "argus"
+        - value: "Total MOP Imports"
+          data_provider: "argus"
+        - value: "Total MOP Exports"
+          data_provider: "argus"
+        # ---------- Shared Argus (Imports/Exports) ----------
+        - value: "Total Imports"
+          data_provider: "argus"
+        - value: "Total Exports"
+          data_provider: "argus"
+        # ---------- Argus Ammonia Analytics (simple sheet names) ----------
+        - value: "Production"
+          data_provider: "argus"
+          file_regex: "(?i)argus.*ammonia"
+        - value: "Imports"
+          data_provider: "argus"
+          file_regex: "(?i)argus.*ammonia"
+        - value: "Exports"
+          data_provider: "argus"
+          file_regex: "(?i)argus.*ammonia"
+        - value: "Ammonia"
+          data_provider: "argus"
+          file_regex: "(?i)argus.*ammonia"
+        # ---------- Urea (Argus) ----------
+        - value: "Total Capacity"
+          data_provider: "argus"
+        - value: "Total Production"
+          data_provider: "argus"
+        - value: "Total Consumption"
+          data_provider: "argus"
+        - value: "Total Imports"
+          data_provider: "argus"
+        - value: "Total Exports"
+          data_provider: "argus"
+        # ---------- PA / Processed Phosphates (Argus) ----------
+        - value: "PA Total Capacity"
+          data_provider: "argus"
+        - value: "PA Total Production"
+          data_provider: "argus"
+        - value: "PA Total Consumption"
+          data_provider: "argus"
+        - value: "PA Total Imports"
+          data_provider: "argus"
+        - value: "PA Total Exports"
+          data_provider: "argus"
+        # ---------- DAP (Argus) ----------
+        - value: "DAP Total Capacity"
+          data_provider: "argus"
+        - value: "DAP Total Production"
+          data_provider: "argus"
+        - value: "DAP d.a. Consumption"
+          data_provider: "argus"
+        - value: "DAP Compounds Consumption"
+          data_provider: "argus"
+        - value: "DAP Total Consumption"
+          data_provider: "argus"
+        - value: "DAP Total Imports"
+          data_provider: "argus"
+        - value: "DAP Total Exports"
+          data_provider: "argus"
+        # ---------- MAP (Argus) ----------
+        - value: "MAP Total Capacity"
+          data_provider: "argus"
+        - value: "MAP Total Production"
+          data_provider: "argus"
+        - value: "MAP d.a. Consumption"
+          data_provider: "argus"
+        - value: "MAP Compounds Consumption"
+          data_provider: "argus"
+        - value: "MAP Total Consumption"
+          data_provider: "argus"
+        - value: "MAP Total Imports"
+          data_provider: "argus"
+        - value: "MAP Total Exports"
+          data_provider: "argus"
+        # ---------- TSP (Argus) ----------
+        - value: "TSP Total Capacity"
+          data_provider: "argus"
+        - value: "TSP Total Production"
+          data_provider: "argus"
+        - value: "TSP Total Consumption"
+          data_provider: "argus"
+        - value: "TSP Total Imports"
+          data_provider: "argus"
+        - value: "TSP Total Exports"
+          data_provider: "argus"
+        # ---------- NPK Analytics ----------
+        - value: "NPK Total Capacity"
+        - value: "NPK Total Production"
+        - value: "NPK Total Consumption"
+        - value: "NPK Total Imports"
+        - value: "NPK Total Exports"
+        - value: "Total NPK Capacity"
+        - value: "Total NPK Production"
+        - value: "Total NPK Consumption"
+        - value: "Total NPK Imports"
+        - value: "Total NPK Exports"
+
+  - name: plant_capacity
+    description: >
+      Unified caster for plant-level capacity sheets (Company→Site + year cols).
+      Argus sources only. Product/type/grade auto-detected.
+      (CRU & S&P entries moved to capacity_database above)
+    extractor_code: plant_capacity_caster.py
+
+    matches:
+      exact:
+        # ---------- Argus Ammonia Analytics ----------
+        - value: "Gross Capacity by Plant"
+          data_provider: "argus"
+        - value: "Merchant Capacity by Plant"
+          data_provider: "argus"
+
+        # ---------- Argus Phosphate Rock / Potash / Urea / NPK ----------
+        - value: "Capacity by Plant"
+          data_provider: "argus"
+
+  - name: cru_flat_database
+    description: >
+      Unified caster for flat-database sheets (Region|SubRegion|Country × Years).
+      S&P: ammonia outlook, sulphur outlook.
+      CRU: ammonia, phosphate rock, phosphate fertilizer (WPA/DAP/MAP/TSP),
+      NPK/NP/PK, sulphur. Product & layout auto-detected.
+    extractor_code: cru_flat_database_caster.py
+
+    matches:
+      exact:
+        # ---------- Ammonia Outlook Data File (Region/Country × Years) ----------
+        - value: "Capacity by geography"
+          data_provider: "sp"
+          file_regex: "(?i)ammonia.?outlook.?data.?file"
+        - value: "Grey ammonia capacity"
+          data_provider: "sp"
+          file_regex: "(?i)ammonia.?outlook.?data.?file"
+        - value: "Green ammonia capacity"
+          data_provider: "sp"
+          file_regex: "(?i)ammonia.?outlook.?data.?file"
+        - value: "Blue ammonia capacity"
+          data_provider: "sp"
+          file_regex: "(?i)ammonia.?outlook.?data.?file"
+        - value: "Op. rate"
+          data_provider: "sp"
+          file_regex: "(?i)ammonia.?outlook.?data.?file"
+        - value: "Production"
+          data_provider: "sp"
+          file_regex: "(?i)ammonia.?outlook.?data.?file"
+        - value: "Grey ammonia production"
+          data_provider: "sp"
+          file_regex: "(?i)ammonia.?outlook.?data.?file"
+        - value: "Green ammonia production"
+          data_provider: "sp"
+          file_regex: "(?i)ammonia.?outlook.?data.?file"
+        - value: "Blue ammonia production"
+          data_provider: "sp"
+          file_regex: "(?i)ammonia.?outlook.?data.?file"
+        - value: "Exports"
+          data_provider: "sp"
+          file_regex: "(?i)ammonia.?outlook.?data.?file"
+        - value: "Imports"
+          data_provider: "sp"
+          file_regex: "(?i)ammonia.?outlook.?data.?file"
+        - value: "AppCons total"
+          data_provider: "sp"
+          file_regex: "(?i)ammonia.?outlook.?data.?file"
+        - value: "Demand"
+          data_provider: "sp"
+          file_regex: "(?i)ammonia.?outlook.?data.?file"
+
+        # ---------- Ammonia Outlook: SKIP sheets ----------
+        - value: "Introduction"
+          data_provider: "sp"
+          file_regex: "(?i)ammonia.?outlook.?data.?file"
+          params:
+            skip: true
+        - value: "Index"
+          data_provider: "sp"
+          file_regex: "(?i)ammonia.?outlook.?data.?file"
+          params:
+            skip: true
+        - value: "LT Price Fcst"
+          data_provider: "sp"
+          file_regex: "(?i)ammonia.?outlook.?data.?file"
+          params:
+            skip: true
+        - value: "ST Price Fcst"
+          data_provider: "sp"
+          file_regex: "(?i)ammonia.?outlook.?data.?file"
+          params:
+            skip: true
+        - value: "Cost assumptions"
+          data_provider: "sp"
+          file_regex: "(?i)ammonia.?outlook.?data.?file"
+          params:
+            skip: true
+        - value: "Cost Curve data - Producers"
+          data_provider: "sp"
+          file_regex: "(?i)ammonia.?outlook.?data.?file"
+          params:
+            skip: true
+        - value: "Cost Curve data - Exporters"
+          data_provider: "sp"
+          file_regex: "(?i)ammonia.?outlook.?data.?file"
+          params:
+            skip: true
+        - value: "Geography Summary"
+          data_provider: "sp"
+          file_regex: "(?i)ammonia.?outlook.?data.?file"
+          params:
+            skip: true
+        - value: "Inter-regional Trade"
+          data_provider: "sp"
+          file_regex: "(?i)ammonia.?outlook.?data.?file"
+          params:
+            skip: true
+        - value: "Correction"
+          data_provider: "sp"
+          file_regex: "(?i)ammonia.?outlook.?data.?file"
+          params:
+            skip: true
+        - value: "Direct Application"
+          data_provider: "sp"
+          file_regex: "(?i)ammonia.?outlook.?data.?file"
+          params:
+            skip: true
+        - value: "Other N Fert"
+          data_provider: "sp"
+          file_regex: "(?i)ammonia.?outlook.?data.?file"
+          params:
+            skip: true
+        - value: "Industrial Use"
+          data_provider: "sp"
+          file_regex: "(?i)ammonia.?outlook.?data.?file"
+          params:
+            skip: true
+        - value: "Decarb of existing demand"
+          data_provider: "sp"
+          file_regex: "(?i)ammonia.?outlook.?data.?file"
+          params:
+            skip: true
+        - value: "Low Carbon for H2"
+          data_provider: "sp"
+          file_regex: "(?i)ammonia.?outlook.?data.?file"
+          params:
+            skip: true
+        - value: "Low Carbon for Bunkering"
+          data_provider: "sp"
+          file_regex: "(?i)ammonia.?outlook.?data.?file"
+          params:
+            skip: true
+        - value: "Low Carbon for Power"
+          data_provider: "sp"
+          file_regex: "(?i)ammonia.?outlook.?data.?file"
+          params:
+            skip: true
+
+        # ---------- Sulphur Outlook Data (Region/Country × Years) ----------
+        - value: "S-Production Oil Refining"
+          data_provider: "sp"
+          file_regex: "(?i)sulphur.?outlook"
+        - value: "S-Production Gas"
+          data_provider: "sp"
+          file_regex: "(?i)sulphur.?outlook"
+        - value: "S-Production Sand"
+          data_provider: "sp"
+          file_regex: "(?i)sulphur.?outlook"
+        - value: "S-Production Mined"
+          data_provider: "sp"
+          file_regex: "(?i)sulphur.?outlook"
+        - value: "S-Production Other"
+          data_provider: "sp"
+          file_regex: "(?i)sulphur.?outlook"
+        - value: "Elemental-S Prod Total"
+          data_provider: "sp"
+          file_regex: "(?i)sulphur.?outlook"
+        - value: "ELemental S Apparent Cons"
+          data_provider: "sp"
+          file_regex: "(?i)sulphur.?outlook"
+        - value: "S-Demand Agri Total"
+          data_provider: "sp"
+          file_regex: "(?i)sulphur.?outlook"
+        - value: "S-Demand AS"
+          data_provider: "sp"
+          file_regex: "(?i)sulphur.?outlook"
+        - value: "S-Demand Phos Acid"
+          data_provider: "sp"
+          file_regex: "(?i)sulphur.?outlook"
+        - value: "S-Demand SOP"
+          data_provider: "sp"
+          file_regex: "(?i)sulphur.?outlook"
+        - value: "S-Demand SOP "
+          data_provider: "sp"
+          file_regex: "(?i)sulphur.?outlook"
+        - value: "S-Demand SSP"
+          data_provider: "sp"
+          file_regex: "(?i)sulphur.?outlook"
+        - value: "S-Demand Other Ag"
+          data_provider: "sp"
+          file_regex: "(?i)sulphur.?outlook"
+        - value: "Sulphur Bentonite"
+          data_provider: "sp"
+          file_regex: "(?i)sulphur.?outlook"
+        - value: "S-Demand industrial"
+          data_provider: "sp"
+          file_regex: "(?i)sulphur.?outlook"
+        - value: "S-Demand Leaching"
+          data_provider: "sp"
+          file_regex: "(?i)sulphur.?outlook"
+        - value: "S-Demand Rubber"
+          data_provider: "sp"
+          file_regex: "(?i)sulphur.?outlook"
+        - value: "S-Demand CS2"
+          data_provider: "sp"
+          file_regex: "(?i)sulphur.?outlook"
+        - value: "S-Demand Other"
+          data_provider: "sp"
+          file_regex: "(?i)sulphur.?outlook"
+        - value: "S-Demand Total"
+          data_provider: "sp"
+          file_regex: "(?i)sulphur.?outlook"
+        - value: "Sulphur Imports"
+          data_provider: "sp"
+          file_regex: "(?i)sulphur.?outlook"
+        - value: "Sulphur Exports"
+          data_provider: "sp"
+          file_regex: "(?i)sulphur.?outlook"
+
+        # ---------- Sulphur Outlook: SKIP sheets ----------
+        - value: "Price Forecast_Qrtly"
+          data_provider: "sp"
+          file_regex: "(?i)sulphur.?outlook"
+          params:
+            skip: true
+        - value: "Price Forecast Real_LT"
+          data_provider: "sp"
+          file_regex: "(?i)sulphur.?outlook"
+          params:
+            skip: true
+        - value: "Price Forecast Nominal_LT"
+          data_provider: "sp"
+          file_regex: "(?i)sulphur.?outlook"
+          params:
+            skip: true
+        - value: "Freight Costs and Margins"
+          data_provider: "sp"
+          file_regex: "(?i)sulphur.?outlook"
+          params:
+            skip: true
+
+        # ---------- CRU Ammonia Flat Database ----------
+        - value: "Consumption"
+          data_provider: "cru"
+          file_regex: "(?i)(?:ammonia|phosphate|sulphur).*(?:flat.?database|market.?outlook)"
+        - value: "Production"
+          data_provider: "cru"
+          file_regex: "(?i)(?:ammonia|phosphate|sulphur).*(?:flat.?database|market.?outlook)"
+        - value: "Capacity"
+          data_provider: "cru"
+          file_regex: "(?i)(?:ammonia|phosphate|sulphur).*(?:flat.?database|market.?outlook)"
+        - value: "Operating Rates"
+          data_provider: "cru"
+          file_regex: "(?i)(?:ammonia|phosphate|sulphur).*(?:flat.?database|market.?outlook)"
+        - value: "Imports"
+          data_provider: "cru"
+          file_regex: "(?i)(?:ammonia|phosphate|sulphur).*(?:flat.?database|market.?outlook)"
+        - value: "Exports"
+          data_provider: "cru"
+          file_regex: "(?i)(?:ammonia|phosphate|sulphur).*(?:flat.?database|market.?outlook)"
+
+        # ---------- CRU Phosphate Rock Flat Database ----------
+        - value: "Utilization"
+          data_provider: "cru"
+          file_regex: "(?i)phosphate.?rock.*(?:flat.?database|market.?outlook)"
+        - value: "Apparent Demand"
+          data_provider: "cru"
+          file_regex: "(?i)phosphate.?rock.*(?:flat.?database|market.?outlook)"
+
+        # ---------- CRU NPK Capacity sub-types ----------
+        - value: "Capacity - Total"
+          data_provider: "cru"
+          file_regex: "(?i)(?:npk|phosphate.?fertilizer).*(?:flat.?database|market.?outlook)"
+        - value: "Capacity - Phos Acid"
+          data_provider: "cru"
+          file_regex: "(?i)(?:npk|phosphate.?fertilizer).*(?:flat.?database|market.?outlook)"
+        - value: "Capacity - Nitrophos"
+          data_provider: "cru"
+          file_regex: "(?i)(?:npk|phosphate.?fertilizer).*(?:flat.?database|market.?outlook)"
+        - value: "Capacity - Steam"
+          data_provider: "cru"
+          file_regex: "(?i)(?:npk|phosphate.?fertilizer).*(?:flat.?database|market.?outlook)"
+        - value: "Capacity - Melt"
+          data_provider: "cru"
+          file_regex: "(?i)(?:npk|phosphate.?fertilizer).*(?:flat.?database|market.?outlook)"
+
+        # ---------- CRU Sulphur (code sheets) ----------
+        - value: "B"
+          data_provider: "cru"
+          file_regex: "(?i)sulphur.*(?:flat.?database|market.?outlook)"
+        - value: "B.1"
+          data_provider: "cru"
+          file_regex: "(?i)sulphur.*(?:flat.?database|market.?outlook)"
+        - value: "B.2"
+          data_provider: "cru"
+          file_regex: "(?i)sulphur.*(?:flat.?database|market.?outlook)"
+        - value: "B.3"
+          data_provider: "cru"
+          file_regex: "(?i)sulphur.*(?:flat.?database|market.?outlook)"
+        - value: "B.4"
+          data_provider: "cru"
+          file_regex: "(?i)sulphur.*(?:flat.?database|market.?outlook)"
+        - value: "B.5"
+          data_provider: "cru"
+          file_regex: "(?i)sulphur.*(?:flat.?database|market.?outlook)"
+        - value: "B.6"
+          data_provider: "cru"
+          file_regex: "(?i)sulphur.*(?:flat.?database|market.?outlook)"
+        - value: "B.7"
+          data_provider: "cru"
+          file_regex: "(?i)sulphur.*(?:flat.?database|market.?outlook)"
+        - value: "B.8"
+          data_provider: "cru"
+          file_regex: "(?i)sulphur.*(?:flat.?database|market.?outlook)"
+        - value: "B.9"
+          data_provider: "cru"
+          file_regex: "(?i)sulphur.*(?:flat.?database|market.?outlook)"
+        - value: "C"
+          data_provider: "cru"
+          file_regex: "(?i)sulphur.*(?:flat.?database|market.?outlook)"
+        - value: "C.1"
+          data_provider: "cru"
+          file_regex: "(?i)sulphur.*(?:flat.?database|market.?outlook)"
+        - value: "C.2"
+          data_provider: "cru"
+          file_regex: "(?i)sulphur.*(?:flat.?database|market.?outlook)"
+        - value: "C.3"
+          data_provider: "cru"
+          file_regex: "(?i)sulphur.*(?:flat.?database|market.?outlook)"
+        - value: "C.4"
+          data_provider: "cru"
+          file_regex: "(?i)sulphur.*(?:flat.?database|market.?outlook)"
+        - value: "Stock Change"
+          data_provider: "cru"
+          file_regex: "(?i)sulphur.*(?:flat.?database|market.?outlook)"
+        - value: "Balance"
+          data_provider: "cru"
+          file_regex: "(?i)sulphur.*(?:flat.?database|market.?outlook)"
+        - value: "Pyrites production"
+          data_provider: "cru"
+          file_regex: "(?i)sulphur.*(?:flat.?database|market.?outlook)"
+        - value: "Smelter production"
+          data_provider: "cru"
+          file_regex: "(?i)sulphur.*(?:flat.?database|market.?outlook)"
+
+      regex:
+        # ---------- Ammonia Outlook: skip NH3 for X / trade matrix sheets ----------
+        - pattern: "^NH3 for .+$"
+          data_provider: "sp"
+          params:
+            skip: true
+        - pattern: "^\\d{4} (port-to-port matrix|Trade Matrix|Sea Trade|Land Trade)$"
+          data_provider: "sp"
+          params:
+            skip: true
+
+        # ---------- Sulphur Outlook: trade matrix (SKIP) ----------
+        - pattern: "^Sulphur Trade Matrix \\d{4}$"
+          data_provider: "sp"
+          params:
+            skip: true
+
+        # ---------- CRU Phosphate Fertilizer (WPA/DAP/MAP/TSP × metric) ----------
+        - pattern: "^(WPA|DAP|MAP|TSP) (Capacity|Production|App Demand|Imports|Exports)$"
+          data_provider: "cru"
+
+        # ---------- CRU NPK/NP/PK × metric ----------
+        - pattern: "^(NPK|NP|PK|NPK\\+NP\\+PK) (Production|App Demand|Imports|Exports)$"
+          data_provider: "cru"
+
+       # ---------- S&P PIEC PhosphateOutlook: timeseries (Product_Suffix) ----------
+        - pattern: "^.+_(Cap_O|Cap_H|P|I|E|D|UR|NR)$"
+          data_provider: "sp"
+ 
+
+  - name: capacity_database
+    description: >
+      Unified caster for plant-level capacity sheets (Company|Plant × Years).
+      S&P: Ammonia "Capacity by plant" (Refinery → plant_name).
+      CRU: ammonia, phosphate-rock, phosphate-fert, npk, sulphur capacity databases.
+      Product & layout auto-detected. entity = company_plant composite.
+    extractor_code: cru_capacity_database_caster.py
+
+    matches:
+      exact:
+        # ---------- S&P Ammonia Outlook: Capacity by plant ----------
+        - value: "Capacity by plant"
+          data_provider: "sp"
+
+        # ---------- CRU: Sheets to SKIP ----------
+        - value: "Table of Contents"
+          data_provider: "cru"
+          params: { skip: true }
+        - value: "Regional Output"
+          data_provider: "cru"
+          params: { skip: true }
+        - value: "Base Case Capacity by Country"
+          data_provider: "cru"
+          params: { skip: true }
+
+        # ---------- CRU Ammonia Capacity Database ----------
+        - value: "Capacity Forecasts"
+          data_provider: "cru"
+        - value: "Net Capacity Forecasts"
+          data_provider: "cru"
+        - value: "Projects"
+          data_provider: "cru"
+
+        # ---------- CRU Phosphate Rock Capacity Database ----------
+        - value: "Capacity Forecasts - Base Case"
+          data_provider: "cru"
+
+        # ---------- CRU Phosphate Fertilizer Capacity Database ----------
+        - value: "WPA"
+          data_provider: "cru"
+        - value: "DAP"
+          data_provider: "cru"
+        - value: "MAP"
+          data_provider: "cru"
+        - value: "TSP"
+          data_provider: "cru"
+        - value: "NPK (Phos acid)"
+          data_provider: "cru"
+
+      regex:
+        # ---------- S&P S-Capacity by plant: SKIP all ----------
+        - pattern: "^S-Capacity by plant .+$"
+          data_provider: "sp"
+          params:
+            skip: true
+  - name: phosphate_flat_database_analytics
+    description: "Extraction dynamique des onglets Flat Database (Capacity, Trade, Demand) pour WPA, DAP, MAP, TSP"
+    extractor_code: "phosphate_fertilizer_market_outlook_may_DATE_flat_database_caster.py"
+    matches:
+      regex:
+        # Cette Regex capture : "WPA Capacity", "DAP Exports", "MAP App Demand", etc.
+        - pattern: "^(WPA|DAP|MAP|TSP) (Capacity|Production|Imports|Exports|App Demand|Apparent Demand)$"
+          data_provider: "cru"
+          file_regex: "phosphate[-_ ]fertilizer[-_ ]market[-_ ]outlook"
+  - name: phosphate_rock_trade_matrices
+    description: "Matrices commerciales (Imports/Exports/Années) pour le Phosphate Rock (CRU)"
+    extractor_code: "phosphate-rock-market-outlook-march-2025-trade-matrices.py"
+    matches:
+      exact:
+        - value: "Imports"
+          data_provider: "cru"
+          file_regex: "^phosphate[-_ ]rock[-_ ]market[-_ ]outlook.*trade[-_ ]matrices.*"
+        - value: "Exports"
+          data_provider: "cru"
+          file_regex: "^phosphate[-_ ]rock[-_ ]market[-_ ]outlook.*trade[-_ ]matrices.*"
+  
+  - name: phosphate_rock_trade_matrices_yearly
+    description: "Matrices commerciales (Années) pour le Phosphate Rock (CRU)"
+    extractor_code: "trade_matrix.py"
+    matches:
+      regex:
+        # Cette Regex capture : "WPA Capacity", "DAP Exports", "MAP App Demand", etc.
+        - pattern: "^20[0-9]{2}$"
+          data_provider: "cru"
+          file_regex: "^phosphate[-_ ]rock[-_ ]market[-_ ]outlook.*trade[-_ ]matrices.*"
+
+  - name: specialty_phosphates_capacity_list
+    description: >
+      Capacity list sheets (company/site entities) from specialty phosphates
+      market outlook database. Header row 3, columns: Region/Country/Company/
+      Site/Product/Status/PGS Scoring + year columns.
+    extractor_code: specialty_phosphates_market_outlook_DATE_database_amended__pwa_tpa_capacity_list.py
+
+    matches:
+      exact:
+        - value: "Contents"
+          params: { skip: true }
+        - value: "Table of Contents"
+          params: { skip: true }
+        - value: "Data Viewer"
+          params: { skip: true }
+
+
+      regex:
+        # ---- SKIP: landing tabs (1-cell product dividers) ----
+        - pattern: "^(PWA TPA|tMAP|P4|LFP|STPP|SPA|APP|DCP|MCP[-_]MDCP)$"
+          params: { skip: true }
+
+        # ---- SKIP: trade matrix tabs ----
+        - pattern: ".*\\d{4}\\s+Trade$"
+          params: { skip: true }
+
+        # ---- Capacity list: specific product group overrides (before generic) ----
+        - pattern: "^PWA TPA Capacity list$"
+          params: { frequency: "annual", product_group: "pwa_tpa", data_provider: "cru" }
+
+        - pattern: "^MCP[-_]MDCP Capacity list$"
+          params: { frequency: "annual", product_group: "mcp_mdcp", data_provider: "cru" }
+
+        - pattern: "^LFP Capacity list$"
+          params: { frequency: "annual", product_group: "lfp_lmfp", data_provider: "cru" }
+
+        # ---- Capacity list: generic (APP, SPA, DCP, tMAP, P4, STPP) ----
+        - pattern: ".*Capacity list$"
+          params: { frequency: "annual", data_provider: "cru" }
+
+  # ===========================================================================
+  # SPECIALTY PHOSPHATES – DATA SHEETS CASTER
+  # Handles Capacity/Production/Demand/Imports/Exports sheets
+  # Region/country-level data (header row 2)
+  # Products: PWA TPA, tMAP, P4, LFP/LMFP, STPP, SPA, DCP, MCP-MDCP
+  # ===========================================================================
+  - name: specialty_phosphates_capacity
+    description: >
+      Data sheets (capacity/production/demand/imports/exports) from specialty
+      phosphates market outlook database. Region/Subregion/Country layout,
+      header row 2 + year columns.
+    extractor_code: specialty_phosphates_market_outlook_DATE_database_amended__pwa_tpa_capacity.py
+
+    matches:
+      regex:
+        # ---- SKIP: landing tabs ----
+        - pattern: "^(PWA TPA|tMAP|P4|LFP|STPP|SPA|APP|DCP|MCP[-_]MDCP)$"
+          params: { skip: true }
+
+        # ---- SKIP: trade matrix tabs ----
+        - pattern: ".*\\d{4}\\s+Trade$"
+          params: { skip: true }
+
+        # ---- DATA: special case LFP P2O5 Demand ----
+        - pattern: "^LFP P2O5 Demand$"
+          params: { frequency: "annual", product_group: "lfp_lmfp", metric_type_override: "demand", data_provider: "cru" }
+
+        # ---- DATA: multi-token product overrides ----
+        - pattern: "^PWA TPA (Capacity|Production|Demand|Imports|Exports)$"
+          params: { frequency: "annual", product_group: "pwa_tpa", data_provider: "cru" }
+
+        - pattern: "^MCP[-_]MDCP (Capacity|Production|Demand|Imports|Exports)$"
+          params: { frequency: "annual", product_group: "mcp_mdcp", data_provider: "cru" }
+
+        - pattern: "^LFP (Capacity|Production)$"
+          params: { frequency: "annual", product_group: "lfp_lmfp", data_provider: "cru" }
+
+        # ---- DATA: generic (all remaining metric sheets) ----
+        - pattern: "^(PWA TPA|tMAP|P4|LFP|STPP|SPA|APP|DCP|MCP[-_]MDCP) (Capacity|Production|Demand|Imports|Exports)$"
+          params: { frequency: "annual", data_provider: "cru" }
+
+  - name: "sp_plant_list"
+    description: "Extracteur plantlist sp datafile"
+    # CORRECTION ICI : 'extractor_code' et pointe vers le fichier .py
+    extractor_code: "plantlist_caster.py"
+    matches:
+    # A. MATCHS EXACTS (Triggers utilisés dans le Runner)
+      exact:
+        - value: "PlantList"
+          data_provider: "sp"
+          file_regex: "Plant|plants?_List|plant list"
+

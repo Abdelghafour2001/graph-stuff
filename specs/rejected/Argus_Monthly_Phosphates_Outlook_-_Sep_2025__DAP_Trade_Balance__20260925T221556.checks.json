@@ -1,0 +1,187 @@
+{
+ "checks": [
+  {
+   "check": "values_parse",
+   "ok": true,
+   "detail": "267 numeric values, 0 non-numeric cells in value columns"
+  },
+  {
+   "check": "covers_whole_table",
+   "ok": true,
+   "detail": "numeric cells just outside table_range: 0 in the 3 rows below, 0 in the 2 columns to the right. Extend the range or confirm a separate table starts there"
+  },
+  {
+   "check": "unit_evidence",
+   "ok": true,
+   "detail": "value_unit 'kt_dap' (read as kt); units evidenced in preamble/header text: ['kt']"
+  },
+  {
+   "check": "no_total_rows",
+   "ok": true,
+   "detail": "rows equal to the sum of the other rows (drop them): []"
+  },
+  {
+   "check": "no_total_columns",
+   "ok": true,
+   "detail": "columns equal to the sum of the other columns (drop them): []"
+  },
+  {
+   "check": "dropped_columns_are_totals_or_empty",
+   "ok": true,
+   "detail": "dropped columns that hold real data (not a total, not empty): []"
+  },
+  {
+   "check": "dropped_rows_are_totals_or_empty",
+   "ok": true,
+   "detail": "dropped rows that are neither empty nor the sum of the kept rows: []"
+  },
+  {
+   "check": "no_subtotal_labels",
+   "ok": false,
+   "detail": "most specific label column mixes regions (subtotals) with countries: ['africa', 'asia', 'central america', 'middle east', 'north america', 'oceania', 'south america', 'south asia', 'west europe']; rows labelled total: []. Use skip_label_kinds: [region] and/or skip_rows_matching"
+  }
+ ],
+ "rows": 267,
+ "sample": [
+  {
+   "region_or_country": "West Europe",
+   "month_or_quarter": "1769.8669809784733",
+   "value": 45.20240365174239,
+   "unit": "kt_dap",
+   "cell": "B7"
+  },
+  {
+   "region_or_country": "West Europe",
+   "month_or_quarter": "1497.0066351291437",
+   "value": 53.99163782587898,
+   "unit": "kt_dap",
+   "cell": "C7"
+  },
+  {
+   "region_or_country": "West Europe",
+   "month_or_quarter": "1142.239611662032",
+   "value": 29.66326002163576,
+   "unit": "kt_dap",
+   "cell": "D7"
+  },
+  {
+   "region_or_country": "West Europe",
+   "month_or_quarter": "3460.723005923316",
+   "value": 212.28273071687897,
+   "unit": "kt_dap",
+   "cell": "E7"
+  },
+  {
+   "region_or_country": "West Europe",
+   "month_or_quarter": "4051.438130154402",
+   "value": 151.32374521907465,
+   "unit": "kt_dap",
+   "cell": "F7"
+  },
+  {
+   "region_or_country": "West Europe",
+   "month_or_quarter": "4733.597995268785",
+   "value": 174.04338451475945,
+   "unit": "kt_dap",
+   "cell": "G7"
+  },
+  {
+   "region_or_country": "Lithuania",
+   "month_or_quarter": "1769.8669809784733",
+   "value": 32.147360814864676,
+   "unit": "kt_dap",
+   "cell": "B8"
+  },
+  {
+   "region_or_country": "Lithuania",
+   "month_or_quarter": "1497.0066351291437",
+   "value": 35.83942043229921,
+   "unit": "kt_dap",
+   "cell": "C8"
+  },
+  {
+   "region_or_country": "Lithuania",
+   "month_or_quarter": "1142.239611662032",
+   "value": 17.21082362058315,
+   "unit": "kt_dap",
+   "cell": "D8"
+  },
+  {
+   "region_or_country": "Lithuania",
+   "month_or_quarter": "3460.723005923316",
+   "value": 135.56611461075377,
+   "unit": "kt_dap",
+   "cell": "E8"
+  },
+  {
+   "region_or_country": "Lithuania",
+   "month_or_quarter": "4051.438130154402",
+   "value": 101.40642156872562,
+   "unit": "kt_dap",
+   "cell": "F8"
+  },
+  {
+   "region_or_country": "Lithuania",
+   "month_or_quarter": "4733.597995268785",
+   "value": 122.01071972868665,
+   "unit": "kt_dap",
+   "cell": "G8"
+  },
+  {
+   "region_or_country": "E Europe, C Asia",
+   "month_or_quarter": "1769.8669809784733",
+   "value": 185.68173775133934,
+   "unit": "kt_dap",
+   "cell": "B9"
+  },
+  {
+   "region_or_country": "E Europe, C Asia",
+   "month_or_quarter": "1497.0066351291437",
+   "value": 204.6603758585323,
+   "unit": "kt_dap",
+   "cell": "C9"
+  },
+  {
+   "region_or_country": "E Europe, C Asia",
+   "month_or_quarter": "1142.239611662032",
+   "value": 125.29043596898445,
+   "unit": "kt_dap",
+   "cell": "D9"
+  },
+  {
+   "region_or_country": "E Europe, C Asia",
+   "month_or_quarter": "3460.723005923316",
+   "value": 645.9793426338734,
+   "unit": "kt_dap",
+   "cell": "E9"
+  },
+  {
+   "region_or_country": "E Europe, C Asia",
+   "month_or_quarter": "4051.438130154402",
+   "value": 554.133462836097,
+   "unit": "kt_dap",
+   "cell": "F9"
+  },
+  {
+   "region_or_country": "E Europe, C Asia",
+   "month_or_quarter": "4733.597995268785",
+   "value": 373.3809745243246,
+   "unit": "kt_dap",
+   "cell": "G9"
+  },
+  {
+   "region_or_country": "Russia",
+   "month_or_quarter": "1769.8669809784733",
+   "value": 148.460734568511,
+   "unit": "kt_dap",
+   "cell": "B10"
+  },
+  {
+   "region_or_country": "Russia",
+   "month_or_quarter": "1497.0066351291437",
+   "value": 164.16332788976834,
+   "unit": "kt_dap",
+   "cell": "C10"
+  }
+ ]
+}

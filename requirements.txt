@@ -1,0 +1,12 @@
+anthropic>=1.8
+fastapi>=0.115
+neo4j>=5.28
+openai>=1.0
+openpyxl>=3.1
+pandas>=2.2
+psycopg[binary]>=3.2
+python-dotenv>=1.0
+pyyaml>=6
+requests>=2.32
+streamlit>=1.38
+uvicorn[standard]>=0.30

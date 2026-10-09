@@ -1,0 +1,187 @@
+{
+ "checks": [
+  {
+   "check": "values_parse",
+   "ok": true,
+   "detail": "186 numeric values, 0 non-numeric cells in value columns"
+  },
+  {
+   "check": "covers_whole_table",
+   "ok": true,
+   "detail": "non-empty cells just outside table_range: 0 in the 3 rows below, 0 in the 2 columns to the right. Extend the range or confirm a separate table starts there"
+  },
+  {
+   "check": "unit_evidence",
+   "ok": true,
+   "detail": "value_unit 'kt_dap' (read as kt); units evidenced in preamble/header text: ['kt']"
+  },
+  {
+   "check": "no_total_rows",
+   "ok": true,
+   "detail": "rows equal to the sum of the other rows (drop them): []"
+  },
+  {
+   "check": "no_total_columns",
+   "ok": true,
+   "detail": "columns equal to the sum of the other columns (drop them): []"
+  },
+  {
+   "check": "dropped_columns_are_totals_or_empty",
+   "ok": true,
+   "detail": "dropped columns that hold real data (not a total, not empty): []"
+  },
+  {
+   "check": "dropped_rows_are_totals_or_empty",
+   "ok": true,
+   "detail": "dropped rows that are neither empty nor the sum of the kept rows: []"
+  },
+  {
+   "check": "no_subtotal_labels",
+   "ok": true,
+   "detail": "most specific label column mixes regions (subtotals) with countries: []; rows labelled total: []. Use skip_label_kinds: [region] and/or skip_rows_matching"
+  }
+ ],
+ "rows": 186,
+ "sample": [
+  {
+   "country_or_region": "Lithuania",
+   "period": "2025-10-01 00:00:00",
+   "value": 32.147360814864676,
+   "unit": "kt_dap",
+   "cell": "B8"
+  },
+  {
+   "country_or_region": "Lithuania",
+   "period": "2025-11-01 00:00:00",
+   "value": 35.83942043229921,
+   "unit": "kt_dap",
+   "cell": "C8"
+  },
+  {
+   "country_or_region": "Lithuania",
+   "period": "2025-12-01 00:00:00",
+   "value": 17.21082362058315,
+   "unit": "kt_dap",
+   "cell": "D8"
+  },
+  {
+   "country_or_region": "Lithuania",
+   "period": "1Q25",
+   "value": 135.56611461075377,
+   "unit": "kt_dap",
+   "cell": "E8"
+  },
+  {
+   "country_or_region": "Lithuania",
+   "period": "2Q26",
+   "value": 101.40642156872562,
+   "unit": "kt_dap",
+   "cell": "F8"
+  },
+  {
+   "country_or_region": "Lithuania",
+   "period": "3Q26",
+   "value": 122.01071972868665,
+   "unit": "kt_dap",
+   "cell": "G8"
+  },
+  {
+   "country_or_region": "E Europe, C Asia",
+   "period": "2025-10-01 00:00:00",
+   "value": 185.68173775133934,
+   "unit": "kt_dap",
+   "cell": "B9"
+  },
+  {
+   "country_or_region": "E Europe, C Asia",
+   "period": "2025-11-01 00:00:00",
+   "value": 204.6603758585323,
+   "unit": "kt_dap",
+   "cell": "C9"
+  },
+  {
+   "country_or_region": "E Europe, C Asia",
+   "period": "2025-12-01 00:00:00",
+   "value": 125.29043596898445,
+   "unit": "kt_dap",
+   "cell": "D9"
+  },
+  {
+   "country_or_region": "E Europe, C Asia",
+   "period": "1Q25",
+   "value": 645.9793426338734,
+   "unit": "kt_dap",
+   "cell": "E9"
+  },
+  {
+   "country_or_region": "E Europe, C Asia",
+   "period": "2Q26",
+   "value": 554.133462836097,
+   "unit": "kt_dap",
+   "cell": "F9"
+  },
+  {
+   "country_or_region": "E Europe, C Asia",
+   "period": "3Q26",
+   "value": 373.3809745243246,
+   "unit": "kt_dap",
+   "cell": "G9"
+  },
+  {
+   "country_or_region": "Russia",
+   "period": "2025-10-01 00:00:00",
+   "value": 148.460734568511,
+   "unit": "kt_dap",
+   "cell": "B10"
+  },
+  {
+   "country_or_region": "Russia",
+   "period": "2025-11-01 00:00:00",
+   "value": 164.16332788976834,
+   "unit": "kt_dap",
+   "cell": "C10"
+  },
+  {
+   "country_or_region": "Russia",
+   "period": "2025-12-01 00:00:00",
+   "value": 115.0,
+   "unit": "kt_dap",
+   "cell": "D10"
+  },
+  {
+   "country_or_region": "Russia",
+   "period": "1Q25",
+   "value": 622.7858596600473,
+   "unit": "kt_dap",
+   "cell": "E10"
+  },
+  {
+   "country_or_region": "Russia",
+   "period": "2Q26",
+   "value": 514.2275343191886,
+   "unit": "kt_dap",
+   "cell": "F10"
+  },
+  {
+   "country_or_region": "Russia",
+   "period": "3Q26",
+   "value": 296.5102687492283,
+   "unit": "kt_dap",
+   "cell": "G10"
+  },
+  {
+   "country_or_region": "Turkey",
+   "period": "2025-10-01 00:00:00",
+   "value": 36.05006118686083,
+   "unit": "kt_dap",
+   "cell": "B11"
+  },
+  {
+   "country_or_region": "Turkey",
+   "period": "2025-11-01 00:00:00",
+   "value": 40.24365957920445,
+   "unit": "kt_dap",
+   "cell": "C11"
+  }
+ ]
+}

@@ -1,0 +1,19 @@
+file: Argus Monthly Ammonia Outlook - October 2025.xlsx
+sheet: Ammonia Production Costs
+table_range: A6:C11
+header_rows: [6]
+label_columns: [A]
+row_dimensions: [supplier]
+column_dimension: metric
+drop_rows: []
+drop_columns: []
+skip_rows_matching: []
+skip_label_kinds: []
+operators:
+  - op: ffill
+    args:
+      target: labels
+  - op: stack
+value_unit: usd/t
+fixed: {product: ammonia, year: 2025}
+notes: Extraction of ammonia production costs by supplier with gas price and fob cost.

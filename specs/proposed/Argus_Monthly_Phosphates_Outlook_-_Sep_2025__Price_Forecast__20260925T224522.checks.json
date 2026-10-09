@@ -1,0 +1,187 @@
+{
+ "checks": [
+  {
+   "check": "values_parse",
+   "ok": true,
+   "detail": "3040 numeric values, 0 non-numeric cells in value columns"
+  },
+  {
+   "check": "covers_whole_table",
+   "ok": true,
+   "detail": "numeric cells just outside table_range: 0 in the 3 rows below, 0 in the 2 columns to the right. Extend the range or confirm a separate table starts there"
+  },
+  {
+   "check": "unit_evidence",
+   "ok": true,
+   "detail": "value_unit 'usd_per_short_ton' = usd_per_short_ton; units evidenced in preamble/header text: ['metric_ton', 'usd_per_short_ton', 'usd_per_ton']; more specific evidenced: []"
+  },
+  {
+   "check": "no_total_rows",
+   "ok": true,
+   "detail": "rows equal to the sum of the other rows of their section (drop them): []"
+  },
+  {
+   "check": "no_total_columns",
+   "ok": true,
+   "detail": "columns equal to the sum of the other columns (drop them): []"
+  },
+  {
+   "check": "dropped_columns_are_totals_or_empty",
+   "ok": true,
+   "detail": "dropped columns that hold real data (not a total, not empty): []"
+  },
+  {
+   "check": "dropped_rows_are_totals_or_empty",
+   "ok": true,
+   "detail": "dropped rows that are not empty, not labelled total, and match no checksum of their section: []"
+  },
+  {
+   "check": "no_subtotal_labels",
+   "ok": true,
+   "detail": "most specific label column mixes regions (subtotals) with countries: []; rows labelled total: []. Use skip_label_kinds: [region] and/or skip_rows_matching"
+  }
+ ],
+ "rows": 3040,
+ "sample": [
+  {
+   "unit": "usd_per_short_ton",
+   "date": "2014-02-01 00:00:00",
+   "price_type": "Low | 441",
+   "value": 495.0,
+   "cell": "B8"
+  },
+  {
+   "unit": "usd_per_short_ton",
+   "date": "2014-02-01 00:00:00",
+   "price_type": "High | 461",
+   "value": 507.5,
+   "cell": "C8"
+  },
+  {
+   "unit": "usd_per_short_ton",
+   "date": "2014-02-01 00:00:00",
+   "price_type": "Low | 433.6",
+   "value": 485.0,
+   "cell": "D8"
+  },
+  {
+   "unit": "usd_per_short_ton",
+   "date": "2014-02-01 00:00:00",
+   "price_type": "High | 442",
+   "value": 490.0,
+   "cell": "E8"
+  },
+  {
+   "unit": "usd_per_short_ton",
+   "date": "2014-02-01 00:00:00",
+   "price_type": "Low | 390",
+   "value": 432.5,
+   "cell": "F8"
+  },
+  {
+   "unit": "usd_per_short_ton",
+   "date": "2014-02-01 00:00:00",
+   "price_type": "High | 405",
+   "value": 438.75,
+   "cell": "G8"
+  },
+  {
+   "unit": "usd_per_short_ton",
+   "date": "2014-02-01 00:00:00",
+   "price_type": "Low | 405",
+   "value": 440.0,
+   "cell": "H8"
+  },
+  {
+   "unit": "usd_per_short_ton",
+   "date": "2014-02-01 00:00:00",
+   "price_type": "High | 425",
+   "value": 482.5,
+   "cell": "I8"
+  },
+  {
+   "unit": "usd_per_short_ton",
+   "date": "2014-02-01 00:00:00",
+   "price_type": "Low | 428",
+   "value": 470.0,
+   "cell": "J8"
+  },
+  {
+   "unit": "usd_per_short_ton",
+   "date": "2014-02-01 00:00:00",
+   "price_type": "High | 440",
+   "value": 485.0,
+   "cell": "K8"
+  },
+  {
+   "unit": "usd_per_short_ton",
+   "date": "2014-02-01 00:00:00",
+   "price_type": "Low | 464",
+   "value": 513.75,
+   "cell": "L8"
+  },
+  {
+   "unit": "usd_per_short_ton",
+   "date": "2014-02-01 00:00:00",
+   "price_type": "High | 476",
+   "value": 518.75,
+   "cell": "M8"
+  },
+  {
+   "unit": "usd_per_short_ton",
+   "date": "2014-02-01 00:00:00",
+   "price_type": "Low | 609",
+   "value": 662.25,
+   "cell": "N8"
+  },
+  {
+   "unit": "usd_per_short_ton",
+   "date": "2014-02-01 00:00:00",
+   "price_type": "High | 609",
+   "value": 662.25,
+   "cell": "O8"
+  },
+  {
+   "unit": "usd_per_short_ton",
+   "date": "2014-02-01 00:00:00",
+   "price_type": "Low | 85",
+   "value": 87.5,
+   "cell": "P8"
+  },
+  {
+   "unit": "usd_per_short_ton",
+   "date": "2014-02-01 00:00:00",
+   "price_type": "High | 130",
+   "value": 130.0,
+   "cell": "Q8"
+  },
+  {
+   "unit": "usd_per_short_ton",
+   "date": "2014-02-01 00:00:00",
+   "price_type": "Low | 410.8",
+   "value": 468.25,
+   "cell": "R8"
+  },
+  {
+   "unit": "usd_per_short_ton",
+   "date": "2014-02-01 00:00:00",
+   "price_type": "High | 421.4",
+   "value": 482.5,
+   "cell": "S8"
+  },
+  {
+   "unit": "usd_per_short_ton",
+   "date": "2014-02-01 00:00:00",
+   "price_type": "Low | 404.2",
+   "value": 425.0,
+   "cell": "T8"
+  },
+  {
+   "unit": "usd_per_short_ton",
+   "date": "2014-02-01 00:00:00",
+   "price_type": "High | 406",
+   "value": 430.0,
+   "cell": "U8"
+  }
+ ]
+}

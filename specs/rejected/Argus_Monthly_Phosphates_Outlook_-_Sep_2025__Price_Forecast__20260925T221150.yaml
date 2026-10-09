@@ -1,0 +1,19 @@
+file: Argus Monthly Phosphates Outlook - Sep 2025.xlsx
+sheet: Price Forecast
+table_range: A5:AV33
+header_rows: [5,6]
+label_columns: [A]
+row_dimensions: [date]
+column_dimension: price_type
+drop_rows: []
+drop_columns: []
+skip_rows_matching: ["copyright"]
+skip_label_kinds: ["region"]
+operators:
+  - op: ffill
+    args:
+      target: header
+  - op: stack
+value_unit: usd/t_product
+fixed: {}
+notes: "Monthly phosphates price forecast including low/high prices for multiple product-country combinations."

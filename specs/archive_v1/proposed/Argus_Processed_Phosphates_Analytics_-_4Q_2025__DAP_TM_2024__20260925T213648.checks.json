@@ -1,0 +1,217 @@
+{
+ "checks": [
+  {
+   "check": "values_parse",
+   "ok": true,
+   "detail": "2178 numeric values, 0 non-numeric cells in value columns"
+  },
+  {
+   "check": "unit_evidence",
+   "ok": true,
+   "detail": "value_unit 'kt_product' (read as kt); units evidenced in preamble/header text: ['kt', 't']"
+  },
+  {
+   "check": "corner_orientation",
+   "ok": true,
+   "detail": "corner cell 'Importers\\Exporters' means rows=importers, columns=exporters; spec has rows=importer, columns=exporter"
+  },
+  {
+   "check": "no_total_rows",
+   "ok": true,
+   "detail": "rows equal to the sum of the other rows (drop them): []"
+  },
+  {
+   "check": "no_total_columns",
+   "ok": true,
+   "detail": "columns equal to the sum of the other columns (drop them): []"
+  },
+  {
+   "check": "no_subtotal_labels",
+   "ok": true,
+   "detail": "region rows mixed with country rows (subtotals, per graph IN_REGION): []; rows labelled total: []"
+  }
+ ],
+ "rows": 2178,
+ "sample": [
+  {
+   "product": "dap",
+   "year": 2024,
+   "importer": null,
+   "exporter": "Total",
+   "value": 16480.01769726248,
+   "unit": "kt_product",
+   "cell": "B7"
+  },
+  {
+   "product": "dap",
+   "year": 2024,
+   "importer": null,
+   "exporter": "Australia",
+   "value": 450.0,
+   "unit": "kt_product",
+   "cell": "C7"
+  },
+  {
+   "product": "dap",
+   "year": 2024,
+   "importer": null,
+   "exporter": "Austria",
+   "value": 0.6,
+   "unit": "kt_product",
+   "cell": "D7"
+  },
+  {
+   "product": "dap",
+   "year": 2024,
+   "importer": null,
+   "exporter": "Belgium",
+   "value": 200.0,
+   "unit": "kt_product",
+   "cell": "E7"
+  },
+  {
+   "product": "dap",
+   "year": 2024,
+   "importer": null,
+   "exporter": "Bulgaria",
+   "value": 27.0,
+   "unit": "kt_product",
+   "cell": "F7"
+  },
+  {
+   "product": "dap",
+   "year": 2024,
+   "importer": null,
+   "exporter": "China",
+   "value": 4563.0,
+   "unit": "kt_product",
+   "cell": "G7"
+  },
+  {
+   "product": "dap",
+   "year": 2024,
+   "importer": null,
+   "exporter": "Colombia",
+   "value": 1.9,
+   "unit": "kt_product",
+   "cell": "H7"
+  },
+  {
+   "product": "dap",
+   "year": 2024,
+   "importer": null,
+   "exporter": "Egypt",
+   "value": 318.0,
+   "unit": "kt_product",
+   "cell": "I7"
+  },
+  {
+   "product": "dap",
+   "year": 2024,
+   "importer": null,
+   "exporter": "Honduras",
+   "value": 1.0,
+   "unit": "kt_product",
+   "cell": "J7"
+  },
+  {
+   "product": "dap",
+   "year": 2024,
+   "importer": null,
+   "exporter": "Jordan",
+   "value": 590.0,
+   "unit": "kt_product",
+   "cell": "K7"
+  },
+  {
+   "product": "dap",
+   "year": 2024,
+   "importer": null,
+   "exporter": "Lithuania",
+   "value": 132.0,
+   "unit": "kt_product",
+   "cell": "L7"
+  },
+  {
+   "product": "dap",
+   "year": 2024,
+   "importer": null,
+   "exporter": "Mexico",
+   "value": 141.0,
+   "unit": "kt_product",
+   "cell": "M7"
+  },
+  {
+   "product": "dap",
+   "year": 2024,
+   "importer": null,
+   "exporter": "Morocco",
+   "value": 3937.3000000000006,
+   "unit": "kt_product",
+   "cell": "N7"
+  },
+  {
+   "product": "dap",
+   "year": 2024,
+   "importer": null,
+   "exporter": "Philippines",
+   "value": 34.0,
+   "unit": "kt_product",
+   "cell": "O7"
+  },
+  {
+   "product": "dap",
+   "year": 2024,
+   "importer": null,
+   "exporter": "Poland",
+   "value": 30.000000000000004,
+   "unit": "kt_product",
+   "cell": "P7"
+  },
+  {
+   "product": "dap",
+   "year": 2024,
+   "importer": null,
+   "exporter": "Russia",
+   "value": 1635.0,
+   "unit": "kt_product",
+   "cell": "Q7"
+  },
+  {
+   "product": "dap",
+   "year": 2024,
+   "importer": null,
+   "exporter": "Saudi Arabia",
+   "value": 3249.9999999999995,
+   "unit": "kt_product",
+   "cell": "R7"
+  },
+  {
+   "product": "dap",
+   "year": 2024,
+   "importer": null,
+   "exporter": "Senegal",
+   "value": 1.8276972624798742,
+   "unit": "kt_product",
+   "cell": "S7"
+  },
+  {
+   "product": "dap",
+   "year": 2024,
+   "importer": null,
+   "exporter": "Tunisia",
+   "value": 231.0,
+   "unit": "kt_product",
+   "cell": "U7"
+  },
+  {
+   "product": "dap",
+   "year": 2024,
+   "importer": null,
+   "exporter": "Turkey",
+   "value": 172.00000000000003,
+   "unit": "kt_product",
+   "cell": "V7"
+  }
+ ]
+}

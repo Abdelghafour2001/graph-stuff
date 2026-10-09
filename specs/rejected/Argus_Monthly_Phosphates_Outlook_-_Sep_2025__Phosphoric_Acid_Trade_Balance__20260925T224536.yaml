@@ -1,0 +1,15 @@
+file: Argus Monthly Phosphates Outlook - Sep 2025.xlsx
+sheet: Phosphoric Acid Trade Balance
+table_range: A6:H26
+header_rows: [6]
+label_columns: [A]
+row_dimensions: [region_or_country]
+column_dimension: period
+drop_rows: []
+drop_columns: []
+skip_rows_matching: ["Balance"]
+skip_label_kinds: []
+operators: [{op: stack}]
+value_unit: kiloton_p2o5
+fixed: {}
+notes: Extraction of monthly phosphoric acid trade balance by region or country for several periods. Rows labeled 'Balance' are skipped as they represent calculated net values.

@@ -1,0 +1,20 @@
+file: phosphate-rock-market-outlook-march-2025-trade-matrices.xlsx
+sheet: Imports
+table_range: A4:AO211
+header_rows: [4,5,6]
+label_columns: [A,B,C]
+row_dimensions: [region, subregion, country]
+column_dimension: year
+drop_rows: [211]
+drop_columns: []
+skip_rows_matching: ["Total"]
+skip_label_kinds: [region]
+value_unit: kt_rock
+fixed: {}
+operators:
+  - op: ffill
+    args: {target: header}
+  - op: ffill
+    args: {target: labels}
+  - op: stack
+notes: "Data in '000 tonnes of rock, phosphate"

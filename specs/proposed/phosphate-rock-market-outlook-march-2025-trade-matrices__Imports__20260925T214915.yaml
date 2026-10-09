@@ -1,0 +1,23 @@
+file: phosphate-rock-market-outlook-march-2025-trade-matrices.xlsx
+sheet: Imports
+table_range: A4:AO211
+header_rows: [4,5,6]
+label_columns: [A,B,C]
+row_dimensions: [region, region, country]
+column_dimension: year
+skip_rows_matching: [total, Total]
+drop_rows: []
+drop_columns: [AO]
+skip_label_kinds: []
+value_unit: kt_rock
+fixed: {}
+operators:
+- op: ffill
+  args:
+    target: labels
+- op: ffill
+  args:
+    target: header
+- op: stack
+  args: {}
+notes: "Extraction of phosphate rock import volumes by country and year; exclude totals and last column AO which might be extra totals."

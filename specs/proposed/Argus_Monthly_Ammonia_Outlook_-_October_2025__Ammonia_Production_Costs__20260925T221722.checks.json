@@ -1,0 +1,117 @@
+{
+ "checks": [
+  {
+   "check": "values_parse",
+   "ok": true,
+   "detail": "10 numeric values, 0 non-numeric cells in value columns"
+  },
+  {
+   "check": "covers_whole_table",
+   "ok": true,
+   "detail": "numeric cells just outside table_range: 0 in the 3 rows below, 0 in the 2 columns to the right. Extend the range or confirm a separate table starts there"
+  },
+  {
+   "check": "unit_evidence",
+   "ok": true,
+   "detail": "value_unit 'usd/t_product' (read as usd/t); units evidenced in preamble/header text: ['t', 'usd/t']"
+  },
+  {
+   "check": "no_total_rows",
+   "ok": true,
+   "detail": "rows equal to the sum of the other rows (drop them): []"
+  },
+  {
+   "check": "no_total_columns",
+   "ok": true,
+   "detail": "columns equal to the sum of the other columns (drop them): []"
+  },
+  {
+   "check": "dropped_columns_are_totals_or_empty",
+   "ok": true,
+   "detail": "dropped columns that hold real data (not a total, not empty): []"
+  },
+  {
+   "check": "dropped_rows_are_totals_or_empty",
+   "ok": true,
+   "detail": "dropped rows that are neither empty nor the sum of the kept rows: []"
+  },
+  {
+   "check": "no_subtotal_labels",
+   "ok": true,
+   "detail": "most specific label column mixes regions (subtotals) with countries: []; rows labelled total: []. Use skip_label_kinds: [region] and/or skip_rows_matching"
+  }
+ ],
+ "rows": 10,
+ "sample": [
+  {
+   "site": "Russia (TOAZ, via Ust-Luga)",
+   "metric": "Natural gas price $/mn Btu",
+   "value": 2.3380215647629257,
+   "unit": "usd/t_product",
+   "cell": "B7"
+  },
+  {
+   "site": "Russia (TOAZ, via Ust-Luga)",
+   "metric": "$/t fob",
+   "value": 289.90792000698207,
+   "unit": "usd/t_product",
+   "cell": "C7"
+  },
+  {
+   "site": "Russia (Eurochem, via Ust-Luga)",
+   "metric": "Natural gas price $/mn Btu",
+   "value": 2.515555677932875,
+   "unit": "usd/t_product",
+   "cell": "B8"
+  },
+  {
+   "site": "Russia (Eurochem, via Ust-Luga)",
+   "metric": "$/t fob",
+   "value": 158.5210173137089,
+   "unit": "usd/t_product",
+   "cell": "C8"
+  },
+  {
+   "site": "USA",
+   "metric": "Natural gas price $/mn Btu",
+   "value": 3.1160000000000005,
+   "unit": "usd/t_product",
+   "cell": "B9"
+  },
+  {
+   "site": "USA",
+   "metric": "$/t fob",
+   "value": 191.29719950375747,
+   "unit": "usd/t_product",
+   "cell": "C9"
+  },
+  {
+   "site": "Trinidad and Tobago",
+   "metric": "Natural gas price $/mn Btu",
+   "value": 5.9203125,
+   "unit": "usd/t_product",
+   "cell": "B10"
+  },
+  {
+   "site": "Trinidad and Tobago",
+   "metric": "$/t fob",
+   "value": 240.58740278327653,
+   "unit": "usd/t_product",
+   "cell": "C10"
+  },
+  {
+   "site": "Indonesia",
+   "metric": "Natural gas price $/mn Btu",
+   "value": 6.0,
+   "unit": "usd/t_product",
+   "cell": "B11"
+  },
+  {
+   "site": "Indonesia",
+   "metric": "$/t fob",
+   "value": 247.04335191819632,
+   "unit": "usd/t_product",
+   "cell": "C11"
+  }
+ ]
+}

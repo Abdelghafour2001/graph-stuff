@@ -1,0 +1,21 @@
+file: phosphate-rock-market-outlook-march-2025-trade-matrices.xlsx
+sheet: Imports
+table_range: A4:AO211
+header_rows: [4,5,6]
+label_columns: [A, B, C]
+row_dimensions: [region, subregion, country]
+column_dimension: year
+value_unit: kt_rock
+drop_rows: [209,210,211]
+drop_columns: []
+skip_rows_matching: ['Total']
+fixed: {}
+operators:
+- op: ffill
+  args:
+    target: header
+- op: ffill
+  args:
+    target: labels
+- op: stack
+notes: "Multiple header rows with years 2000-2012. Labels in 3 columns: region, subregion, country. Last 3 rows totals, to drop."

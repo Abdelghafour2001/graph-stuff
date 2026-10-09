@@ -1,0 +1,110 @@
+{
+ "checks": [
+  {
+   "check": "values_parse",
+   "ok": true,
+   "detail": "7 numeric values, 0 non-numeric cells in value columns"
+  },
+  {
+   "check": "covers_whole_table",
+   "ok": false,
+   "detail": "non-empty cells just outside table_range: 0 in the 3 rows below, 8 in the 2 columns to the right. Extend the range or confirm a separate table starts there"
+  },
+  {
+   "check": "unit_evidence",
+   "ok": true,
+   "detail": "value_unit 'kt_ammonia' (read as kt); units evidenced in preamble/header text: ['kt', 't']"
+  },
+  {
+   "check": "no_total_rows",
+   "ok": true,
+   "detail": "rows equal to the sum of the other rows (drop them): []"
+  },
+  {
+   "check": "no_total_columns",
+   "ok": true,
+   "detail": "columns equal to the sum of the other columns (drop them): []"
+  },
+  {
+   "check": "dropped_columns_are_totals_or_empty",
+   "ok": true,
+   "detail": "dropped columns that hold real data (not a total, not empty): []"
+  },
+  {
+   "check": "dropped_rows_are_totals_or_empty",
+   "ok": true,
+   "detail": "dropped rows that are neither empty nor the sum of the kept rows: []"
+  },
+  {
+   "check": "no_subtotal_labels",
+   "ok": true,
+   "detail": "most specific label column mixes regions (subtotals) with countries: []; rows labelled total: []. Use skip_label_kinds: [region] and/or skip_rows_matching"
+  }
+ ],
+ "rows": 7,
+ "sample": [
+  {
+   "company": "TogliattiAzot",
+   "location": "Togliatti, Russia",
+   "date_expected": "2024",
+   "capacity_kt_per_year": "Capacity '000 t/yr*",
+   "value": -400.0,
+   "unit": "kt_ammonia",
+   "cell": "D7"
+  },
+  {
+   "company": "Gulf Coast Ammonia",
+   "location": "Texas City, USA",
+   "date_expected": "2025",
+   "capacity_kt_per_year": "Capacity '000 t/yr*",
+   "value": 1260.0,
+   "unit": "kt_ammonia",
+   "cell": "D8"
+  },
+  {
+   "company": "HPC",
+   "location": "Hengam, Iran",
+   "date_expected": "2025",
+   "capacity_kt_per_year": "Capacity '000 t/yr*",
+   "value": -759.0,
+   "unit": "kt_ammonia",
+   "cell": "D9"
+  },
+  {
+   "company": "Shchekinoazot",
+   "location": "Tula, Russia",
+   "date_expected": "2025",
+   "capacity_kt_per_year": "Capacity '000 t/yr*",
+   "value": 119.0,
+   "unit": "kt_ammonia",
+   "cell": "D10"
+  },
+  {
+   "company": "Gemlik Gubre",
+   "location": "Gemlik, Turkey",
+   "date_expected": "2025",
+   "capacity_kt_per_year": "Capacity '000 t/yr*",
+   "value": -102.0,
+   "unit": "kt_ammonia",
+   "cell": "D11"
+  },
+  {
+   "company": "Woodside",
+   "location": "Beaumont, TX, USA",
+   "date_expected": "2025",
+   "capacity_kt_per_year": "Capacity '000 t/yr*",
+   "value": 1100.0,
+   "unit": "kt_ammonia",
+   "cell": "D12"
+  },
+  {
+   "company": "Ma'aden",
+   "location": "Ras al-Khair, Saudi Arabia",
+   "date_expected": "2026",
+   "capacity_kt_per_year": "Capacity '000 t/yr*",
+   "value": -278.0,
+   "unit": "kt_ammonia",
+   "cell": "D13"
+  }
+ ]
+}

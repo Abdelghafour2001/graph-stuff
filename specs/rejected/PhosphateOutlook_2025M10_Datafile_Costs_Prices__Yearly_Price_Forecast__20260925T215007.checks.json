@@ -1,0 +1,177 @@
+{
+ "checks": [
+  {
+   "check": "values_parse",
+   "ok": false,
+   "detail": "409 numeric values, 81 non-numeric cells in value columns"
+  },
+  {
+   "check": "covers_whole_table",
+   "ok": false,
+   "detail": "non-empty cells just outside table_range: 105 in the 3 rows below, 32 in the 2 columns to the right. Extend the range or confirm a separate table starts there"
+  },
+  {
+   "check": "unit_evidence",
+   "ok": false,
+   "detail": "value_unit 'usd/t_product' (read as usd/t); units evidenced in preamble/header text: ['t']"
+  },
+  {
+   "check": "no_total_rows",
+   "ok": true,
+   "detail": "rows equal to the sum of the other rows (drop them): []"
+  },
+  {
+   "check": "no_total_columns",
+   "ok": true,
+   "detail": "columns equal to the sum of the other columns (drop them): []"
+  },
+  {
+   "check": "no_subtotal_labels",
+   "ok": true,
+   "detail": "most specific label column mixes regions (subtotals) with countries: []; rows labelled total: []. Use skip_label_kinds: [region] and/or skip_rows_matching"
+  }
+ ],
+ "rows": 409,
+ "sample": [
+  {
+   "year": "",
+   "product_region_incoterm": "Year | 2010",
+   "value": 2011.0,
+   "unit": "usd/t_product",
+   "cell": "B13"
+  },
+  {
+   "year": "",
+   "product_region_incoterm": "AP US Domestic | 497.06188190207445",
+   "value": 618.7214202909734,
+   "unit": "usd/t_product",
+   "cell": "C13"
+  },
+  {
+   "year": "",
+   "product_region_incoterm": "DAP DAP NE China | 0",
+   "value": 0.0,
+   "unit": "usd/t_product",
+   "cell": "D13"
+  },
+  {
+   "year": "",
+   "product_region_incoterm": "DAP fca Benelux | 0",
+   "value": 0.0,
+   "unit": "usd/t_product",
+   "cell": "E13"
+  },
+  {
+   "year": "",
+   "product_region_incoterm": "DAP cfr India | 459.90208333333334",
+   "value": 613.2520833333333,
+   "unit": "usd/t_product",
+   "cell": "F13"
+  },
+  {
+   "year": "",
+   "product_region_incoterm": "MAP cfr Brazil | 0",
+   "value": 0.0,
+   "unit": "usd/t_product",
+   "cell": "G13"
+  },
+  {
+   "year": "",
+   "product_region_incoterm": "fob US Gulf | 497.83333333333337",
+   "value": 620.4583333333334,
+   "unit": "usd/t_product",
+   "cell": "H13"
+  },
+  {
+   "year": "",
+   "product_region_incoterm": "fob Northern Africa | 499.70833333333337",
+   "value": 652.0833333333334,
+   "unit": "usd/t_product",
+   "cell": "I13"
+  },
+  {
+   "year": "",
+   "product_region_incoterm": "fob China | 497.95833333333337",
+   "value": 471.4583333333333,
+   "unit": "usd/t_product",
+   "cell": "J13"
+  },
+  {
+   "year": "",
+   "product_region_incoterm": "fob Middle East | 473.875",
+   "value": 595.375,
+   "unit": "usd/t_product",
+   "cell": "K13"
+  },
+  {
+   "year": "",
+   "product_region_incoterm": "fob Baltic | 484.83333333333337",
+   "value": 625.375,
+   "unit": "usd/t_product",
+   "cell": "L13"
+  },
+  {
+   "year": "",
+   "product_region_incoterm": "16:16:16 fob Eastern Europe | 341.7481684981685",
+   "value": 455.01282051282055,
+   "unit": "usd/t_product",
+   "cell": "M13"
+  },
+  {
+   "year": "",
+   "product_region_incoterm": "fob Morocco | 0",
+   "value": 0.0,
+   "unit": "usd/t_product",
+   "cell": "N13"
+  },
+  {
+   "year": "",
+   "product_region_incoterm": "12:38:13S fob Tampa | 0",
+   "value": 622.26,
+   "unit": "usd/t_product",
+   "cell": "O13"
+  },
+  {
+   "year": "",
+   "product_region_incoterm": "12:46:7S fob Morocco | 0",
+   "value": 0.0,
+   "unit": "usd/t_product",
+   "cell": "P13"
+  },
+  {
+   "year": "",
+   "product_region_incoterm": "19:38:7S fob Morocco | 0",
+   "value": 0.0,
+   "unit": "usd/t_product",
+   "cell": "Q13"
+  },
+  {
+   "year": "",
+   "product_region_incoterm": "11:44 cfr Brazil | 547.5050469695142",
+   "value": 442.69330809806263,
+   "unit": "usd/t_product",
+   "cell": "R13"
+  },
+  {
+   "year": "",
+   "product_region_incoterm": "TSP fob North Africa | 423.8697344322344",
+   "value": 563.3814102564103,
+   "unit": "usd/t_product",
+   "cell": "S13"
+  },
+  {
+   "year": "",
+   "product_region_incoterm": "TSP fob China | 321.5177015428088",
+   "value": 478.3989842587288,
+   "unit": "usd/t_product",
+   "cell": "T13"
+  },
+  {
+   "year": "",
+   "product_region_incoterm": "TSP cfr Brazil | 327.9308628437165",
+   "value": 480.25193663239145,
+   "unit": "usd/t_product",
+   "cell": "U13"
+  }
+ ]
+}

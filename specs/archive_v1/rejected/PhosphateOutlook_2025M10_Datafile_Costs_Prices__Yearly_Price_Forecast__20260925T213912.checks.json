@@ -1,0 +1,172 @@
+{
+ "checks": [
+  {
+   "check": "values_parse",
+   "ok": true,
+   "detail": "2313 numeric values, 106 non-numeric cells in value columns"
+  },
+  {
+   "check": "unit_evidence",
+   "ok": false,
+   "detail": "value_unit 'usd/t' (read as usd/t); units evidenced in preamble/header text: ['t']"
+  },
+  {
+   "check": "no_total_rows",
+   "ok": true,
+   "detail": "rows equal to the sum of the other rows (drop them): []"
+  },
+  {
+   "check": "no_total_columns",
+   "ok": true,
+   "detail": "columns equal to the sum of the other columns (drop them): []"
+  },
+  {
+   "check": "no_subtotal_labels",
+   "ok": true,
+   "detail": "region rows mixed with country rows (subtotals, per graph IN_REGION): []; rows labelled total: []"
+  }
+ ],
+ "rows": 2313,
+ "sample": [
+  {
+   "year": "",
+   "price_location_product": "Year",
+   "value": 2010.0,
+   "unit": "usd/t",
+   "cell": "B12"
+  },
+  {
+   "year": "",
+   "price_location_product": "DAP | AP US Domestic",
+   "value": 497.06188190207445,
+   "unit": "usd/t",
+   "cell": "C12"
+  },
+  {
+   "year": "",
+   "price_location_product": "DAP | DAP DAP NE China",
+   "value": 0.0,
+   "unit": "usd/t",
+   "cell": "D12"
+  },
+  {
+   "year": "",
+   "price_location_product": "DAP | DAP fca Benelux",
+   "value": 0.0,
+   "unit": "usd/t",
+   "cell": "E12"
+  },
+  {
+   "year": "",
+   "price_location_product": "DAP | DAP cfr India",
+   "value": 459.90208333333334,
+   "unit": "usd/t",
+   "cell": "F12"
+  },
+  {
+   "year": "",
+   "price_location_product": "MAP | MAP cfr Brazil",
+   "value": 0.0,
+   "unit": "usd/t",
+   "cell": "G12"
+  },
+  {
+   "year": "",
+   "price_location_product": "DAP/MAP | fob US Gulf",
+   "value": 497.83333333333337,
+   "unit": "usd/t",
+   "cell": "H12"
+  },
+  {
+   "year": "",
+   "price_location_product": "DAP/MAP | fob Northern Africa",
+   "value": 499.70833333333337,
+   "unit": "usd/t",
+   "cell": "I12"
+  },
+  {
+   "year": "",
+   "price_location_product": "DAP/MAP | fob China",
+   "value": 497.95833333333337,
+   "unit": "usd/t",
+   "cell": "J12"
+  },
+  {
+   "year": "",
+   "price_location_product": "DAP/MAP | fob Middle East",
+   "value": 473.875,
+   "unit": "usd/t",
+   "cell": "K12"
+  },
+  {
+   "year": "",
+   "price_location_product": "DAP/MAP | fob Baltic",
+   "value": 484.83333333333337,
+   "unit": "usd/t",
+   "cell": "L12"
+  },
+  {
+   "year": "",
+   "price_location_product": "NPK | 16:16:16 fob Eastern Europe",
+   "value": 341.7481684981685,
+   "unit": "usd/t",
+   "cell": "M12"
+  },
+  {
+   "year": "",
+   "price_location_product": "NPK | fob Morocco",
+   "value": 0.0,
+   "unit": "usd/t",
+   "cell": "N12"
+  },
+  {
+   "year": "",
+   "price_location_product": "NPS | 12:38:13S fob Tampa",
+   "value": 0.0,
+   "unit": "usd/t",
+   "cell": "O12"
+  },
+  {
+   "year": "",
+   "price_location_product": "NPS | 12:46:7S fob Morocco",
+   "value": 0.0,
+   "unit": "usd/t",
+   "cell": "P12"
+  },
+  {
+   "year": "",
+   "price_location_product": "NPS | 19:38:7S fob Morocco",
+   "value": 0.0,
+   "unit": "usd/t",
+   "cell": "Q12"
+  },
+  {
+   "year": "",
+   "price_location_product": "NP | 11:44 cfr Brazil",
+   "value": 547.5050469695142,
+   "unit": "usd/t",
+   "cell": "R12"
+  },
+  {
+   "year": "",
+   "price_location_product": "TSP | TSP fob North Africa",
+   "value": 423.8697344322344,
+   "unit": "usd/t",
+   "cell": "S12"
+  },
+  {
+   "year": "",
+   "price_location_product": "TSP | TSP fob China",
+   "value": 321.5177015428088,
+   "unit": "usd/t",
+   "cell": "T12"
+  },
+  {
+   "year": "",
+   "price_location_product": "TSP | TSP cfr Brazil",
+   "value": 327.9308628437165,
+   "unit": "usd/t",
+   "cell": "U12"
+  }
+ ]
+}

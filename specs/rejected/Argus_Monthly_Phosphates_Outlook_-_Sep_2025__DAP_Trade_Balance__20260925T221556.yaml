@@ -1,0 +1,20 @@
+file: Argus Monthly Phosphates Outlook - Sep 2025.xlsx
+sheet: DAP Trade Balance
+table_range: A6:G76
+header_rows: [6]
+label_columns: [A]
+row_dimensions: [region_or_country]
+column_dimension: month_or_quarter
+skip_rows_matching: ["total"]
+drop_rows: []
+drop_columns: []
+skip_label_kinds: []
+value_unit: kt_dap
+fixed: {}
+operators:
+  - op: ffill
+    args:
+      target: labels
+  - op: stack
+    args: {}
+notes: Extraction of monthly and quarterly DAP trade balance by region/country, units in '000t'. Skip rows labeled as totals.

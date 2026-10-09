@@ -1,0 +1,2191 @@
+################################################################################
+# FICHIER DE RÉFÉRENCE CENTRAL (REFERENTIAL.YAML)
+# ------------------------------------------------------------------------------
+# DERNIÈRE MISE À JOUR : Ajout des Mappings Géographiques & Alias
+#
+# 1. COUNTRY ALIASES : Permet de corriger les variations (ex: usa -> united_states).
+# 2. COUNTRY REGION MAPPING : Associe chaque pays standardisé à sa macro-région.
+# 3. LISTE COUNTRY : Mise à jour pour matcher les standards (ex: uae -> united_arab_emirates).
+################################################################################
+ 
+#############################
+#### Sources referential ####
+#############################
+sources:
+  - argus
+  - cru
+  - s&p
+  - ifa
+  - google_patents
+  - fertecon
+  - fertilizer_week
+ 
+##############################
+#### Entities referential ####
+##############################
+companies:
+  # --- Majors & Global ---
+  - yara
+  - nutrium
+  - mosaic
+  - ocp
+  - eurochem
+  - maaden
+  - sabic
+  - cf_industries
+  - phosagro
+  - uralchem
+  - k_plus_s
+  - icl
+  - basf
+  - borealis
+  - oci
+  - qafco
+  - mopco
+  - fertiberia
+  - helm
+  - trammo
+  - ameropa
+  - koch
+  - indorama
+  - braskem
+  - petrobras
+ 
+  # --- Regional / Specific ---
+  - abu_qir
+  - achema
+  - acron
+  - aditya_birla
+  - agrium
+  - agroferti
+  - agropolychim
+  - alexfert
+  - ammonia_pjsc
+  - angarsk
+  - aragonesas_agro
+  - azomures
+  - beferco
+  - belaruskali
+  - brunei_fertilizer_industries
+  - bunge
+  - cargill
+  - cf_industries_holdings
+  - chambal
+  - chernigov
+  - chevron
+  - chimco
+  - cibra
+  - cnooc
+  - coromandel
+  - deepak
+  - dorchim
+  - duslo
+  - ebic
+  - el_nasr
+  - fact
+  - fanavaran
+  - fertil
+  - fertiglobe
+  - fertipar
+  - ffc
+  - gacl
+  - gazprom
+  - gnfc
+  - gpic
+  - gpn
+  - grodno_azot
+  - grupa_azoty
+  - gsfc
+  - guomao
+  - haifa
+  - heringer
+  - hindalco
+  - iffco
+  - igsas
+  - incopa
+  - ineos
+  - irish_fertilizer_industries
+  - jpmc
+  - kribhco
+  - kuibyshevazot
+  - lat_nitrogen
+  - lonza
+  - lotte
+  - louis_dreyfus
+  - marubeni
+  - metinvest
+  - microchemie
+  - mitsui
+  - navin
+  - neochim
+  - nfl
+  - nippon
+  - noranda
+  - omifco
+  - orica
+  - parna_raya
+  - pck
+  - petkim
+  - petronas
+  - phosphoric_fertilizers_industry
+  - pic
+  - poltava
+  - profertil
+  - proman
+  - pupuk_indonesia
+  - pupuk_kaltim
+  - razi
+  - rossosh
+  - rovnoazot
+  - salalah
+  - san_miguel
+  - sasol
+  - shchekinoazot
+  - sichuan_meifeng
+  - sinopec
+  - skw
+  - socar
+  - solvay
+  - sorfert
+  - spic
+  - stickstoffwerke_piesteritz
+  - sumitomo
+  - terra_nitrogen
+  - tessenderlo
+  - timac
+  - togliattiazot
+  - toros
+  - uralchem
+  - vale
+  - valero
+  - westlake
+  - yph
+  - zaklady_azotowe
+  - zuari
+ 
+#############################################
+#### Geographic Referentials (Standardized) ####
+#############################################
+ 
+# 1. LISTE DES PAYS STANDARDISÉS (A-Z)
+# Note: Les alias (usa, uae) ont été remplacés par leur forme canonique (united_states, united_arab_emirates)
+country:
+  - afghanistan
+  - albania
+  - algeria
+  - andorra
+  - angola
+  - antigua_and_barbuda
+  - argentina
+  - armenia
+  - australia
+  - austria
+  - azerbaijan
+  - bahamas
+  - bahrain
+  - bangladesh
+  - barbados
+  - belarus
+  - belgium
+  - belize
+  - benin
+  - bhutan
+  - bolivia
+  - bosnia_and_herzegovina
+  - botswana
+  - brazil
+  - brunei
+  - bulgaria
+  - burkina_faso
+  - burundi
+  - cabo_verde
+  - cambodia
+  - cameroon
+  - canada
+  - central_african_republic
+  - chad
+  - chile
+  - china
+  - colombia
+  - comoros
+  - congo
+  - costa_rica
+  - ivory_coast             # Standardisé (ex: cote_d_ivoire)
+  - croatia
+  - cuba
+  - cyprus
+  - czech_republic          # Standardisé (ex: czechia)
+  - denmark
+  - djibouti
+  - dominica
+  - dominican_republic
+  - dr_congo                # Standardisé (ex: drc)
+  - ecuador
+  - egypt
+  - el_salvador
+  - equatorial_guinea
+  - eritrea
+  - estonia
+  - eswatini
+  - ethiopia
+  - fiji
+  - finland
+  - france
+  - gabon
+  - gambia
+  - georgia
+  - germany
+  - ghana
+  - greece
+  - grenada
+  - guatemala
+  - guinea
+  - guinea_bissau
+  - guyana
+  - haiti
+  - honduras
+  - hungary
+  - iceland
+  - india
+  - indonesia
+  - iran
+  - iraq
+  - ireland
+  - israel
+  - italy
+  - jamaica
+  - japan
+  - jordan
+  - kazakhstan
+  - kenya
+  - kiribati
+  - kuwait
+  - kyrgyzstan
+  - laos
+  - latvia
+  - lebanon
+  - lesotho
+  - liberia
+  - libya
+  - liechtenstein
+  - lithuania
+  - luxembourg
+  - madagascar
+  - malawi
+  - macedonia
+  - malaysia
+  - maldives
+  - mali
+  - malta
+  - marshall_islands
+  - mauritania
+  - mauritius
+  - mexico
+  - micronesia
+  - moldova
+  - monaco
+  - mongolia
+  - montenegro
+  - morocco
+  - mozambique
+  - myanmar
+  - namibia
+  - nauru
+  - nepal
+  - netherlands
+  - new_zealand
+  - nicaragua
+  - niger
+  - nigeria
+  - north_korea
+  - north_macedonia
+  - norway
+  - oman
+  - pakistan
+  - palau
+  - panama
+  - papua_new_guinea
+  - paraguay
+  - peru
+  - philippines
+  - poland
+  - portugal
+  - qatar
+  - romania
+  - russia
+  - rwanda
+  - saint_kitts_and_nevis
+  - saint_lucia
+  - saint_vincent_and_the_grenadines
+  - samoa
+  - san_marino
+  - sao_tome_and_principe
+  - saudi_arabia
+  - senegal
+  - serbia
+  - seychelles
+  - sierra_leone
+  - singapore
+  - slovakia
+  - slovenia
+  - solomon_islands
+  - somalia
+  - south_africa            # Standardisé (ex: rsa)
+  - south_korea             # Standardisé (ex: korea)
+  - south_sudan
+  - spain
+  - sri_lanka
+  - sudan
+  - suriname
+  - sweden
+  - switzerland
+  - syria
+  - taiwan
+  - tajikistan
+  - tanzania
+  - thailand
+  - timor_leste
+  - togo
+  - tonga
+  - trinidad_and_tobago
+  - tunisia
+  - turkey
+  - turkmenistan
+  - tuvalu
+  - uganda
+  - ukraine
+  - united_arab_emirates    # Standardisé (ex: uae)
+  - united_kingdom          # Standardisé (ex: uk)
+  - united_states           # Standardisé (ex: usa)
+  - uruguay
+  - uzbekistan
+  - vanuatu
+  - vatican_city
+  - venezuela
+  - vietnam
+  - yemen
+  - zambia
+  - zimbabwe
+  - gibraltar
+  - kosovo
+  - palestine
+  - greenland
+  - hong_kong
+  - macao
+  - puerto_rico
+  - guadeloupe
+  - martinique
+  - reunion
+  - mayotte
+  - new_caledonia
+  - french_guiana
+  - french_polynesia
+  - french_southern_territories
+  - saint_barthelemy
+  - saint_martin
+  - saint_pierre_and_miquelon
+  - svalbard_and_jan_mayen
+  - american_samoa
+  - bermuda
+  - cayman_islands
+  - turks_and_caicos_islands
+  - virgin_islands_us
+  - virgin_islands_british
+  - aland_islands
+  - anguilla
+  - aruba
+  - bonaire_sint_eustatius_and_saba
+  - bouvet_island
+  - british_indian_ocean_territory
+  - christmas_island
+  - cocos_keeling_islands
+  - cook_islands
+  - curacao
+  - falkland_islands
+  - faroe_islands
+  - guam
+  - guernsey_island
+  - heard_island_and_mcdonald_islands
+  - isle_of_man
+  - jersey_island
+  - montserrat
+  - niue
+  - norfolk_island
+  - northern_mariana_islands
+  - pitcairn
+  - south_georgia_and_the_south_sandwich_islands
+  - sint_maarten
+  - tokelau
+  - united_states_minor_outlying_islands
+  - wallis_and_futuna
+  - saint_helena_ascension_and_tristan_da_cunha
+# 2. ALIAS GÉOGRAPHIQUES (CORRECTIONS AUTOMATIQUES)
+# Permet de nettoyer les inputs avant mapping
+country_aliases:
+  # --- Abbreviations / common ---
+  usa: united_states
+  congo_-_roc: congo
+  congo__roc: congo
+  congo___roc: congo
+  congo__drc: dr_congo
+  congo___drc: dr_congo
+  palestinian_territory: palestine
+  brunei_darussalam: brunei
+  bonaire,_sint_eustatius_and_saba: bonaire_sint_eustatius_and_saba
+  cocos_(keeling)_islands: cocos_keeling_islands
+  saint_helena,_ascension_and_tristan_da_cunha: saint_helena_ascension_and_tristan_da_cunha
+  western_sahara: morocco
+  western sahara: morocco
+  us: united_states
+  u_s_a: united_states
+  u.s.a: united_states
+  u.s.: united_states
+  uk: united_kingdom
+  uae: united_arab_emirates
+  rsa: south_africa
+  russian_federation: russia
+  china_peoples_republic_of: china
+  india_30_days: india
+  martinque: martinique
+  italy__199: italy
+  greece__21: greece
+  south_africa_245: south_africa
+  bosnia__herzegoina: bosnia_and_herzegovina
+  bosnia: bosnia_and_herzegovina
+  bosnia__herzegovina: bosnia_and_herzegovina
+  luxemburg: luxembourg
+  romaina: romania
+  moldavia: moldova
+  guadaloupe: guadeloupe
+  # --- Congo disambiguation ---
+  drc: dr_congo
+  congo_kinshasa: dr_congo
+  democratic_republic_of_the_congo: dr_congo
+  republic_of_the_congo: congo
+ 
+  # --- Korea / Vietnam / Slovakia / Czech ---
+  korea: south_korea
+  viet_nam: vietnam
+  slovak_republic: slovakia
+  czechia: czech_republic
+  korea_rep_of: south_korea
+  korea_rep: south_korea
+ 
+  # --- Côte d'Ivoire ---
+  cote_d_ivoire: ivory_coast
+  brunei_darussalam: brunei
+  cote_divoire: ivory_coast
+  ivorycoast: ivory_coast
+  cote_d'ivoire: ivory_coast
+ 
+  # --- Micronesia ---
+  federated_states_of_micronesia: micronesia
+  mauritatia: mauritania
+ 
+  # --- Guinea-Bissau / Laos / Timor ---
+  guineabissau: guinea_bissau
+  guinea-bissau: guinea_bissau
+  guinea_bissau_is: guinea_bissau
+  timor-leste: timor_leste
+  lao_peoples_democratic_republic: laos
+  lao_people_s_democratic_republic: laos
+  lao_people's_democratic_republic: laos
+  timorleste: timor_leste
+  east_timor: timor_leste
+  trinidad: trinidad_and_tobago
+  united_states_virgin_islands: virgin_islands_us
+  us_virgin_islands: virgin_islands_us
+  # --- Cabo Verde ---
+  cape_verde: cabo_verde
+ 
+  # --- Eswatini ---
+  swaziland: eswatini
+ 
+  # --- China naming noise ---
+  taiwan_china: taiwan
+  china_mainland: china
+ 
+  # --- Virgin Islands variants ---
+  virgin_islands_u.s.: virgin_islands_us
+  "virgin_islands_(u.s.)": virgin_islands_us
+  british_virgin_islands: virgin_islands_british
+  "virgin_islands_(british)": virgin_islands_british
+  macau: macao
+  wallis_and_futuna_islands: wallis_and_futuna
+ 
+  # --- Legacy / Dissolved Countries ---
+  soviet_union: russia
+  ussr: russia
+  u.s.s.r: russia
+  usssr: russia
+  yugoslavia: serbia_and_montenegro
+  yugoslavian: serbia_and_montenegro
+  czechoslovakia: czech_republic
+  czech_and_slovak: czech_republic
+  east_germany: germany
+  eastern_germany: germany
+  ddr: germany
+  gdr: germany
+ 
+  # --- Alias supplémentaires pour le fichier NPK flat database CRU ---
+  bosnia_&_herzegovina: bosnia_and_herzegovina
+  dapbosnia_&_herzegovina: bosnia_and_herzegovina
+  mapbosnia_&_herzegovina: bosnia_and_herzegovina
+  taiwan,_china: taiwan
+  macedonia: north_macedonia
+ 
+  # --- NOISE / non-countries from Argus/exports tables ---
+  geographically_unassigned_cleanrelated_consumption: geographically_unassigned
+  geographically_unassigned_cleanrelated_capacity: geographically_unassigned
+  geographically_unassigned_cleanrelated_production: geographically_unassigned
+  geographically_unassigned_cleanrelated_imports: geographically_unassigned
+  geographically_unassigned_cleanrelated_exports: geographically_unassigned
+  geographically_unassigned: geographically_unassigned
+  # latin_america_caribbean: geographically_unassigned
+  # central_and_south_america: geographically_unassigned
+  # "central_&_south_america": geographically_unassigned
+  # central_south_america: geographically_unassigned
+  data_in_000_tonnes_kcl_per_year: geographically_unassigned
+  data_in_000_tonnes_product: geographically_unassigned
+  copyright_c_2025_argus_media_group: geographically_unassigned
+  total: geographically_unassigned
+  region: geographically_unassigned
+
+  kaz_border: kazakhstan
+  china_foodgrade: china
+  china_food_grade: china
+  china_polyphosphoric: china
+  belgium_techgrade: belgium
+  belgium_colagrade: belgium
+  usa_spa: united_states
+  usa_pwa: united_states
+  usa_mga: united_states
+
+  sudan_(former): sudan_former
+  korea_south: south_korea
+  taiwan_china: taiwan
+  # serbia_and_montenegro: serbia
+
+# 3. MAPPING MACRO-RÉGIONS
+# Associe chaque pays standardisé à sa région économique
+country_region_mapping:
+  # NORTH AMERICA
+  united_states: north_america
+  canada: north_america
+  mexico: north_america
+ 
+  # SOUTH AMERICA
+  brazil: south_america
+  argentina: south_america
+  chile: south_america
+  peru: south_america
+  colombia: south_america
+  venezuela: south_america
+  uruguay: south_america
+  paraguay: south_america
+  ecuador: south_america
+  bolivia: south_america
+  guyana: south_america
+  suriname: south_america
+  argentina_uruguay: south_america
+ 
+  # CENTRAL AMERICA
+  panama: central_america
+  costa_rica: central_america
+  guatemala: central_america
+  honduras: central_america
+  nicaragua: central_america
+  el_salvador: central_america
+  belize: central_america
+  trinidad_and_tobago: central_america
+  cuba: central_america
+  dominican_republic: central_america
+  jamaica: central_america
+  bahamas: caribbean
+  haiti: caribbean
+ 
+  # WESTERN EUROPE
+  luxembourg: western_europe
+  france: western_europe
+  germany: western_europe
+  united_kingdom: western_europe
+  spain: western_europe
+  italy: western_europe
+  netherlands: western_europe
+  belgium: western_europe
+  switzerland: western_europe
+  austria: western_europe
+  portugal: western_europe
+  ireland: western_europe
+  norway: western_europe
+  sweden: western_europe
+  finland: western_europe
+  denmark: western_europe
+  greece: western_europe
+  iceland: western_europe
+  luxembourg: western_europe
+  malta: western_europe
+ 
+  # EASTERN EUROPE / CIS / BLACK SEA
+  russia: cis
+  ukraine: cis
+  belarus: cis
+  kazakhstan: cis
+  uzbekistan: cis
+  turkmenistan: cis
+  azerbaijan: cis
+  georgia: cis
+  poland: eastern_europe
+  romania: eastern_europe
+  bulgaria: eastern_europe
+  hungary: eastern_europe
+  czech_republic: eastern_europe
+  slovakia: eastern_europe
+  lithuania: eastern_europe
+  latvia: eastern_europe
+  estonia: eastern_europe
+  serbia: eastern_europe
+  croatia: eastern_europe
+  slovenia: eastern_europe
+  albania: southern_europe
+  bosnia_and_herzegovina: southern_europe
+  montenegro: southern_europe
+  north_macedonia: southern_europe
+  moldova: eastern_europe
+ 
+  # TURKEY / WEST ASIA
+  turkey: western_asia
+  cyprus: western_asia
+  armenia: western_asia
+ 
+  # NORTH AFRICA
+  morocco: north_africa
+  algeria: north_africa
+  tunisia: north_africa
+  egypt: north_africa
+  libya: north_africa
+ 
+  # WEST AFRICA
+  nigeria: west_africa
+  ghana: west_africa
+  ivory_coast: west_africa
+  senegal: west_africa
+  togo: west_africa
+  benin: west_africa
+  mali: west_africa
+  burkina_faso: west_africa
+  niger: west_africa
+  guinea: west_africa
+  liberia: west_africa
+  sierra_leone: west_africa
+  mauritania: west_africa
+  cameroon: west_africa
+ 
+  # EAST AFRICA
+  kenya: east_africa
+  tanzania: east_africa
+  ethiopia: east_africa
+  uganda: east_africa
+  rwanda: east_africa
+  sudan: east_africa
+  djibouti: east_africa
+  somalia: east_africa
+ 
+  # SOUTHERN AFRICA
+  south_africa: southern_africa
+  mozambique: southern_africa
+  zambia: southern_africa
+  zimbabwe: southern_africa
+  namibia: southern_africa
+  botswana: southern_africa
+  madagascar: southern_africa
+  angola: southern_africa
+  dr_congo: central_africa
+ 
+  # MIDDLE EAST
+  saudi_arabia: middle_east
+  qatar: middle_east
+  united_arab_emirates: middle_east
+  oman: middle_east
+  jordan: middle_east
+  israel: middle_east
+  iran: middle_east
+  iraq: middle_east
+  kuwait: middle_east
+  yemen: middle_east
+  bahrain: middle_east
+  lebanon: middle_east
+  syria: middle_east
+ 
+  # SOUTH ASIA
+  india: south_asia
+  pakistan: south_asia
+  bangladesh: south_asia
+  sri_lanka: south_asia
+  nepal: south_asia
+ 
+  # EAST ASIA
+  china: east_asia
+  japan: east_asia
+  south_korea: east_asia
+  north_korea: east_asia
+  taiwan: east_asia
+  mongolia: east_asia
+  japan_south_korea: east_asia
+ 
+  # SOUTH EAST ASIA
+  vietnam: south_east_asia
+  thailand: south_east_asia
+  indonesia: south_east_asia
+  malaysia: south_east_asia
+  philippines: south_east_asia
+  singapore: south_east_asia
+  myanmar: south_east_asia
+  cambodia: south_east_asia
+  laos: south_east_asia
+  brunei: south_east_asia
+  timor_leste: south_east_asia
+ 
+  # OCEANIA
+  australia: oceania
+  new_zealand: oceania
+  papua_new_guinea: oceania
+  # Disputed
+  gibraltar: western_europe          # via UK
+  kosovo: eastern_europe             # or your own bucket
+  palestine: middle_east
+  greenland: western_europe          # usually grouped with Europe
+  hong_kong: east_asia
+  macao: east_asia
+  puerto_rico: central_america
+  guadeloupe: central_america
+  martinique: central_america
+  reunion: east_africa
+  mayotte: east_africa
+  new_caledonia: oceania
+  french_guiana: south_america
+  french_polynesia: oceania
+  american_samoa: oceania
+  bermuda: north_america
+  cayman_islands: central_america
+  turks_and_caicos_islands: central_america
+  virgin_islands_us: central_america
+  virgin_islands_british: central_america
+  aland_islands: northern_europe
+  anguilla: caribbean
+  aruba: caribbean
+  bonaire_sint_eustatius_and_saba: caribbean
+  bouvet_island: antarctica
+  christmas_island: oceania
+  cocos_keeling_islands: oceania
+  cook_islands: oceania
+  curacao: caribbean
+  falkland_islands: south_america
+  faroe_islands: northern_europe
+  guam: micronesia
+  micronesia: micronesia
+  guernsey_island: northern_europe
+  isle_of_man: northern_europe
+  jersey_island: northern_europe
+  montserrat: caribbean
+  niue: oceania
+  norfolk_island: oceania
+  pitcairn: oceania
+  south_georgia_and_the_south_sandwich_islands: south_america
+  sint_maarten: caribbean
+  tokelau: oceania
+  united_states_minor_outlying_islands: oceania
+  wallis_and_futuna: oceania
+  saint_helena_ascension_and_tristan_da_cunha: east_africa
+  macedonia: southern_europe
+  serbia_and_montenegro: southern_europe
+ 
+  cabo_verde: west_africa
+  gambia: west_africa
+  guinea_bissau: west_africa
+ 
+  burundi: east_africa
+  eritrea: east_africa
+  malawi: east_africa
+  south_sudan: east_africa
+  comoros: east_africa
+  seychelles: east_africa
+ 
+  mauritius: southern_africa
+  eswatini: southern_africa
+  lesotho: southern_africa
+ 
+  central_african_republic: central_africa
+  chad: central_africa
+  equatorial_guinea: central_africa
+  gabon: central_africa
+  sao_tome_and_principe: central_africa
+ 
+  kyrgyzstan: russia_and_central_asia
+  tajikistan: russia_and_central_asia
+ 
+  afghanistan: south_asia
+  bhutan: south_asia
+  maldives: south_asia
+ 
+  nauru: micronesia
+ 
+  # CARIBBEAN
+  antigua_and_barbuda: caribbean
+  barbados: caribbean
+  dominica: caribbean
+  grenada: caribbean
+  saint_kitts_and_nevis: caribbean
+  saint_lucia: caribbean
+  saint_vincent_and_the_grenadines: caribbean
+  saint_barthelemy: caribbean
+  saint_martin: caribbean
+ 
+  # SOUTHERN EUROPE
+  andorra: southern_europe
+  san_marino: southern_europe
+  vatican_city: southern_europe
+  monaco: western_europe
+  liechtenstein: western_europe
+ 
+  # OCEANIA (additional)
+  fiji: oceania
+  kiribati: oceania
+  samoa: oceania
+  solomon_islands: oceania
+  tonga: oceania
+  tuvalu: oceania
+  vanuatu: oceania
+  british_indian_ocean_territory: oceania
+  heard_island_and_mcdonald_islands: oceania
+  northern_mariana_islands: micronesia
+  marshall_islands: micronesia
+  palau: micronesia
+ 
+  # ADDITIONAL
+  french_southern_territories: east_africa
+  saint_pierre_and_miquelon: north_america
+  svalbard_and_jan_mayen: northern_europe
+ 
+# 4. TRADING HUBS & REGIONS SPECIFIQUES
+# (Combiné: Macro-régions + Hubs commerciaux historiques)
+regions:
+  # --- Canonicals added from DB / compat ---
+  - pacific_islands_trust_territory
+  - world
+  - australasia
+  - central_eastern_europe
+  - central_and_south_america
+  - europe_cis
+  - russia_and_central_asia
+  - micronesia
+ 
+  # --- Canonicals hubs / combos ---
+ 
+  - baltic_sea_black_sea
+ 
+  # Hubs commerciaux (legacy kept)
+  - nola
+  - us_gulf
+  - south_east_asia
+  - baltic
+  - red_sea
+  - black_sea
+  - middle_east
+ 
+  # Macro-régions
+  - north_america
+  - south_america
+  - central_america
+  - western_europe
+  - eastern_europe
+  - cis
+  - western_asia
+  - north_africa
+  - west_africa
+  - east_africa
+  - southern_africa
+  - central_africa
+  - south_asia
+  - east_asia
+  - central_asia
+  - oceania
+  - benelux # Belgium, Netherlands, Luxembourg
+  # directional canonicals (pour gérer nw_asia, etc.)
+  - north_west_asia
+  - north_east_asia
+  - south_west_asia
+  - south_east_asia
+  # legacy / high-level macros for backward compatibility
+  - europe
+  - africa
+  - asia
+  - americas
+  - eurasia
+  - antarctica
+  - northern_europe
+  - southern_europe
+  - australia_and_new_zealand
+  - caribbean
+  - melanesia
+  - polynesia
+  - other_australasia
+  - latin_america_caribbean
+
+legacy_countries:
+  - soviet_union
+  - yugoslavia
+  - czechoslovakia
+  - east_germany
+ 
+region_aliases:
+  # -------------------------------------------------
+  # Garbage / placeholders -> world
+  # -------------------------------------------------
+  "": world
+  nan: world
+  none: world
+  null: world
+  undefined: world
+  unidentified: world
+  total: world
+  region: world
+  global: world
+  worldwide: world
+  world: world
+  worldtotal: world
+  total_world_capacity: world
+ 
+  # -------------------------------------------------
+  # High-level macros
+  # -------------------------------------------------
+  europe: europe
+  eu: europe
+  eur: europe
+ 
+  africa: africa
+  afr: africa
+  north_afica: north_africa
+ 
+  asia: asia
+  as: asia
+ 
+  americas: americas
+  america: americas
+  the_americas: americas
+ 
+  eurasia: eurasia
+  euroasia: eurasia
+  eur_asia: eurasia
+  eur-asia: eurasia
+ 
+  antarctica: antarctica
+  antartica: antarctica
+  antarctic: antarctica
+ 
+  # -------------------------------------------------
+  # Additional "other" / "unspecified" variants -> canonical mapping
+  # -------------------------------------------------
+  #other_western_europe: western_europe
+  unspecified_western_europe: western_europe
+  #other_southern_europe: southern_europe
+  unspecified_southern_europe: southern_europe
+  #other_northern_europe: northern_europe
+  unspecified_northern_europe: northern_europe
+  #other_eastern_europe: eastern_europe
+  unspecified_eastern_europe: eastern_europe
+  #other_europe: europe
+  unspecified_europe: europe
+ 
+  #other_eurasia: eurasia
+  unspecified_eurasia: eurasia
+ 
+  #other_northern_africa: north_africa
+  unspecified_northern_africa: north_africa
+  #other_western_africa: west_africa
+  unspecified_western_africa: west_africa
+  #other_eastern_africa: east_africa
+  unspecified_eastern_africa: east_africa
+  #other_central_africa: central_africa
+  unspecified_central_africa: central_africa
+  #other_southern_africa: southern_africa
+  unspecified_southern_africa: southern_africa
+  #other_africa: africa
+  unspecified_africa: africa
+ 
+  #other_middle_east: middle_east
+  unspecified_middle_east: middle_east
+ 
+  #other_central_asia: russia_and_central_asia
+  unspecified_central_asia: russia_and_central_asia
+  #other_southern_asia: south_asia
+  unspecified_southern_asia: south_asia
+  #other_eastern_asia: east_asia
+  unspecified_eastern_asia: east_asia
+  #other_southeast_asia: south_east_asia
+  unspecified_southeast_asia: south_east_asia
+ 
+  #other_oceania: oceania
+  unspecified_oceania: oceania
+ 
+  #other_north_america: north_america
+  unspecified_north_america: north_america
+  #other_caribbean: caribbean
+  unspecified_caribbean: caribbean
+  #other_central_america: central_america
+  unspecified_central_america: central_america
+  #other_south_america: south_america
+  unspecified_south_america: south_america
+  #other_latin_america: south_america
+  unspecified_latin_america: south_america
+ 
+  # small hub / legacy aliases
+  nw_europe_eurt: north_west_europe
+  nw_europe_eur_t: north_west_europe
+  # nw_europe_excl_duty: north_west_europe
+  # nw_europe_incl_duty: north_west_europe
+  # southeast_asia_incl_aus: south_east_asia
+
+ 
+  mediterranean: mediterranean
+ 
+  # -------------------------------------------------
+  # Americas macro-regions
+  # -------------------------------------------------
+  north_america: north_america
+  north america: north_america
+  north-america: north_america
+  n_america: north_america
+  n.america: north_america
+  n america: north_america
+  namerica: north_america
+  northern_america: north_america
+ 
+  central_america: central_america
+  central america: central_america
+  central-america: central_america
+  c_america: central_america
+  c.america: central_america
+  c america: central_america
+ 
+  south_america: south_america
+  south america: south_america
+  south-america: south_america
+  s_america: south_america
+  s.america: south_america
+  s america: south_america
+  samerica: south_america
+  southern_america: south_america
+  latin_america: south_america
+  latin america: south_america
+  latam: south_america
+ 
+  central_and_south_america: central_and_south_america
+  "central_&_south_america": central_and_south_america
+  central_south_america: central_and_south_america
+  central south america: central_and_south_america
+  central-south-america: central_and_south_america
+  central_southamerica: central_and_south_america
+  central__south_america: central_and_south_america
+  central_south_am: central_and_south_america
+  c_s_america: central_and_south_america
+  central_and_south_am: central_and_south_america
+ 
+  caribbean: caribbean
+  caribe: caribbean
+  caraibes: caribbean
+  caraïbes: caribbean
+  west_indies: caribbean
+  west indies: caribbean
+  west-indies: caribbean
+  us_domestic_nolaflorida : us_domestic
+  us_domestic_nola_florida : us_domestic
+ 
+  north_africa_half: north_africa
+  middle_east_half: middle_east
+  vancouver_half: vancouver
+ 
+  nw_mexico: north_west_mexico
+  se_mexico: south_east_mexico
+  # -------------------------------------------------
+  # Europe macro-regions
+  # -------------------------------------------------
+  western_europe: western_europe
+  western europe: western_europe
+  western-europe: western_europe
+  west_europe: western_europe
+  west europe: western_europe
+  west-europe: western_europe
+  w_europe: western_europe
+  w europe: western_europe
+  europe_west: western_europe
+  europe west: western_europe
+  europe-west: western_europe
+ 
+  eastern_europe: eastern_europe
+  eastern europe: eastern_europe
+  eastern-europe: eastern_europe
+  east_europe: eastern_europe
+  east europe: eastern_europe
+  east-europe: eastern_europe
+  e_europe: eastern_europe
+  e europe: eastern_europe
+  europe_east: eastern_europe
+  europe east: eastern_europe
+  europe-east: eastern_europe
+ 
+  northern_europe: northern_europe
+  northern europe: northern_europe
+  northern-europe: northern_europe
+  north_europe: northern_europe
+  north europe: northern_europe
+  north-europe: northern_europe
+  n_europe: northern_europe
+  n europe: northern_europe
+  europe_north: northern_europe
+ 
+  southern_europe: southern_europe
+  southern europe: southern_europe
+  southern-europe: southern_europe
+  south_europe: southern_europe
+  south europe: southern_europe
+  south-europe: southern_europe
+  s_europe: southern_europe
+  s europe: southern_europe
+  europe_south: southern_europe
+ 
+  # NW Europe hub (market)
+  nw_europe: north_west_europe
+  nw europe: north_west_europe
+  nw-europe: north_west_europe
+  n_w_europe: north_west_europe
+  n-w_europe: north_west_europe
+  n.w.europe: north_west_europe
+  nwe: north_west_europe
+  northwest_europe: north_west_europe
+  north west europe: north_west_europe
+  north-west europe: north_west_europe
+  north-west-europe: north_west_europe
+  north_west_europe: north_west_europe
+  northwestern_europe: north_west_europe
+  "nw europe": north_west_europe
+  "northwest europe": north_west_europe
+  "n.w. europe": north_west_europe
+  nw_europe_ex_vessel: north_west_europe
+  nw_europe_non_food: north_west_europe
+  nw_europe_marine: north_west_europe
+  nw_europe_duty_paid: north_west_europe
+  nw_europe_duty_paid_eur_t: north_west_europe
+  # Central/Eastern Europe (DB)
+  central_eastern_europe: central_eastern_europe
+  central eastern europe: central_eastern_europe
+  central-eastern-europe: central_eastern_europe
+  ce_europe: central_eastern_europe
+  c_e_europe: central_eastern_europe
+ 
+  # CIS + composites
+  cis: cis
+  c.i.s: cis
+  fsu: cis
+  former_soviet_union: cis
+  former soviet union: cis
+  commonwealth_of_independent_states: cis
+  commonwealth of independent states: cis
+  europe__cis: europe_cis
+  central__south_america: central_and_south_america
+  lesser_antilles: caribbean  
+ 
+  europe_cis: europe_cis
+  europe cis: europe_cis
+  europe-cis: europe_cis
+  european_cis: europe_cis
+  eu_cis: europe_cis
+  baltics: baltic
+ 
+  russia_and_central_asia: russia_and_central_asia
+  russia_central_asia: russia_and_central_asia
+  russia central asia: russia_and_central_asia
+  russia-central-asia: russia_and_central_asia
+  ru_central_asia: russia_and_central_asia
+  central_asia_russia: russia_and_central_asia
+  russia_and_central_as: russia_and_central_asia
+ 
+  # -------------------------------------------------
+  # Africa macro-regions
+  # -------------------------------------------------
+  north_africa: north_africa
+  north africa: north_africa
+  north-africa: north_africa
+  northern_africa: north_africa
+  northern africa: north_africa
+  n_africa: north_africa
+  n africa: north_africa
+  nafrica: north_africa
+  maghreb: north_africa
+  afrique_du_nord: north_africa
+  afrique du nord: north_africa
+ 
+  west_africa: west_africa
+  west africa: west_africa
+  west-africa: west_africa
+  western_africa: west_africa
+  western africa: west_africa
+  w_africa: west_africa
+  w africa: west_africa
+  wafrica: west_africa
+  afrique_de_l_ouest: west_africa
+  afrique de l ouest: west_africa
+ 
+  east_africa: east_africa
+  east africa: east_africa
+  east-africa: east_africa
+  eastern_africa: east_africa
+  eastern africa: east_africa
+  e_africa: east_africa
+  e africa: east_africa
+  eafrica: east_africa
+  horn_of_africa: east_africa
+  horn of africa: east_africa
+  hoa: east_africa
+  afrique_de_l_est: east_africa
+  afrique de l est: east_africa
+ 
+  southern_africa: southern_africa
+  southern africa: southern_africa
+  southern-africa: southern_africa
+  south_africa_region: southern_africa
+  south africa region: southern_africa
+  s_africa: southern_africa
+  s africa: southern_africa
+  safra: southern_africa
+  afrique_australe: southern_africa
+  afrique australe: southern_africa
+ 
+  central_africa: central_africa
+  central africa: central_africa
+  central-africa: central_africa
+  middle_africa: central_africa
+  middle africa: central_africa
+  c_africa: central_africa
+  c africa: central_africa
+  cafrica: central_africa
+  afrique_centrale: central_africa
+  afrique centrale: central_africa
+ 
+  # -------------------------------------------------
+  # Asia macro-regions + directional Asia (NEW canonicals)
+  # -------------------------------------------------
+  western_asia: western_asia
+  western asia: western_asia
+  western-asia: western_asia
+  west_asia: western_asia
+  west asia: western_asia
+  west-asia: western_asia
+  w_asia: western_asia
+  w asia: western_asia
+ 
+  south_asia: south_asia
+  south asia: south_asia
+  south-asia: south_asia
+  southern_asia: south_asia
+  southern asia: south_asia
+  s_asia: south_asia
+  s asia: south_asia
+  indian_subcontinent: south_asia
+  indian subcontinent: south_asia
+ 
+  east_asia: east_asia
+  east asia: east_asia
+  east-asia: east_asia
+  eastern_asia: east_asia
+  eastern asia: east_asia
+  e_asia: east_asia
+  e asia: east_asia
+  far_east: east_asia
+  far east: east_asia
+ 
+  # hub canonical already: south_east_asia
+  south_east_asia: south_east_asia
+  south east asia: south_east_asia
+  south-east asia: south_east_asia
+  south-eastern_asia: south_east_asia
+  south-east-asia: south_east_asia
+  southeast_asia: south_east_asia
+  southeast asia: south_east_asia
+  south_eastasia: south_east_asia
+  southeastern_asia: south_east_asia
+  se_asia: south_east_asia
+  s_e_asia: south_east_asia
+  sea: south_east_asia
+  asean: south_east_asia
+ 
+  # directional canonicals (requested: nw_asia -> north_west_asia)
+  north_west_asia: north_west_asia
+  north west asia: north_west_asia
+  north-west asia: north_west_asia
+  north-west-asia: north_west_asia
+  northwest_asia: north_west_asia
+  northwest asia: north_west_asia
+  northwestern_asia: north_west_asia
+  nw_asia: north_west_asia
+  nw asia: north_west_asia
+  nw-asia: north_west_asia
+  n_w_asia: north_west_asia
+  n.w._asia: north_west_asia
+  w_n_asia: north_west_asia
+  west_north_asia: north_west_asia
+  west north asia: north_west_asia
+  asia_nw: north_west_asia
+  asia northwest: north_west_asia
+  asia_northwest: north_west_asia
+ 
+  north_east_asia: north_east_asia
+  north east asia: north_east_asia
+  north-east asia: north_east_asia
+  #other_northeast_asia: north_east_asia
+  northeast_asia: north_east_asia
+  northeast asia: north_east_asia
+  northeastern_asia: north_east_asia
+  ne_asia: north_east_asia
+  ne asia: north_east_asia
+  ne-asia: north_east_asia
+  n_e_asia: north_east_asia
+  e_n_asia: north_east_asia
+  asia_ne: north_east_asia
+  asia_northeast: north_east_asia
+ 
+  south_west_asia: south_west_asia
+  south west asia: south_west_asia
+  south-west asia: south_west_asia
+  southwest_asia: south_west_asia
+  sw_asia: south_west_asia
+  sw asia: south_west_asia
+  s_w_asia: south_west_asia
+  w_s_asia: south_west_asia
+  asia_sw: south_west_asia
+ 
+  southeast_asia_dir: south_east_asia
+  se_asia_dir: south_east_asia
+ 
+  # Middle East hub (kept distinct)
+  middle_east: middle_east
+  middle east: middle_east
+  middle-east: middle_east
+  middleeast: middle_east
+  mideast: middle_east
+  me: middle_east
+  mena: middle_east
+ 
+  # CHINA
+  ne_china: north_east_china
+  southwest_china_furnace: south_west_china
+ 
+  # -------------------------------------------------
+  # Oceania + subregions
+  # -------------------------------------------------
+  oceania: oceania
+  ocn: oceania
+  christmas_island: oceania
+ 
+  australasia: australasia
+  australasia_region: australasia
+  #other_australasia: australasia
+ 
+  australia_and_new_zealand: australia_and_new_zealand
+  australia and new zealand: australia_and_new_zealand
+  australia & new zealand: australia_and_new_zealand
+  australia_new_zealand: australia_and_new_zealand
+  australia-new-zealand: australia_and_new_zealand
+  anz: australia_and_new_zealand
+  aus_nz: australia_and_new_zealand
+ 
+  micronesia: micronesia
+  micro-nesia: micronesia
+ 
+  melanesia: melanesia
+  polynesia: polynesia
+ 
+  # -------------------------------------------------
+  # Trading hubs / maritime (market)
+  # -------------------------------------------------
+  us_gulf: us_gulf
+  us gulf: us_gulf
+  us-gulf: us_gulf
+  u.s._gulf: us_gulf
+  u.s. gulf: us_gulf
+  gulf_coast: us_gulf
+  gulf coast: us_gulf
+  us_gulf_coast: us_gulf
+  usg: us_gulf
+ 
+  nola: nola
+  new_orleans: nola
+  new orleans: nola
+  new-orleans: nola
+  nol: nola
+  new_orleans_barge: nola
+  nola_barge: nola
+
+
+  ec_us: us_east_coast
+  ec_afr_and_mea: east_central_africa_and_middle_east
+  sse_asia: south_southeast_asia
+  ec_india: east_coast_india
+  n_se_asia: north_and_southeast_asia
+
+ 
+ 
+ 
+ 
+  wc_india: west_coast_india
+  wc india: west_coast_india
+  west_coast_india: west_coast_india
+  west coast india: west_coast_india
+  w_coast_india: west_coast_india
+  wci: west_coast_india
+  india_west_coast: west_coast_india
+ 
+  baltic: baltic
+  baltic_sea: baltic
+  baltic sea: baltic
+  baltic-sea: baltic
+ 
+  red_sea: red_sea
+  red sea: red_sea
+  red-sea: red_sea
+  redsea: red_sea
+ 
+  black_sea: black_sea
+  black sea: black_sea
+  black-sea: black_sea
+  blacksea: black_sea
+ 
+  # -------------------------------------------------
+  # Your special composite mappings (kept)
+  # -------------------------------------------------
+  baltic_sea_black_sea: baltic_sea_black_sea
+  baltic_black_sea: baltic_sea_black_sea
+  balticblack_sea: baltic_sea_black_sea
+  baltic_sea_blacksea: baltic_sea_black_sea
+  balticsea_black_sea: baltic_sea_black_sea
+  balticsea_blacksea: baltic_sea_black_sea
+  black_sea_steel_grade: baltic_sea_black_sea
+ 
+ 
+  # -------------------------------------------------
+  # Safer unknown bucket (optional but recommended)
+  # -------------------------------------------------
+  unknown: world
+  unspecified: world
+ 
+  # -------------------------------------------------
+  # Mediterranean pricing language (FW/Argus style)
+  # -------------------------------------------------
+  med: southern_europe
+  "med.": southern_europe
+  "west med": western_mediterranean
+  "west_med": western_mediterranean
+  "western med": western_mediterranean
+  "east med": eastern_mediterranean
+  "east_med": eastern_mediterranean
+  "eastern med": eastern_mediterranean
+ 
+  # -------------------------------------------------
+  # US Gulf (split macro hub into sub-hubs)
+  # -------------------------------------------------
+  "us gulf nola": nola
+  "us_gulf_nola": nola
+  "us_gulf_nola_barge": nola
+  "new orleans gulf": nola
+  "new-orleans gulf": nola
+  "nola gulf": nola
+ 
+ 
+ 
+  "central florida": us_gulf
+  "us central florida": us_gulf
+ 
+ 
+  # -------------------------------------------------
+  # North Africa ports / Morocco
+  # -------------------------------------------------
+  jorf: north_africa
+  "jorf lasfar": north_africa
+  "jorf-lasfar": north_africa
+  "jorf_lasfar": north_africa
+ 
+  "north africa coast": north_africa
+  "north-africa coast": north_africa
+  maghreb_coast: north_africa
+ 
+  # -------------------------------------------------
+  # Middle East Gulf / Red Sea phrasing
+  # -------------------------------------------------
+  "arabian gulf": middle_east
+  "persian gulf": middle_east
+  "gulf region": middle_east
+  jubail: middle_east
+  "ras al khair": middle_east
+  ras_al_khair: middle_east
+ 
+  # -------------------------------------------------
+  # China market phrasing (FW/Argus style)
+  # -------------------------------------------------
+  "east china": east_asia
+  "south china": east_asia
+  "china inland": east_asia
+  "inland china": east_asia
+ 
+  # -------------------------------------------------
+  # India (coasts are common in pricing)
+  # -------------------------------------------------
+  "west coast india": west_coast_india
+  "east coast india": east_coast_india
+  mundra: west_coast_india
+ 
+  # -------------------------------------------------
+  # Black Sea / Baltic port phrasing
+  # -------------------------------------------------
+  yuzhnyy: black_sea
+  "black sea ports": black_sea
+  "baltic ports": baltic
+  "baltic/black sea": baltic_sea_black_sea
+  "baltic - black sea": baltic_sea_black_sea
+  "baltic & black sea": baltic_sea_black_sea
+
+  ap_us_domestic: us_domestic
+cities:
+  - terneuzenghent
+  - new_orleans
+  - vancouver
+  - mundra
+  - yuzhnyy
+  - pivdenny_yuzhny
+  - jubail
+  - ras_al_khair
+  - jorf_lasfar
+  - hong_kong
+  - yunnan_china
+  - st_louis
+  - tulsa
+  - cincinnati
+  - twin_cities
+  - great_lakes
+  - texas_coast
+  - arkansas_river
+  - southern_plains
+  - midwest
+  - pacific_nw
+  - rouen
+  - ghent
+  - terneuzen
+  - tampa
+ 
+city_mapping_country:
+  terneuzenghent: belgium
+  new_orleans: united_states
+  vancouver: canada
+  mundra: india
+  yuzhnyy: ukraine
+  pivdenny_yuzhny: ukraine
+  jubail: saudi_arabia
+  ras_al_khair: saudi_arabia
+  jorf_lasfar: morocco
+  hong_kong: china
+  yunnan_china: china
+  tampa: united_states
+city_aliase:
+  hongkong: hong_kong
+  hong_kong_sar: hong_kong
+  "tampa, fl": tampa
+  "tampa usa": tampa
+  "tampa_usa": tampa
+  tampa_us: tampa
+  tampa_usa: tampa
+  tampa usa: tampa
+  tampa-usa: tampa
+  tampa_: tampa
+  us_tampa: tampa
+city_mapping_regions:
+  tampa: us_gulf
+ 
+hub:
+  - us_gulf_tampa
+hub_aliases:
+ 
+  tampaus_gulf: us_gulf_tampa
+  "us gulf tampa": us_gulf_tampa
+  "us_gulf_tampa": us_gulf_tampa
+  "tampa gulf": us_gulf_tampa
+  us_golf_tampa: us_gulf_tampa
+  tampa_us_gulf: us_gulf_tampa
+  us_gulf_tampa: us_gulf_tampa
+  us_gulftampa: us_gulf_tampa
+hub_mapping_countries:
+  us_gulf_tampa: united_states
+hub_mapping_regions:
+  us_gulf_tampa: us_gulf
+ 
+#############################
+#### Vessels referential ####
+#############################
+vessels:
+  - african_lion
+  - african_raptor
+  - baltic_mantis
+  - baltic_scorpion
+  - bow_fagus
+  - bow_orion
+  - bulk_venus
+  - chem_norma
+  - clipper_barolo
+  - clipper_como
+  - desert_challenger
+  - desert_pioneer
+  - eco_alice
+  - eco_dream
+  - fairchem_katana
+  - federal_cedar
+  - federal_montreal
+  - genco_languedoc
+  - golden_bull
+  - golden_wings
+  - green_k_max
+  - harvest_frost
+  - harvest_sun
+  - ivs_phoenix
+  - jag_amar
+  - jin_ping
+  - kmax_leader
+  - lowlands_breeze
+  - medi_tokyo
+  - navigator_global
+  - navigator_phoenix
+  - nordic_aquarius
+  - nordic_oslo
+  - ocean_amazing
+  - olympic_gemini
+  - pacific_glory
+  - pacific_treasure
+  - pan_cosmos
+  - port_shanghai
+  - proteus_stella
+  - sanko_fortune
+  - santa_victoria
+  - sea_falcon
+  - sea_triumph
+  - sichem_defender
+  - sichem_paris
+  - spar_gemini
+  - spar_lyra
+  - star_aquarius
+  - star_polaris
+  - stolt_spray
+  - tai_profit
+  - ubc_savannah
+  - ubc_tokyo
+  - ultra_galaxy
+  - ultra_lion
+  - yangtze_fortune
+  - yara_freya
+  - yara_gas
+  - yara_kara
+  - yara_nauma
+  - yasa_unity
+  - ym_inauguration
+  - zhenhua_25
+ 
+##############################
+#### Products referential ####
+##############################
+products_by_category:
+ 
+  sulphur:
+    - sulphur
+    - sulphuric_acid
+ 
+  rock:
+    - phosphate_rock
+    - rock_k02
+    - rock_k08
+    - rock_k20
+ 
+  phosphoric_acid:
+    - mga
+    - wpa
+    - pwa
+    - tpa
+    - spa
+    - phosphoric_acid
+    - ppa
+    # ── compound / derived products ──
+    - phosphate_ssp
+    - pwa_tpa
+ 
+  phosphorus:
+    - phosphorus
+    - p4
+ 
+  salt:
+    - stpp
+ 
+  n_fertilizer:
+    - ammonia
+    - urea
+    - agu
+    - ammonium_nitrate
+    - an
+    - uan
+    - urea_ammonium_nitrate
+    - urea_prilled_granular
+    - low_emissions_ammonia
+    # ── compound / variant products (PlantList & CRU) ──
+    - dap_np
+    - dap_tsp
+    - dap_map_np
+    - map_np
+    - map_npk
+    - map_nps
+    - map_tsp
+    - mop_sop
+    - np_complex
+    - np_ssp
+    - np_ssp_tsp
+    - np_npk
+    - npk_ssp
+    - nps_map_mineral_np
+    - map_npk_nps
+    - tmap_12_61
+    - urea_prilled
+    - nitrogen
+    - np_mc
+    - aps
+    - as
+    - mes
+  hybrid_n_fertilizer:
+    - ammonium_sulphate
+    - amsul
+    - calcium_ammonium_nitrate
+    - can
+ 
+  np_fertilizer:
+    - dap
+    - diammonium_phosphate
+    - map
+    - monoammonium_phosphate
+    - monammonium_phosphate
+    - tmap
+    - np
+    - dap_map
+ 
+ 
+  superphosphate:
+    - ssp
+    - tsp
+    - dtsp
+    # ── compound products ──
+    - ssp_tsp
+    - dsp_nps_ssp
+    - ssp_np
+    - dap_np_npk_ssp
+    - ssp_phosphate
+    - tsp_map
+    - np_tsp
+    - npk_tsp
+    - dsp_ssp_tsp
+    - map_ssp
+ 
+  speciality_phosphate:
+    - fmp
+    - app
+    - mkp
+   
+ 
+  hybrid_p_fertilizer:
+    - mcp
+    - monocalcium_phosphate
+    - dcp
+    - mdcp
+    - dicalcium_phosphate
+ 
+  k_fertilizer:
+    - potash
+    - mop
+    - sop
+ 
+  npk_fertilizer:
+    - npk
+    - lfp
+    - lmfp
+ 
+  pk_fertilizer:
+    - pk
+ 
+  nps_fertilizer:
+    - nps
+ 
+  npks_fertilizer:
+    - npks
+   
+  intermediate_phosphorus:
+    - p4
+    - white_phosphorus
+    - yellow_phosphorus
+    # ── compound products ──
+    - mcp_mdcp
+    - lfp_lmfp
+    - p5
+ 
+  complex_fertilisers:
+    - nitrophosphate
+ 
+ 
+ 
+  physical_form:
+    - liquid
+    - granular
+    - prilled
+    - standard
+    - solid
+    - powder
+    - solution
+ 
+################################
+#### Product Variants       ####
+################################
+# Variants are NOT separate products — they qualify the base product.
+# The caster stores product = base, variant = key below.
+# e.g. Commodity "Green ammonia" → product=ammonia, variant=green
+product_variants:
+  ammonia:
+    - grey
+    - green
+    - blue
+    - low_carbon
+    - lowemissions
+  sulphur:
+    - elemental
+ 
+#######################
+#### Relationships ####
+#######################
+relationships:
+  - export
+  - import
+  - ship
+  - transport
+  - sell
+  - buy
+  - produce
+  - consume
+ 
+###########################
+#### Units referential ####
+###########################
+units:
+  - metric_ton
+  - kiloton
+  - million_ton
+  - ton_of_p2o5
+  - kiloton_p2o5
+  - bcm
+  - mcf
+  - usd
+  - eur
+  - billion_usd
+  - usd_per_ton
+  - eur_per_ton
+  - usd_per_mmbtu
+  - usd_per_mwh
+  - mmbtu_per_ton
+  - percent
+  - usd_per_year
+  - kg_per_ton
+  - ton_per_m3
+  - ppm
+  - day
+  - headcount
+  - ratio
+  - count
+  - cubic_meter
+  - usd_per_ton_of_p2o5
+  - gbp_per_ton
+  - cad_per_ton
+  - mxn_per_ton
+  - brl_per_ton
+  - rmb_per_ton
+  - ars_per_ton
+  - frf_per_ton
+  - dem_per_ton
+  - usd_per_short_ton
+  - usd_per_unit
+  - usd_per_liter
+  - kmt_per_year
+  - mt_per_year
+ 
+###########################################
+#### Skip keywords for row filtering   ####
+###########################################
+# Rows where country/region matches any of these (substring) are excluded.
+# The caster loads this list at startup — no hardcoded values.
+skip_country_keywords:
+  - total
+  - grand total
+  - sub-total
+  - subtotal
+  - world
+  - global
+  - aggregate
+  - sum
+  - summary
+  - average
+  - moyenne
+  - undefined
+  - unidentified
+  - geographically_unassigned
+ 
+##################################
+#### Metric types referential ####
+##################################
+metric_type_nature:
+  - financial
+  - price
+  - volume
+  - capacity
+  - production
+  - consumption
+  - trade
+  - inventory
+  - operating_rate
+  - forecast
+  - shipping
+  - operational
+  - price
+ 
+metric_type_quantitive_nature:
+  - metric
+  - ratio
+  - percent
+  - absolute_variation
+  - relative_variation
+ 
+metric_type_time_nature:
+  - realized
+  - forecast
+  - budget
+  - estimated    
+ 
+ 
+product_aliases:
+  phosrock: phosphate_rock
+  rock: phosphate_rock
+  phosphate: phosphate_rock
+  phosphates: phosphate_rock
+  190419: npk
+  phosphoric: phosphoric_acid
+  potassio: potash
+  phospahte: phosphate_rock
+  sulfuric: sulphuric_acid
+  pa: wpa
+  phosphoricacid: phosphoric_acid
+  map_dap: dap_map
+  dapmap: dap_map
+  dap_map: dap_map        # keep idempotent
+  pwa_tpa: pwa_tpa        # (optional) groups too
+  nitropk: npk
+  nitrop: np
+  npk_phos_acid: npk
+  npk_(phos_acid): npk
+  npk__phos_acid_: npk
+  triple_superphosphate: tsp
+  single_superphosphate: ssp
+  triple_super_phosphate: tsp
+  double_tripple_superphosphate: dstp
+ 
+  nitrophosphate: nitrophosphate
+  tmap_1261: tmap
+  phosphoric_acid_technical: phosphoric_acid   # "Phosphoric Acid (Technical)" → variante, pas produit distinct
+  urea_net: urea                               # "Urea (Net)" → qualificatif de capacité, pas produit distinct
+  # Ammonia variants — resolve to base product (variant stored in scope, see product_variants)
+  low_carbon_ammonia: ammonia
+  grey_ammonia: ammonia
+  green_ammonia: ammonia
+  blue_ammonia: ammonia
+  lowemissions_ammonia: ammonia
+  # Elemental sulphur — resolve to base product (variant=elemental stored in scope)
+  elemental_sulphur: sulphur
+
+  # ── Compound-product ordering aliases (alphabetical canonical) ──
+  map_dsp: dsp_map
+  np_map: map_np
+  nps_map: map_nps
+  tsp_ssp: ssp_tsp
+  np_dap: dap_np
+  map_dap_np: dap_map_np
+  map_np_dap: dap_map_np
+  npk_map: map_npk
+  npk_np: np_npk
+  nps_npk_map: map_npk_nps
+  ssp_dsp_nps: dsp_nps_ssp
+  ssp_nps_dsp: dsp_nps_ssp
+  ssp_np_dap_npk: dap_np_npk_ssp
+  tsp_np: np_tsp
+  tsp_npk: npk_tsp
+  tsp_ssp_dsp: dsp_ssp_tsp
+  ssp_map: map_ssp
+
+  # ── Spelling / abbreviation / variant normalization ──
+  sulfuric_acid: sulphuric_acid
+  sulfuric: sulphuric_acid
+  sulfur: sulphur
+  phosphoric: phosphoric_acid
+  phospahte: phosphate_rock
+  phospahtes: phosphate_rock
+  phosphate: phosphate_rock
+  phosphates: phosphate_rock
+  fertilizer: not_specified
+
+  # ── Garbage values from PlantList fallback ──
+  tbc: not_specified
+  potassio: potash
+  "19_04_19": not_specified
+ 
+unit_aliases:
+  # price
+  "usd/t": usd_per_ton
+  "us$/t": usd_per_ton
+  "$/t": usd_per_ton
+  "$/st": usd_per_short_ton
+  "st": usd_per_short_ton
+  "usd / t": usd_per_ton
+  "usd per t": usd_per_ton
+  "usd_t": usd_per_ton
+  "2024usd_t": usd_per_ton
+  usd_t: usd_per_ton
+  usd_st: usd_per_short_ton
+  eur_t: eur_per_ton
+  rmb_t: rmb_per_ton
+  mxn_t: mxn_per_ton
+  usd_lt: usd_per_liter
+  usd_unit: usd_per_unit
+  brl_t: brl_per_ton
+  cad_t: cad_per_ton
+  gbp_t: gbp_per_ton
+  dem_t: dem_per_ton
+  frf_t: frf_per_ton
+  ars_t: ars_per_ton
+  "us$$   /y": usd_per_year
+  "usd/y": usd_per_year
+  "usd/yr": usd_per_year
+  "usd per year": usd_per_year
+  "$$   /t p2o5": usd_per_ton_of_p2o5
+  "usd / t p2o5": usd_per_ton_of_p2o5
+  "000t p2o5": kiloton_p2o5
+  "000 t p2o5": kiloton_p2o5
+  "us$/gj": usd_per_gj
+  "usd/gj": usd_per_gj
+  "us$$   /gj": usd_per_gj
+  "$/t p2o5": usd_per_ton_of_p2o5
+  "us$/year": usd_per_year
+  "us$/yr": usd_per_year
+  "$\/t p2o5": usd_per_ton_of_p2o5
+  "000t p2o5": kiloton_p2o5
+  "kiloton_p2o5_per_year": kiloton_p2o5
+  "mt/y": mt_per_year
+  "us$/mwh": usd_per_mwh
+  "us$/y": usd_per_year
+  "usd_t": usd_per_ton
+  "million_metric_ton": million_ton
+  "million metric tonnes": million_ton
+  "million tonnes": million_ton
+  "million metric tons": million_ton
+  "million tons": million_ton
+  # better: create usd_per_gj unit; see note below
+  "us$/mwh": usd_per_mwh
+  "usd/mwh": usd_per_mwh
+  "usd / mwh": usd_per_mwh
+  "us$$   /mwh": usd_per_mwh
+  # ratios / percent
+  "%": percent
+  "% of capacity": percent
+  "% of cap": percent
+  "p2o5 %": percent
+  "percent": percent
+  "% n": percent
+  "% p2o5": percent
+  "waste:ore": ratio
+  "waste/ore": ratio
+ 
+  # physical quantities
+  "kg/t": kg_per_ton
+  "t/m3": ton_per_m3
+  "t/m3, wet": ton_per_m3
+  "t per m3": ton_per_m3
+  "us$/litre": usd_per_liter
+  "usd/litre": usd_per_liter
+  "days": day
+  "day": day
+ 
+  "# men": headcount
+  "men": headcount
+ 
+  "ppm": ppm
+ 
+  "m3": cubic_meter
+  "#": count
+  "t": metric_ton
+  "million tonnes"   : million_ton
+  "000 t p2o5": kiloton_p2o5
+  "000_t p2o5": kiloton_p2o5
+  "'000 tonnes product": kiloton
+  "000_tonnes_product": kiloton
+  "000_tonnes_p2o5": kiloton_p2o5
+  "'000_tonnes_p2o5": kiloton_p2o5
+  "000_tonnes": kiloton
+  "000 tonnes": kiloton
+  kiloton: kiloton
+  kt: kiloton
+  "kmt": kmt_per_year
+  "000 tonnes p205": kiloton_p2o5
+  "000_tonnes_p205": kiloton_p2o5
+  "'000 tonnes p205": kiloton_p2o5
+  "'000t": kiloton
+  "000t": kiloton
+  # --- common garbage from PIEC ---
+  kt_productyear: kiloton
+  kt_product: kiloton
+  "kt product": kiloton
+  kt_p2o5: kiloton_p2o5
+ 
+  # --- known junk tokens (mapped to percent) ---
+  _of_capacity: percent
+  _of_cap_o_cap_h: percent
+  "% of capacity": percent
+  # qualifiers → still price per ton
+  "usd/t concentrate": usd_per_ton
+  "usd/t product": usd_per_ton
+ 
+  # ✅ Option B nuance: per tonne of P2O5
+  "usd/t p2o5": usd_per_ton_of_p2o5
+  "2024$/t": usd_per_ton
+  # robust to _canon_key(raw) outputs
+  "usdt_concentrate": usd_per_ton
+  "usdt_product": usd_per_ton
+  "usdt_p2o5": usd_per_ton_of_p2o5
+  usdt: usd_per_ton
+  eurt: eur_per_ton
+  gbpt: gbp_per_ton
+  cadt: cad_per_ton
+  mxnt: mxn_per_ton
+  brlt: brl_per_ton
+  rmbt: rmb_per_ton
+  arst: ars_per_ton
+  frft: frf_per_ton
+  demt: dem_per_ton
+ 
+  usdst: usd_per_short_ton
+  usdunit: usd_per_unit
+  usdlt: usd_per_liter
+  "usd /t p2o5": usd_per_ton_of_p2o5
+  "usd /t product": usd_per_ton
+ 

@@ -1,0 +1,192 @@
+{
+ "checks": [
+  {
+   "check": "values_parse",
+   "ok": true,
+   "detail": "3128 numeric values, 0 non-numeric cells in value columns"
+  },
+  {
+   "check": "covers_whole_table",
+   "ok": true,
+   "detail": "numeric cells just outside table_range: 0 in the 3 rows below, 0 in the 2 columns to the right. Extend the range or confirm a separate table starts there"
+  },
+  {
+   "check": "unit_evidence",
+   "ok": true,
+   "detail": "value_unit 'kiloton' = kiloton; units evidenced in preamble/header text: ['kiloton']; more specific evidenced: []"
+  },
+  {
+   "check": "corner_orientation",
+   "ok": true,
+   "detail": "corner cell 'Importers\\Exporters' means rows=importers, columns=exporters; spec has rows=importer, columns=exporter"
+  },
+  {
+   "check": "no_total_rows",
+   "ok": false,
+   "detail": "rows equal to the sum of the other rows of their section (drop them): [7]"
+  },
+  {
+   "check": "no_total_columns",
+   "ok": false,
+   "detail": "columns equal to the sum of the other columns (drop them): ['B']"
+  },
+  {
+   "check": "dropped_columns_are_totals_or_empty",
+   "ok": true,
+   "detail": "dropped columns that hold real data (not a total, not empty): []"
+  },
+  {
+   "check": "dropped_rows_are_totals_or_empty",
+   "ok": true,
+   "detail": "dropped rows that are not empty, not labelled total, and match no checksum of their section: []"
+  },
+  {
+   "check": "no_subtotal_labels",
+   "ok": true,
+   "detail": "most specific label column mixes regions (subtotals) with countries: []; rows labelled total: []. Use skip_label_kinds: [region] and/or skip_rows_matching"
+  }
+ ],
+ "rows": 3128,
+ "sample": [
+  {
+   "importer": "",
+   "exporter": "Total",
+   "value": 16480.01769726248,
+   "unit": "kiloton",
+   "cell": "B7"
+  },
+  {
+   "importer": "",
+   "exporter": "Australia",
+   "value": 450.0,
+   "unit": "kiloton",
+   "cell": "C7"
+  },
+  {
+   "importer": "",
+   "exporter": "Austria",
+   "value": 0.6,
+   "unit": "kiloton",
+   "cell": "D7"
+  },
+  {
+   "importer": "",
+   "exporter": "Belgium",
+   "value": 200.0,
+   "unit": "kiloton",
+   "cell": "E7"
+  },
+  {
+   "importer": "",
+   "exporter": "Bulgaria",
+   "value": 27.0,
+   "unit": "kiloton",
+   "cell": "F7"
+  },
+  {
+   "importer": "",
+   "exporter": "China",
+   "value": 4563.0,
+   "unit": "kiloton",
+   "cell": "G7"
+  },
+  {
+   "importer": "",
+   "exporter": "Colombia",
+   "value": 1.9,
+   "unit": "kiloton",
+   "cell": "H7"
+  },
+  {
+   "importer": "",
+   "exporter": "Egypt",
+   "value": 318.0,
+   "unit": "kiloton",
+   "cell": "I7"
+  },
+  {
+   "importer": "",
+   "exporter": "Honduras",
+   "value": 1.0,
+   "unit": "kiloton",
+   "cell": "J7"
+  },
+  {
+   "importer": "",
+   "exporter": "Jordan",
+   "value": 590.0,
+   "unit": "kiloton",
+   "cell": "K7"
+  },
+  {
+   "importer": "",
+   "exporter": "Lithuania",
+   "value": 132.0,
+   "unit": "kiloton",
+   "cell": "L7"
+  },
+  {
+   "importer": "",
+   "exporter": "Mexico",
+   "value": 141.0,
+   "unit": "kiloton",
+   "cell": "M7"
+  },
+  {
+   "importer": "",
+   "exporter": "Morocco",
+   "value": 3937.3000000000006,
+   "unit": "kiloton",
+   "cell": "N7"
+  },
+  {
+   "importer": "",
+   "exporter": "Philippines",
+   "value": 34.0,
+   "unit": "kiloton",
+   "cell": "O7"
+  },
+  {
+   "importer": "",
+   "exporter": "Poland",
+   "value": 30.000000000000004,
+   "unit": "kiloton",
+   "cell": "P7"
+  },
+  {
+   "importer": "",
+   "exporter": "Russia",
+   "value": 1635.0,
+   "unit": "kiloton",
+   "cell": "Q7"
+  },
+  {
+   "importer": "",
+   "exporter": "Saudi Arabia",
+   "value": 3249.9999999999995,
+   "unit": "kiloton",
+   "cell": "R7"
+  },
+  {
+   "importer": "",
+   "exporter": "Senegal",
+   "value": 1.8276972624798742,
+   "unit": "kiloton",
+   "cell": "S7"
+  },
+  {
+   "importer": "",
+   "exporter": "South Korea",
+   "value": 82.0,
+   "unit": "kiloton",
+   "cell": "T7"
+  },
+  {
+   "importer": "",
+   "exporter": "Tunisia",
+   "value": 231.0,
+   "unit": "kiloton",
+   "cell": "U7"
+  }
+ ]
+}

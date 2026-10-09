@@ -1,0 +1,145 @@
+{
+ "checks": [
+  {
+   "check": "values_parse",
+   "ok": false,
+   "detail": "14 numeric values, 7 non-numeric cells in value columns"
+  },
+  {
+   "check": "covers_whole_table",
+   "ok": true,
+   "detail": "numeric cells just outside table_range: 0 in the 3 rows below, 0 in the 2 columns to the right. Extend the range or confirm a separate table starts there"
+  },
+  {
+   "check": "unit_evidence",
+   "ok": true,
+   "detail": "value_unit 'kt' (read as kt); units evidenced in preamble/header text: ['kt', 't']"
+  },
+  {
+   "check": "no_total_rows",
+   "ok": true,
+   "detail": "rows equal to the sum of the other rows (drop them): []"
+  },
+  {
+   "check": "no_total_columns",
+   "ok": true,
+   "detail": "columns equal to the sum of the other columns (drop them): []"
+  },
+  {
+   "check": "dropped_columns_are_totals_or_empty",
+   "ok": true,
+   "detail": "dropped columns that hold real data (not a total, not empty): []"
+  },
+  {
+   "check": "dropped_rows_are_totals_or_empty",
+   "ok": true,
+   "detail": "dropped rows that are neither empty nor the sum of the kept rows: []"
+  },
+  {
+   "check": "no_subtotal_labels",
+   "ok": true,
+   "detail": "most specific label column mixes regions (subtotals) with countries: []; rows labelled total: []. Use skip_label_kinds: [region] and/or skip_rows_matching"
+  }
+ ],
+ "rows": 14,
+ "sample": [
+  {
+   "company": "TogliattiAzot",
+   "capacity_info": "Date expected",
+   "value": 2024.0,
+   "unit": "kt",
+   "cell": "C7"
+  },
+  {
+   "company": "TogliattiAzot",
+   "capacity_info": "Capacity '000 t/yr*",
+   "value": -400.0,
+   "unit": "kt",
+   "cell": "D7"
+  },
+  {
+   "company": "Gulf Coast Ammonia",
+   "capacity_info": "Date expected",
+   "value": 2025.0,
+   "unit": "kt",
+   "cell": "C8"
+  },
+  {
+   "company": "Gulf Coast Ammonia",
+   "capacity_info": "Capacity '000 t/yr*",
+   "value": 1260.0,
+   "unit": "kt",
+   "cell": "D8"
+  },
+  {
+   "company": "HPC",
+   "capacity_info": "Date expected",
+   "value": 2025.0,
+   "unit": "kt",
+   "cell": "C9"
+  },
+  {
+   "company": "HPC",
+   "capacity_info": "Capacity '000 t/yr*",
+   "value": -759.0,
+   "unit": "kt",
+   "cell": "D9"
+  },
+  {
+   "company": "Shchekinoazot",
+   "capacity_info": "Date expected",
+   "value": 2025.0,
+   "unit": "kt",
+   "cell": "C10"
+  },
+  {
+   "company": "Shchekinoazot",
+   "capacity_info": "Capacity '000 t/yr*",
+   "value": 119.0,
+   "unit": "kt",
+   "cell": "D10"
+  },
+  {
+   "company": "Gemlik Gubre",
+   "capacity_info": "Date expected",
+   "value": 2025.0,
+   "unit": "kt",
+   "cell": "C11"
+  },
+  {
+   "company": "Gemlik Gubre",
+   "capacity_info": "Capacity '000 t/yr*",
+   "value": -102.0,
+   "unit": "kt",
+   "cell": "D11"
+  },
+  {
+   "company": "Woodside",
+   "capacity_info": "Date expected",
+   "value": 2025.0,
+   "unit": "kt",
+   "cell": "C12"
+  },
+  {
+   "company": "Woodside",
+   "capacity_info": "Capacity '000 t/yr*",
+   "value": 1100.0,
+   "unit": "kt",
+   "cell": "D12"
+  },
+  {
+   "company": "Ma'aden",
+   "capacity_info": "Date expected",
+   "value": 2026.0,
+   "unit": "kt",
+   "cell": "C13"
+  },
+  {
+   "company": "Ma'aden",
+   "capacity_info": "Capacity '000 t/yr*",
+   "value": -278.0,
+   "unit": "kt",
+   "cell": "D13"
+  }
+ ]
+}

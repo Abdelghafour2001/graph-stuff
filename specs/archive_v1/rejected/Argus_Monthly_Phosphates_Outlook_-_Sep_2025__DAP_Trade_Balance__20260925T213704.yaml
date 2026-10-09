@@ -1,0 +1,22 @@
+file: Argus Monthly Phosphates Outlook - Sep 2025.xlsx
+sheet: DAP Trade Balance
+table_range: A5:G77
+header_rows:
+  - 5
+label_columns:
+  - A
+row_dimensions:
+  - country_or_region
+column_dimension: period
+drop_rows: [6, 26]
+drop_columns: []
+skip_rows_matching: [total]
+operators:
+  - op: ffill
+    args:
+      target: labels
+  - op: stack
+    args: {}
+value_unit: kt_product
+fixed: {}
+notes: "Monthly global trade balance forecast of DAP in '000 tonnes, with country/region rows and period columns. Drop total rows 6 and 26."

@@ -1,0 +1,247 @@
+{
+ "checks": [
+  {
+   "check": "values_parse",
+   "ok": true,
+   "detail": "2534 numeric values, 0 non-numeric cells in value columns"
+  },
+  {
+   "check": "covers_whole_table",
+   "ok": false,
+   "detail": "numeric cells just outside table_range: 0 in the 3 rows below, 36 in the 2 columns to the right. Extend the range or confirm a separate table starts there"
+  },
+  {
+   "check": "unit_evidence",
+   "ok": true,
+   "detail": "value_unit 'kiloton' = kiloton; units evidenced in preamble/header text: ['kiloton']; more specific evidenced: []"
+  },
+  {
+   "check": "no_total_rows",
+   "ok": true,
+   "detail": "rows equal to the sum of the other rows of their section (drop them): []"
+  },
+  {
+   "check": "no_total_columns",
+   "ok": true,
+   "detail": "columns equal to the sum of the other columns (drop them): []"
+  },
+  {
+   "check": "dropped_columns_are_totals_or_empty",
+   "ok": true,
+   "detail": "dropped columns that hold real data (not a total, not empty): []"
+  },
+  {
+   "check": "dropped_rows_are_totals_or_empty",
+   "ok": true,
+   "detail": "dropped rows that are not empty, not labelled total, and match no checksum of their section: []"
+  },
+  {
+   "check": "no_subtotal_labels",
+   "ok": true,
+   "detail": "most specific label column mixes regions (subtotals) with countries: []; rows labelled total: []. Use skip_label_kinds: [region] and/or skip_rows_matching"
+  }
+ ],
+ "rows": 2534,
+ "sample": [
+  {
+   "product": "phosphate_rock",
+   "region": "Europe & CIS",
+   "subregion": "West Europe",
+   "country": "Austria",
+   "year": "=D5+D56+D116+D120+D153+D197+D209 | =SUMIF($A7:$A$211,LEFT($C5,LEN($C5)-6),D7:D$211) | =SUMIF($B7:$B$211,LEFT($C6,LEN($C6)-6),D7:D$211)",
+   "value": 199.3,
+   "unit": "kiloton",
+   "cell": "D7"
+  },
+  {
+   "product": "phosphate_rock",
+   "region": "Europe & CIS",
+   "subregion": "West Europe",
+   "country": "Austria",
+   "year": "=E5+E56+E116+E120+E153+E197+E209 | =SUMIF($A7:$A$211,LEFT($C5,LEN($C5)-6),E7:E$211) | =SUMIF($B7:$B$211,LEFT($C6,LEN($C6)-6),E7:E$211)",
+   "value": 169.5,
+   "unit": "kiloton",
+   "cell": "E7"
+  },
+  {
+   "product": "phosphate_rock",
+   "region": "Europe & CIS",
+   "subregion": "West Europe",
+   "country": "Austria",
+   "year": "=F5+F56+F116+F120+F153+F197+F209 | =SUMIF($A7:$A$211,LEFT($C5,LEN($C5)-6),F7:F$211) | =SUMIF($B7:$B$211,LEFT($C6,LEN($C6)-6),F7:F$211)",
+   "value": 192.4,
+   "unit": "kiloton",
+   "cell": "F7"
+  },
+  {
+   "product": "phosphate_rock",
+   "region": "Europe & CIS",
+   "subregion": "West Europe",
+   "country": "Austria",
+   "year": "=G5+G56+G116+G120+G153+G197+G209 | =SUMIF($A7:$A$211,LEFT($C5,LEN($C5)-6),G7:G$211) | =SUMIF($B7:$B$211,LEFT($C6,LEN($C6)-6),G7:G$211)",
+   "value": 178.3,
+   "unit": "kiloton",
+   "cell": "G7"
+  },
+  {
+   "product": "phosphate_rock",
+   "region": "Europe & CIS",
+   "subregion": "West Europe",
+   "country": "Austria",
+   "year": "=H5+H56+H116+H120+H153+H197+H209 | =SUMIF($A7:$A$211,LEFT($C5,LEN($C5)-6),H7:H$211) | =SUMIF($B7:$B$211,LEFT($C6,LEN($C6)-6),H7:H$211)",
+   "value": 202.7,
+   "unit": "kiloton",
+   "cell": "H7"
+  },
+  {
+   "product": "phosphate_rock",
+   "region": "Europe & CIS",
+   "subregion": "West Europe",
+   "country": "Austria",
+   "year": "=I5+I56+I116+I120+I153+I197+I209 | =SUMIF($A7:$A$211,LEFT($C5,LEN($C5)-6),I7:I$211) | =SUMIF($B7:$B$211,LEFT($C6,LEN($C6)-6),I7:I$211)",
+   "value": 181.7,
+   "unit": "kiloton",
+   "cell": "I7"
+  },
+  {
+   "product": "phosphate_rock",
+   "region": "Europe & CIS",
+   "subregion": "West Europe",
+   "country": "Austria",
+   "year": "=J5+J56+J116+J120+J153+J197+J209 | =SUMIF($A7:$A$211,LEFT($C5,LEN($C5)-6),J7:J$211) | =SUMIF($B7:$B$211,LEFT($C6,LEN($C6)-6),J7:J$211)",
+   "value": 184.5,
+   "unit": "kiloton",
+   "cell": "J7"
+  },
+  {
+   "product": "phosphate_rock",
+   "region": "Europe & CIS",
+   "subregion": "West Europe",
+   "country": "Austria",
+   "year": "=K5+K56+K116+K120+K153+K197+K209 | =SUMIF($A7:$A$211,LEFT($C5,LEN($C5)-6),K7:K$211) | =SUMIF($B7:$B$211,LEFT($C6,LEN($C6)-6),K7:K$211)",
+   "value": 97.3,
+   "unit": "kiloton",
+   "cell": "K7"
+  },
+  {
+   "product": "phosphate_rock",
+   "region": "Europe & CIS",
+   "subregion": "West Europe",
+   "country": "Austria",
+   "year": "=L5+L56+L116+L120+L153+L197+L209 | =SUMIF($A7:$A$211,LEFT($C5,LEN($C5)-6),L7:L$211) | =SUMIF($B7:$B$211,LEFT($C6,LEN($C6)-6),L7:L$211)",
+   "value": 158.9,
+   "unit": "kiloton",
+   "cell": "L7"
+  },
+  {
+   "product": "phosphate_rock",
+   "region": "Europe & CIS",
+   "subregion": "West Europe",
+   "country": "Austria",
+   "year": "=M5+M56+M116+M120+M153+M197+M209 | =SUMIF($A7:$A$211,LEFT($C5,LEN($C5)-6),M7:M$211) | =SUMIF($B7:$B$211,LEFT($C6,LEN($C6)-6),M7:M$211)",
+   "value": 144.5,
+   "unit": "kiloton",
+   "cell": "M7"
+  },
+  {
+   "product": "phosphate_rock",
+   "region": "Europe & CIS",
+   "subregion": "West Europe",
+   "country": "Austria",
+   "year": "=N5+N56+N116+N120+N153+N197+N209 | =SUMIF($A7:$A$211,LEFT($C5,LEN($C5)-6),N7:N$211) | =SUMIF($B7:$B$211,LEFT($C6,LEN($C6)-6),N7:N$211)",
+   "value": 274.9,
+   "unit": "kiloton",
+   "cell": "N7"
+  },
+  {
+   "product": "phosphate_rock",
+   "region": "Europe & CIS",
+   "subregion": "West Europe",
+   "country": "Austria",
+   "year": "=O5+O56+O116+O120+O153+O197+O209 | =SUMIF($A7:$A$211,LEFT($C5,LEN($C5)-6),O7:O$211) | =SUMIF($B7:$B$211,LEFT($C6,LEN($C6)-6),O7:O$211)",
+   "value": 303.1,
+   "unit": "kiloton",
+   "cell": "O7"
+  },
+  {
+   "product": "phosphate_rock",
+   "region": "Europe & CIS",
+   "subregion": "West Europe",
+   "country": "Austria",
+   "year": "=P5+P56+P116+P120+P153+P197+P209 | =SUMIF($A7:$A$211,LEFT($C5,LEN($C5)-6),P7:P$211) | =SUMIF($B7:$B$211,LEFT($C6,LEN($C6)-6),P7:P$211)",
+   "value": 225.2,
+   "unit": "kiloton",
+   "cell": "P7"
+  },
+  {
+   "product": "phosphate_rock",
+   "region": "Europe & CIS",
+   "subregion": "West Europe",
+   "country": "Austria",
+   "year": "=Q5+Q56+Q116+Q120+Q153+Q197+Q209 | =SUMIF($A7:$A$211,LEFT($C5,LEN($C5)-6),Q7:Q$211) | =SUMIF($B7:$B$211,LEFT($C6,LEN($C6)-6),Q7:Q$211)",
+   "value": 129.3,
+   "unit": "kiloton",
+   "cell": "Q7"
+  },
+  {
+   "product": "phosphate_rock",
+   "region": "Europe & CIS",
+   "subregion": "West Europe",
+   "country": "Belgium",
+   "year": "=D5+D56+D116+D120+D153+D197+D209 | =SUMIF($A7:$A$211,LEFT($C5,LEN($C5)-6),D7:D$211) | =SUMIF($B7:$B$211,LEFT($C6,LEN($C6)-6),D7:D$211)",
+   "value": 1569.8,
+   "unit": "kiloton",
+   "cell": "D8"
+  },
+  {
+   "product": "phosphate_rock",
+   "region": "Europe & CIS",
+   "subregion": "West Europe",
+   "country": "Belgium",
+   "year": "=E5+E56+E116+E120+E153+E197+E209 | =SUMIF($A7:$A$211,LEFT($C5,LEN($C5)-6),E7:E$211) | =SUMIF($B7:$B$211,LEFT($C6,LEN($C6)-6),E7:E$211)",
+   "value": 1189.6,
+   "unit": "kiloton",
+   "cell": "E8"
+  },
+  {
+   "product": "phosphate_rock",
+   "region": "Europe & CIS",
+   "subregion": "West Europe",
+   "country": "Belgium",
+   "year": "=F5+F56+F116+F120+F153+F197+F209 | =SUMIF($A7:$A$211,LEFT($C5,LEN($C5)-6),F7:F$211) | =SUMIF($B7:$B$211,LEFT($C6,LEN($C6)-6),F7:F$211)",
+   "value": 1494.7,
+   "unit": "kiloton",
+   "cell": "F8"
+  },
+  {
+   "product": "phosphate_rock",
+   "region": "Europe & CIS",
+   "subregion": "West Europe",
+   "country": "Belgium",
+   "year": "=G5+G56+G116+G120+G153+G197+G209 | =SUMIF($A7:$A$211,LEFT($C5,LEN($C5)-6),G7:G$211) | =SUMIF($B7:$B$211,LEFT($C6,LEN($C6)-6),G7:G$211)",
+   "value": 1469.0,
+   "unit": "kiloton",
+   "cell": "G8"
+  },
+  {
+   "product": "phosphate_rock",
+   "region": "Europe & CIS",
+   "subregion": "West Europe",
+   "country": "Belgium",
+   "year": "=H5+H56+H116+H120+H153+H197+H209 | =SUMIF($A7:$A$211,LEFT($C5,LEN($C5)-6),H7:H$211) | =SUMIF($B7:$B$211,LEFT($C6,LEN($C6)-6),H7:H$211)",
+   "value": 1514.0,
+   "unit": "kiloton",
+   "cell": "H8"
+  },
+  {
+   "product": "phosphate_rock",
+   "region": "Europe & CIS",
+   "subregion": "West Europe",
+   "country": "Belgium",
+   "year": "=I5+I56+I116+I120+I153+I197+I209 | =SUMIF($A7:$A$211,LEFT($C5,LEN($C5)-6),I7:I$211) | =SUMIF($B7:$B$211,LEFT($C6,LEN($C6)-6),I7:I$211)",
+   "value": 1585.9,
+   "unit": "kiloton",
+   "cell": "I8"
+  }
+ ]
+}

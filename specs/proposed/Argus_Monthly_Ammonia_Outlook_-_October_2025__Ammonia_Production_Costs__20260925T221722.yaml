@@ -1,0 +1,20 @@
+file: Argus Monthly Ammonia Outlook - October 2025.xlsx
+sheet: Ammonia Production Costs
+table_range: A6:C11
+header_rows: [6]
+label_columns: [A]
+row_dimensions: [site]
+column_dimension: metric
+drop_rows: []
+drop_columns: []
+skip_rows_matching: []
+skip_label_kinds: []
+operators:
+- op: ffill
+  args:
+    target: labels
+- op: stack
+  args: {}
+value_unit: usd/t_product
+fixed: {}
+notes: Data relates to production costs and natural gas prices for ammonia

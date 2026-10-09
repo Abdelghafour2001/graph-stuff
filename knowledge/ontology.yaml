@@ -1,0 +1,322 @@
+# Business ontology: what the agent must understand before touching any number.
+# ILLUSTRATIVE seed. Org units, sites and definitions must be validated by finance/BU controllers.
+#
+# kind: org_unit | site | product | input | metric | unit
+# terms: every word/abbreviation people actually use (FR, EN, internal jargon). Lookup is fuzzy.
+
+concepts:
+  # ---------- Organisation ----------
+  - id: ocp_group
+    kind: org_unit
+    name: OCP Group
+    definition: Parent group. Consolidated P&L is the sum of branches minus intercompany flows.
+    terms: [OCP, Groupe OCP, OCP SA, groupe]
+
+  - id: mining
+    kind: org_unit
+    name: Mining
+    definition: Extracts and beneficiates phosphate rock. Sells rock externally and to chemical platforms (intercompany).
+    terms: [Mines, Mining, activité minière, extraction]
+
+  - id: nutricrops
+    kind: org_unit
+    name: OCP Nutricrops
+    definition: Fertilizer business. Turns rock, sulfur and ammonia into phosphoric acid and fertilizers.
+    terms: [Nutricrops, engrais, fertilizers, activité engrais]
+
+  # ---------- Sites ----------
+  - id: khouribga
+    kind: site
+    name: Khouribga
+    definition: Mining site.
+    terms: [Khouribga, KHG]
+
+  - id: benguerir
+    kind: site
+    name: Benguerir
+    definition: Mining site.
+    terms: [Benguerir, Ben Guerir, BG]
+
+  - id: youssoufia
+    kind: site
+    name: Youssoufia
+    definition: Mining site.
+    terms: [Youssoufia]
+
+  - id: boucraa
+    kind: site
+    name: Boucraa
+    definition: Mining site (Phosboucraa).
+    terms: [Boucraa, Phosboucraa]
+
+  - id: jorf_lasfar
+    kind: site
+    name: Jorf Lasfar
+    definition: Chemical platform producing phosphoric acid and fertilizers.
+    terms: [Jorf Lasfar, Jorf, JFC]
+
+  - id: safi
+    kind: site
+    name: Safi
+    definition: Chemical platform producing phosphoric acid and fertilizers.
+    terms: [Safi, Maroc Chimie, Maroc Phosphore Safi]
+
+  # ---------- Products ----------
+  - id: phosphate_rock
+    kind: product
+    name: Phosphate rock
+    definition: Beneficiated ore. Grade expressed in BPL or % P2O5.
+    terms: [roche, roche phosphatée, phosphate brut, rock, phosphate rock, minerai, PR, phosrock, phos rock, phosphate_rock]
+
+  - id: sulfuric_acid
+    kind: product
+    name: Sulfuric acid
+    definition: Made by burning sulfur. Used to attack rock. Byproduct steam is turned into electricity (energy credit).
+    terms: [acide sulfurique, H2SO4, sulfuric acid, sulphuric acid, AS]
+
+  - id: phosphoric_acid
+    kind: product
+    name: Phosphoric acid
+    definition: Rock attacked with sulfuric acid. Sold as merchant acid or converted into fertilizers. Volumes counted in t P2O5.
+    terms: [acide phosphorique, ACP, H3PO4, phosphoric acid, PA, merchant acid, phosacid, phos acid, WPA, wet process phosphoric acid, phosphoric_acid]
+
+  - id: dap
+    kind: product
+    name: DAP
+    definition: Diammonium phosphate (18-46-0). Phosphoric acid + ammonia.
+    terms: [DAP, diammonium phosphate, phosphate diammonique]
+
+  - id: map
+    kind: product
+    name: MAP
+    definition: Monoammonium phosphate (11-52-0). Phosphoric acid + ammonia.
+    terms: [MAP, monoammonium phosphate, phosphate monoammonique]
+
+  - id: tsp
+    kind: product
+    name: TSP
+    definition: Triple superphosphate (0-46-0). Rock attacked with phosphoric acid, no ammonia.
+    terms: [TSP, triple superphosphate, superphosphate triple]
+
+  - id: nps
+    kind: product
+    name: NPS / NPK
+    definition: Compound fertilizers, customised formulas for specific soils and crops.
+    terms: [NPS, NPK, engrais complexes, compound fertilizers, formules]
+
+  # ---------- Purchased inputs (volatile prices) ----------
+  - id: sulfur
+    kind: input
+    name: Sulfur
+    definition: Imported raw material. Price is very volatile and a major cost driver of acid and fertilizers.
+    terms: [soufre, sulfur, sulphur, S]
+
+  - id: ammonia
+    kind: input
+    name: Ammonia
+    definition: Imported raw material (NH3). Price is tied to natural gas. Major cost driver of DAP/MAP.
+    terms: [ammoniac, ammonia, NH3]
+
+  - id: energy
+    kind: input
+    name: Energy
+    definition: Electricity, fuel and gas bought from outside. Partly offset by electricity from sulfuric acid steam.
+    terms: [énergie, energy, électricité, fuel, gaz]
+
+  - id: freight
+    kind: input
+    name: Freight and logistics
+    definition: Rail, slurry pipeline, port and sea freight costs.
+    terms: [fret, freight, logistique, transport, pipeline, slurry]
+
+  # ---------- Metrics ----------
+  - id: revenue
+    kind: metric
+    name: Revenue
+    definition: Volume sold times selling price, per product, per period.
+    terms: [chiffre d'affaires, CA, revenue, ventes, sales, turnover]
+
+  - id: cogs
+    kind: metric
+    name: Cost of goods sold
+    definition: Direct cost of products sold. Inputs consumed times their price, plus conversion costs.
+    terms: [COGS, coût des ventes, coût de revient, cost of sales, CR]
+
+  - id: cash_cost
+    kind: metric
+    name: Cash cost per tonne
+    definition: Cash production cost for one tonne of product (excludes depreciation).
+    terms: [cash cost, coût cash, coût unitaire, cost per tonne, $/t]
+
+  - id: gross_margin
+    kind: metric
+    name: Gross margin
+    definition: Revenue minus COGS.
+    terms: [marge brute, gross margin, marge, GM]
+
+  - id: ebitda
+    kind: metric
+    name: EBITDA
+    definition: Gross margin minus operating expenses, before depreciation, amortisation, interest and tax.
+    terms: [EBITDA, EBE, excédent brut d'exploitation]
+
+  - id: transfer_price
+    kind: metric
+    name: Transfer price
+    definition: Internal price when one branch sells to another (e.g. rock from Mining to Nutricrops). Must be eliminated in group consolidation.
+    terms: [prix de cession interne, PCI, transfer price, prix de transfert, intercompany, interco]
+
+  # ---------- Units ----------
+  - id: tonne
+    kind: unit
+    name: Tonne of product
+    definition: Physical tonne. Multiples kt (thousand) and Mt (million).
+    terms: [t, tonne, kt, Mt, tonnes, TM]
+
+  - id: tonne_p2o5
+    kind: unit
+    name: Tonne P2O5
+    definition: Tonne of phosphorus pentoxide content. Standard unit to compare rock, acid and fertilizers.
+    terms: [t P2O5, tonne P2O5, P2O5, tP2O5, unité fertilisante]
+
+  - id: bpl
+    kind: unit
+    name: BPL
+    definition: Bone Phosphate of Lime, grade of phosphate rock. %BPL ≈ 2.185 x %P2O5.
+    terms: [BPL, teneur, grade, bone phosphate of lime]
+
+  - id: usd
+    kind: unit
+    name: US dollar
+    definition: Currency of most international commodity prices.
+    terms: [USD, $, dollar]
+
+  - id: mad
+    kind: unit
+    name: Moroccan dirham
+    definition: Local currency. Conversions need the FX rate of the right date.
+    terms: [MAD, DH, dirham, dirhams]
+
+  - id: urea
+    kind: product
+    name: Urea
+    definition: Nitrogen fertilizer made from ammonia. Not an OCP core product but a key market signal (Gulf and Iran are big exporters).
+    terms: [urée, urea, granular urea, prilled urea]
+
+  - id: potash
+    kind: product
+    name: Potash (MOP)
+    definition: Potassium fertilizer. Blended into NPK formulas.
+    terms: [potasse, potash, MOP, muriate of potash, KCl, SOP]
+
+  - id: ssp
+    kind: product
+    name: SSP
+    definition: Single superphosphate. Rock attacked with sulfuric acid, low P2O5 content.
+    terms: [SSP, single superphosphate, superphosphate simple]
+
+  # ---------- Incoterms (price basis) ----------
+  - id: fob
+    kind: incoterm
+    name: FOB
+    definition: Free on board. Price at the export port, freight excluded. OCP export prices are typically FOB Morocco.
+    terms: [fob, free on board]
+
+  - id: cfr
+    kind: incoterm
+    name: CFR
+    definition: Cost and freight. Price delivered at the import port, insurance excluded.
+    terms: [cfr, c&f, cost and freight]
+
+  - id: cif
+    kind: incoterm
+    name: CIF
+    definition: Cost, insurance and freight at the import port.
+    terms: [cif]
+
+  - id: fca
+    kind: incoterm
+    name: FCA
+    definition: Free carrier. Usually inland or domestic delivered price.
+    terms: [fca, free carrier]
+
+  - id: cpt_cip
+    kind: incoterm
+    name: CPT / CIP
+    definition: Carriage paid to (and insurance paid to) a named destination, often inland.
+    terms: [cpt, cip]
+
+  - id: exw
+    kind: incoterm
+    name: EXW
+    definition: Ex works, price at the plant gate.
+    terms: [exw, ex-works, ex works]
+
+  # ---------- Trade routes ----------
+  - id: hormuz
+    kind: route
+    name: Strait of Hormuz
+    definition: Gulf chokepoint. A large share of world sulphur, urea, ammonia and part of phosphate exports (Saudi Arabia/Maaden) transit it. Not on OCP's Morocco export routes.
+    terms: [Hormuz, Strait of Hormuz, Ormuz, détroit d'Ormuz]
+
+# [from, TYPE, to]
+relations:
+  - [mining, PART_OF, ocp_group]
+  - [nutricrops, PART_OF, ocp_group]
+  - [khouribga, PART_OF, mining]
+  - [benguerir, PART_OF, mining]
+  - [youssoufia, PART_OF, mining]
+  - [boucraa, PART_OF, mining]
+  - [jorf_lasfar, PART_OF, nutricrops]
+  - [safi, PART_OF, nutricrops]
+
+  - [phosphate_rock, PRODUCED_AT, khouribga]
+  - [phosphate_rock, PRODUCED_AT, benguerir]
+  - [phosphate_rock, PRODUCED_AT, youssoufia]
+  - [phosphate_rock, PRODUCED_AT, boucraa]
+  - [sulfuric_acid, PRODUCED_AT, jorf_lasfar]
+  - [sulfuric_acid, PRODUCED_AT, safi]
+  - [phosphoric_acid, PRODUCED_AT, jorf_lasfar]
+  - [phosphoric_acid, PRODUCED_AT, safi]
+  - [dap, PRODUCED_AT, jorf_lasfar]
+  - [map, PRODUCED_AT, jorf_lasfar]
+  - [tsp, PRODUCED_AT, jorf_lasfar]
+  - [tsp, PRODUCED_AT, safi]
+  - [nps, PRODUCED_AT, jorf_lasfar]
+
+  - [sulfuric_acid, MADE_FROM, sulfur]
+  - [phosphoric_acid, MADE_FROM, phosphate_rock]
+  - [phosphoric_acid, MADE_FROM, sulfuric_acid]
+  - [dap, MADE_FROM, phosphoric_acid]
+  - [dap, MADE_FROM, ammonia]
+  - [map, MADE_FROM, phosphoric_acid]
+  - [map, MADE_FROM, ammonia]
+  - [tsp, MADE_FROM, phosphate_rock]
+  - [tsp, MADE_FROM, phosphoric_acid]
+  - [nps, MADE_FROM, phosphoric_acid]
+  - [nps, MADE_FROM, ammonia]
+  - [nps, MADE_FROM, sulfur]
+
+  - [gross_margin, DEPENDS_ON, revenue]
+  - [gross_margin, DEPENDS_ON, cogs]
+  - [ebitda, DEPENDS_ON, gross_margin]
+  - [cogs, DEPENDS_ON, cash_cost]
+  - [cash_cost, DEPENDS_ON, sulfur]
+  - [cash_cost, DEPENDS_ON, ammonia]
+  - [cash_cost, DEPENDS_ON, energy]
+  - [cash_cost, DEPENDS_ON, freight]
+  - [cash_cost, DEPENDS_ON, transfer_price]
+
+  - [phosphate_rock, MEASURED_IN, bpl]
+  - [phosphoric_acid, MEASURED_IN, tonne_p2o5]
+  - [dap, MEASURED_IN, tonne]
+  - [map, MEASURED_IN, tonne]
+  - [tsp, MEASURED_IN, tonne]
+
+  - [nps, MADE_FROM, potash]
+  - [ssp, MADE_FROM, phosphate_rock]
+  - [ssp, MADE_FROM, sulfuric_acid]
+  - [urea, MADE_FROM, ammonia]
+  - [sulfur, TRANSITS, hormuz]
+  - [ammonia, TRANSITS, hormuz]
+  - [urea, TRANSITS, hormuz]
