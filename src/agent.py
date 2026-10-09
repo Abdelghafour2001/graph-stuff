@@ -40,7 +40,7 @@ Working with workbooks:
   Watch for: multi-row headers, several tables stacked in one sheet, formula total rows (never extract them as data), forecast markers, units in preamble rows.
 - Express extraction as propose_extraction_spec. It runs your spec and returns checks. If any check fails, fix the spec and propose again
   (up to 4 attempts). Never claim success while checks fail; report the remaining failures honestly.
-- Corner cells like "Importers\Exporters" mean rows\columns. Unlabeled rows right under the header are often totals. Units are usually stated
+- Corner cells like "Importers\\Exporters" mean rows\\columns. Unlabeled rows right under the header are often totals. Units are usually stated
   in the rows above the table (e.g. "Data in 000 tonnes product" means kt).
 
 Rules:
@@ -219,14 +219,30 @@ def ask_azure(system: str, tools: list, history: list[dict], trace: list[dict]) 
         api_key=os.environ["AZURE_OPENAI_API_KEY"],
         api_version=os.environ["AZURE_OPENAI_API_VERSION"],
     )
+    return tool_loop(client, os.environ["AZURE_OPENAI_AGENT_DEPLOYMENT"], {}, system, tools, history, trace)
+
+
+def ask_bifrost(system: str, tools: list, history: list[dict], trace: list[dict]) -> str:
+    """Qwen behind the Bifrost gateway, Chat Completions with thinking (see gateway.py)."""
+    import gateway
+    return tool_loop(gateway.client(), gateway.model("chat"), gateway.extra_body("chat"), system, tools, history, trace)
+
+
+def tool_loop(client, model: str, extra_body: dict, system: str, tools: list, history: list[dict], trace: list[dict]) -> str:
+    """OpenAI-compatible tool loop (Azure OpenAI, Bifrost / vLLM)."""
+    from gateway import strip_thinking
     by_name = {t.name: t for t in tools}
     specs = [{"type": "function", "function": {"name": t.name, "description": t.description, "parameters": t.input_schema}} for t in tools]
     messages = [{"role": "system", "content": system}, *history]
     for _ in range(MAX_TOOL_ROUNDS):
-        msg = client.chat.completions.create(model=os.environ["AZURE_OPENAI_AGENT_DEPLOYMENT"], messages=messages, tools=specs).choices[0].message
+        msg = client.chat.completions.create(model=model, messages=messages, tools=specs, **({"extra_body": extra_body} if extra_body else {})).choices[0].message
         if not msg.tool_calls:
-            return msg.content
-        messages.append(msg.model_dump(exclude_none=True))
+            return strip_thinking(msg.content)
+        turn = msg.model_dump(exclude_none=True)
+        turn.pop("reasoning_content", None)  # do not send the model's reasoning back as context
+        if turn.get("content"):
+            turn["content"] = strip_thinking(turn["content"])
+        messages.append(turn)
         for call in msg.tool_calls:
             print(f"  [tool] {call.function.name}({call.function.arguments[:150]})")
             try:
@@ -259,7 +275,7 @@ def reflect(answer: str, trace: list[dict]) -> list[str]:
 
 def run(system: str, tools: list, history: list[dict], trace: list[dict]) -> str:
     """Tool loop, then the Reflector; failed checks go back to the model (REFLECTION_ROUNDS times)."""
-    ask_provider = ask_azure if os.environ["LLM_PROVIDER"] == "azure_openai" else ask_anthropic
+    ask_provider = {"azure_openai": ask_azure, "bifrost": ask_bifrost}.get(os.environ["LLM_PROVIDER"], ask_anthropic)
     messages = list(history)
     for _ in range(REFLECTION_ROUNDS):
         answer = ask_provider(system, tools, messages, trace)

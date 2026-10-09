@@ -26,7 +26,7 @@ LABEL_COLS = 6         # row labels are looked for in the first columns
 REF = re.compile(r"^(?:(\[\d+\])?(?:'((?:[^']|'')+)'|([^'!:]+))!)?(\$?[A-Z]{1,3}\$?\d+(?::\$?[A-Z]{1,3}\$?\d+)?)$")
 
 
-def sheet_cells(ws) -> tuple[dict, dict]:
+def sheet_cells(ws, numbers: dict | None = None) -> tuple[dict, dict]:
     """Formulas {(row, col): text} and row labels {row: label} of one sheet.
 
     The label column is the one, among the first LABEL_COLS, with the most distinct texts: countries rather than regions,
@@ -39,6 +39,8 @@ def sheet_cells(ws) -> tuple[dict, dict]:
                 formulas[(r, c)] = v
             elif isinstance(v, str) and v.strip() and c <= LABEL_COLS:
                 texts[c][r] = v.strip()
+            elif numbers is not None and isinstance(v, (int, float)) and not isinstance(v, bool):
+                numbers[(r, c)] = v
     if not texts:
         return formulas, {}
     best = max(texts, key=lambda c: (len(set(texts[c].values())), -c))
@@ -95,11 +97,10 @@ def abstract(formula: str, sheet: str, row: int, labels: dict) -> tuple[str, lis
 def harvest(path: Path, only: list[str] | None = None) -> dict:
     wb = openpyxl.load_workbook(path, read_only=True)
     names = [n for n in wb.sheetnames if not only or n in only]
-    cells, labels = {}, {}
+    cells, labels, consts = {}, {}, {}
     for n in wb.sheetnames:  # labels of every sheet, so cross-sheet references can be named
-        if only and n not in only and not any(n in f for f in []):
-            pass
-        f, lab = sheet_cells(wb[n])
+        consts[n] = {}
+        f, lab = sheet_cells(wb[n], consts[n] if n in names else None)
         labels[n] = lab
         if n in names:
             cells[n] = f
@@ -125,7 +126,17 @@ def harvest(path: Path, only: list[str] | None = None) -> dict:
             key = text if generic else f"{labels[n].get(r, f'r{r}')} = {text}"
             sheet_rules[key] += 1
             examples.setdefault(key, labels[n].get(r, f"r{r}"))
-        rules[n] = {"formulas": len(formulas), "rules": [{"rule": k if not k.startswith("=") else f"[row] {k}", "rows": v, "example_row": examples[k]}
+        # per row: its own expression (for the P&L engine) and the hard-typed numbers inside its formula span (overrides)
+        row_rules, by_row_cols = [], defaultdict(list)
+        for (r, c) in formulas:
+            by_row_cols[r].append(c)
+        for r, texts in sorted(per_row.items()):
+            expr, count = texts.most_common(1)[0]
+            cols = by_row_cols[r]
+            overrides = sorted(c for (rr, c) in consts[n] if rr == r and min(cols) < c < max(cols))
+            row_rules.append({"row": r, "label": labels[n].get(r, f"r{r}"), "expr": expr, "columns": count,
+                              "variants": len(texts), "overrides": [openpyxl.utils.get_column_letter(c) for c in overrides]})
+        rules[n] = {"row_rules": row_rules, "formulas": len(formulas), "rules": [{"rule": k if not k.startswith("=") else f"[row] {k}", "rows": v, "example_row": examples[k]}
                                                           for k, v in sheet_rules.most_common()]}
     return {"file": path.name, "sheets": rules,
             "depends_on": [{"sheet": a, "uses": b, "references": n} for (a, b), n in edges.most_common()],

@@ -1,0 +1,208 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1700" height="1342" viewBox="0 0 1700 1342">
+<rect width="1700" height="1342" fill="#FFFFFF"/>
+<text x="64" y="88" font-family="Inter" font-size="32" font-weight="700" fill="#13202F" text-anchor="start">Soumission d’une branche — découverte de structure et P&amp;L</text>
+<text x="64" y="116" font-family="Inter" font-size="15" font-weight="400" fill="#4B5768" text-anchor="start">Pas de modèle imposé : l’agent retrouve la logique de chaque fichier, le moteur calcule, la branche confirme, le modèle converge</text>
+<g id="Couche — Soumission de la branche (tout format)">
+<rect x="64" y="160" width="1572" height="165.7" rx="12" fill="#EDF2F7" stroke="#D2DDE8" stroke-width="1"/>
+<rect x="85.5" y="178" width="14" height="14" rx="3" fill="#3A5878"/>
+<text x="109.5" y="189.5" font-family="Inter" font-size="12" font-weight="700" fill="#3A5878" text-anchor="start" letter-spacing="0.6">SOUMISSION DE LA BRANCHE (TOUT FORMAT)</text>
+<g id="Classeur avec formules">
+<rect x="85.5" y="206.5" width="371.8" height="99.2" rx="8" fill="#FFFFFF" stroke="#D6DCE4" stroke-width="1"/>
+<rect x="100.5" y="221.5" width="26" height="26" rx="6" fill="#3A5878"/>
+<text x="113.5" y="239.0" font-family="Inter" font-size="10" font-weight="700" fill="#FFFFFF" text-anchor="middle">XF</text>
+<text x="136.5" y="239.5" font-family="Inter" font-size="14.5" font-weight="600" fill="#13202F" text-anchor="start">Classeur avec formules</text>
+<text x="100.5" y="267.5" font-family="Inter" font-size="12" font-weight="400" fill="#4B5768" text-anchor="start">La logique de la branche est dans ses formules :</text>
+<text x="100.5" y="283.7" font-family="Inter" font-size="12" font-weight="400" fill="#4B5768" text-anchor="start">volume × prix, sommes, ratios</text>
+</g>
+<g id="Valeurs collées">
+<rect x="471.2" y="206.5" width="371.8" height="99.2" rx="8" fill="#FFFFFF" stroke="#D6DCE4" stroke-width="1"/>
+<rect x="486.2" y="221.5" width="26" height="26" rx="6" fill="#3A5878"/>
+<text x="499.2" y="239.0" font-family="Inter" font-size="10" font-weight="700" fill="#FFFFFF" text-anchor="middle">VC</text>
+<text x="522.2" y="239.5" font-family="Inter" font-size="14.5" font-weight="600" fill="#13202F" text-anchor="start">Valeurs collées</text>
+<text x="486.2" y="267.5" font-family="Inter" font-size="12" font-weight="400" fill="#4B5768" text-anchor="start">Sans formules : la logique est retrouvée par</text>
+<text x="486.2" y="283.7" font-family="Inter" font-size="12" font-weight="400" fill="#4B5768" text-anchor="start">l’arithmétique</text>
+</g>
+<g id="PDF, présentation, e-mail">
+<rect x="857.0" y="206.5" width="371.8" height="99.2" rx="8" fill="#FFFFFF" stroke="#D6DCE4" stroke-width="1"/>
+<rect x="872.0" y="221.5" width="26" height="26" rx="6" fill="#3A5878"/>
+<text x="885.0" y="239.0" font-family="Inter" font-size="10" font-weight="700" fill="#FFFFFF" text-anchor="middle">PD</text>
+<text x="908.0" y="239.5" font-family="Inter" font-size="14.5" font-weight="600" fill="#13202F" text-anchor="start">PDF, présentation, e-mail</text>
+<text x="872.0" y="267.5" font-family="Inter" font-size="12" font-weight="400" fill="#4B5768" text-anchor="start">Un nombre n’est gardé que si sa phrase est</text>
+<text x="872.0" y="283.7" font-family="Inter" font-size="12" font-weight="400" fill="#4B5768" text-anchor="start">retrouvée mot pour mot</text>
+</g>
+<g id="Fichiers liés absents">
+<rect x="1242.8" y="206.5" width="371.8" height="99.2" rx="8" fill="#FFFFFF" stroke="#D6DCE4" stroke-width="1"/>
+<rect x="1257.8" y="221.5" width="26" height="26" rx="6" fill="#3A5878"/>
+<text x="1270.8" y="239.0" font-family="Inter" font-size="10" font-weight="700" fill="#FFFFFF" text-anchor="middle">FL</text>
+<text x="1293.8" y="239.5" font-family="Inter" font-size="14.5" font-weight="600" fill="#13202F" text-anchor="start">Fichiers liés absents</text>
+<text x="1257.8" y="267.5" font-family="Inter" font-size="12" font-weight="400" fill="#4B5768" text-anchor="start">Cellules reliées à un autre classeur</text>
+<text x="1257.8" y="283.7" font-family="Inter" font-size="12" font-weight="400" fill="#4B5768" text-anchor="start">([1]Hypothèses) : à demander</text>
+</g>
+</g>
+<line x1="850.0" y1="329.7" x2="850.0" y2="367.7" stroke="#8A96A6" stroke-width="1.5"/>
+<polygon points="850.0,367.7 844.0,356.7 856.0,356.7" fill="#8A96A6"/>
+<g id="Couche — Découverte de structure (déterministe)">
+<rect x="64" y="371.7" width="1572" height="165.7" rx="12" fill="#EAF5F3" stroke="#C9E5DF" stroke-width="1"/>
+<rect x="85.5" y="389.7" width="14" height="14" rx="3" fill="#1E7A6C"/>
+<text x="109.5" y="401.2" font-family="Inter" font-size="12" font-weight="700" fill="#1E7A6C" text-anchor="start" letter-spacing="0.6">DÉCOUVERTE DE STRUCTURE (DÉTERMINISTE)</text>
+<g id="Formules → règles">
+<rect x="85.5" y="418.2" width="355.2" height="99.2" rx="8" fill="#FFFFFF" stroke="#D6DCE4" stroke-width="1"/>
+<rect x="100.5" y="433.2" width="26" height="26" rx="6" fill="#1E7A6C"/>
+<text x="113.5" y="450.7" font-family="Inter" font-size="10" font-weight="700" fill="#FFFFFF" text-anchor="middle">1</text>
+<text x="136.5" y="451.2" font-family="Inter" font-size="14.5" font-weight="600" fill="#13202F" text-anchor="start">Formules → règles</text>
+<text x="100.5" y="479.2" font-family="Inter" font-size="12" font-weight="400" fill="#4B5768" text-anchor="start">395 617 formules → 67 règles (fichier S&amp;P) ;</text>
+<text x="100.5" y="495.4" font-family="Inter" font-size="12" font-weight="400" fill="#4B5768" text-anchor="start">entrées vs lignes calculées</text>
+</g>
+<polyline points="455.8,461.8 461.8,467.8 455.8,473.8" fill="none" stroke="#8A96A6" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/>
+<g id="Identités sur valeurs">
+<rect x="476.8" y="418.2" width="355.2" height="99.2" rx="8" fill="#FFFFFF" stroke="#D6DCE4" stroke-width="1"/>
+<rect x="491.8" y="433.2" width="26" height="26" rx="6" fill="#1E7A6C"/>
+<text x="504.8" y="450.7" font-family="Inter" font-size="10" font-weight="700" fill="#FFFFFF" text-anchor="middle">2</text>
+<text x="527.8" y="451.2" font-family="Inter" font-size="14.5" font-weight="600" fill="#13202F" text-anchor="start">Identités sur valeurs</text>
+<text x="491.8" y="479.2" font-family="Inter" font-size="12" font-weight="400" fill="#4B5768" text-anchor="start">Marge = CA − coûts ; CA = volume × prix ; coût =</text>
+<text x="491.8" y="495.4" font-family="Inter" font-size="12" font-weight="400" fill="#4B5768" text-anchor="start">k × volume</text>
+</g>
+<polyline points="847.0,461.8 853.0,467.8 847.0,473.8" fill="none" stroke="#8A96A6" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/>
+<g id="Sens des libellés">
+<rect x="868.0" y="418.2" width="355.2" height="99.2" rx="8" fill="#FFFFFF" stroke="#D6DCE4" stroke-width="1"/>
+<rect x="883.0" y="433.2" width="26" height="26" rx="6" fill="#1E7A6C"/>
+<text x="896.0" y="450.7" font-family="Inter" font-size="10" font-weight="700" fill="#FFFFFF" text-anchor="middle">3</text>
+<text x="919.0" y="451.2" font-family="Inter" font-size="14.5" font-weight="600" fill="#13202F" text-anchor="start">Sens des libellés</text>
+<text x="883.0" y="479.2" font-family="Inter" font-size="12" font-weight="400" fill="#4B5768" text-anchor="start">Libellé → concept et type de driver ; reranker</text>
+<text x="883.0" y="495.4" font-family="Inter" font-size="12" font-weight="400" fill="#4B5768" text-anchor="start">Bifrost pour départager</text>
+</g>
+<polyline points="1238.2,461.8 1244.2,467.8 1238.2,473.8" fill="none" stroke="#8A96A6" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/>
+<g id="Contrôles">
+<rect x="1259.2" y="418.2" width="355.2" height="99.2" rx="8" fill="#FFFFFF" stroke="#D6DCE4" stroke-width="1"/>
+<rect x="1274.2" y="433.2" width="26" height="26" rx="6" fill="#1E7A6C"/>
+<text x="1287.2" y="450.7" font-family="Inter" font-size="10" font-weight="700" fill="#FFFFFF" text-anchor="middle">4</text>
+<text x="1310.2" y="451.2" font-family="Inter" font-size="14.5" font-weight="600" fill="#13202F" text-anchor="start">Contrôles</text>
+<text x="1274.2" y="479.2" font-family="Inter" font-size="12" font-weight="400" fill="#4B5768" text-anchor="start">Saisies manuelles sur formule, constantes</text>
+<text x="1274.2" y="495.4" font-family="Inter" font-size="12" font-weight="400" fill="#4B5768" text-anchor="start">cachées, intrants attendus par le graphe</text>
+</g>
+</g>
+<line x1="850.0" y1="541.4" x2="850.0" y2="579.4" stroke="#8A96A6" stroke-width="1.5"/>
+<polygon points="850.0,579.4 844.0,568.4 856.0,568.4" fill="#8A96A6"/>
+<g id="Couche — Modèle de la branche (dans le graphe)">
+<rect x="64" y="583.4" width="1572" height="165.7" rx="12" fill="#EEF4FB" stroke="#D3E2F3" stroke-width="1"/>
+<rect x="85.5" y="601.4" width="14" height="14" rx="3" fill="#2F6FB3"/>
+<text x="109.5" y="612.9" font-family="Inter" font-size="12" font-weight="700" fill="#2F6FB3" text-anchor="start" letter-spacing="0.6">MODÈLE DE LA BRANCHE (DANS LE GRAPHE)</text>
+<g id="Hypothèses">
+<rect x="85.5" y="629.9" width="371.8" height="99.2" rx="8" fill="#FFFFFF" stroke="#D6DCE4" stroke-width="1"/>
+<rect x="100.5" y="644.9" width="26" height="26" rx="6" fill="#2F6FB3"/>
+<text x="113.5" y="662.4" font-family="Inter" font-size="10" font-weight="700" fill="#FFFFFF" text-anchor="middle">HY</text>
+<text x="136.5" y="662.9" font-family="Inter" font-size="14.5" font-weight="600" fill="#13202F" text-anchor="start">Hypothèses</text>
+<text x="100.5" y="690.9" font-family="Inter" font-size="12" font-weight="400" fill="#4B5768" text-anchor="start">Volume, prix, ratio, coût, fret, change :</text>
+<text x="100.5" y="707.1" font-family="Inter" font-size="12" font-weight="400" fill="#4B5768" text-anchor="start">versionnées par cycle</text>
+</g>
+<g id="Formules">
+<rect x="471.2" y="629.9" width="371.8" height="99.2" rx="8" fill="#FFFFFF" stroke="#D6DCE4" stroke-width="1"/>
+<rect x="486.2" y="644.9" width="26" height="26" rx="6" fill="#2F6FB3"/>
+<text x="499.2" y="662.4" font-family="Inter" font-size="10" font-weight="700" fill="#FFFFFF" text-anchor="middle">FO</text>
+<text x="522.2" y="662.9" font-family="Inter" font-size="14.5" font-weight="600" fill="#13202F" text-anchor="start">Formules</text>
+<text x="486.2" y="690.9" font-family="Inter" font-size="12" font-weight="400" fill="#4B5768" text-anchor="start">Règles de la branche, lues dans son fichier,</text>
+<text x="486.2" y="707.1" font-family="Inter" font-size="12" font-weight="400" fill="#4B5768" text-anchor="start">évaluables</text>
+</g>
+<g id="Références marché">
+<rect x="857.0" y="629.9" width="371.8" height="99.2" rx="8" fill="#FFFFFF" stroke="#D6DCE4" stroke-width="1"/>
+<rect x="872.0" y="644.9" width="26" height="26" rx="6" fill="#2F6FB3"/>
+<text x="885.0" y="662.4" font-family="Inter" font-size="10" font-weight="700" fill="#FFFFFF" text-anchor="middle">RM</text>
+<text x="908.0" y="662.9" font-family="Inter" font-size="14.5" font-weight="600" fill="#13202F" text-anchor="start">Références marché</text>
+<text x="872.0" y="690.9" font-family="Inter" font-size="12" font-weight="400" fill="#4B5768" text-anchor="start">PRICED_ON : séries fournisseurs, mois réalisés</text>
+<text x="872.0" y="707.1" font-family="Inter" font-size="12" font-weight="400" fill="#4B5768" text-anchor="start">seulement</text>
+</g>
+<g id="Questions à la branche">
+<rect x="1242.8" y="629.9" width="371.8" height="99.2" rx="8" fill="#FFFFFF" stroke="#D6DCE4" stroke-width="1"/>
+<rect x="1257.8" y="644.9" width="26" height="26" rx="6" fill="#2F6FB3"/>
+<text x="1270.8" y="662.4" font-family="Inter" font-size="10" font-weight="700" fill="#FFFFFF" text-anchor="middle">QB</text>
+<text x="1293.8" y="662.9" font-family="Inter" font-size="14.5" font-weight="600" fill="#13202F" text-anchor="start">Questions à la branche</text>
+<text x="1257.8" y="690.9" font-family="Inter" font-size="12" font-weight="400" fill="#4B5768" text-anchor="start">Ce que l’agent ne peut pas voir : jamais deviné</text>
+</g>
+</g>
+<line x1="850.0" y1="753.0999999999999" x2="850.0" y2="791.0999999999999" stroke="#8A96A6" stroke-width="1.5"/>
+<polygon points="850.0,791.0999999999999 844.0,780.0999999999999 856.0,780.0999999999999" fill="#8A96A6"/>
+<g id="Couche — Moteur P&amp;L (déterministe)">
+<rect x="64" y="795.0999999999999" width="1572" height="165.7" rx="12" fill="#EAF5F3" stroke="#C9E5DF" stroke-width="1"/>
+<rect x="85.5" y="813.0999999999999" width="14" height="14" rx="3" fill="#1E7A6C"/>
+<text x="109.5" y="824.5999999999999" font-family="Inter" font-size="12" font-weight="700" fill="#1E7A6C" text-anchor="start" letter-spacing="0.6">MOTEUR P&amp;L (DÉTERMINISTE)</text>
+<g id="Évaluation">
+<rect x="85.5" y="841.5999999999999" width="355.2" height="99.2" rx="8" fill="#FFFFFF" stroke="#D6DCE4" stroke-width="1"/>
+<rect x="100.5" y="856.5999999999999" width="26" height="26" rx="6" fill="#1E7A6C"/>
+<text x="113.5" y="874.0999999999999" font-family="Inter" font-size="10" font-weight="700" fill="#FFFFFF" text-anchor="middle">EV</text>
+<text x="136.5" y="874.5999999999999" font-family="Inter" font-size="14.5" font-weight="600" fill="#13202F" text-anchor="start">Évaluation</text>
+<text x="100.5" y="902.5999999999999" font-family="Inter" font-size="12" font-weight="400" fill="#4B5768" text-anchor="start">Toutes les lignes, toutes les périodes, depuis</text>
+<text x="100.5" y="918.8" font-family="Inter" font-size="12" font-weight="400" fill="#4B5768" text-anchor="start">les formules de la branche</text>
+</g>
+<polyline points="455.8,885.1999999999999 461.8,891.1999999999999 455.8,897.1999999999999" fill="none" stroke="#8A96A6" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/>
+<g id="Sensibilités">
+<rect x="476.8" y="841.5999999999999" width="355.2" height="99.2" rx="8" fill="#FFFFFF" stroke="#D6DCE4" stroke-width="1"/>
+<rect x="491.8" y="856.5999999999999" width="26" height="26" rx="6" fill="#1E7A6C"/>
+<text x="504.8" y="874.0999999999999" font-family="Inter" font-size="10" font-weight="700" fill="#FFFFFF" text-anchor="middle">SE</text>
+<text x="527.8" y="874.5999999999999" font-family="Inter" font-size="14.5" font-weight="600" fill="#13202F" text-anchor="start">Sensibilités</text>
+<text x="491.8" y="902.5999999999999" font-family="Inter" font-size="12" font-weight="400" fill="#4B5768" text-anchor="start">+1 % sur chaque hypothèse : effet sur la marge</text>
+</g>
+<polyline points="847.0,885.1999999999999 853.0,891.1999999999999 847.0,897.1999999999999" fill="none" stroke="#8A96A6" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/>
+<g id="Valorisation au marché">
+<rect x="868.0" y="841.5999999999999" width="355.2" height="99.2" rx="8" fill="#FFFFFF" stroke="#D6DCE4" stroke-width="1"/>
+<rect x="883.0" y="856.5999999999999" width="26" height="26" rx="6" fill="#1E7A6C"/>
+<text x="896.0" y="874.0999999999999" font-family="Inter" font-size="10" font-weight="700" fill="#FFFFFF" text-anchor="middle">VM</text>
+<text x="919.0" y="874.5999999999999" font-family="Inter" font-size="14.5" font-weight="600" fill="#13202F" text-anchor="start">Valorisation au marché</text>
+<text x="883.0" y="902.5999999999999" font-family="Inter" font-size="12" font-weight="400" fill="#4B5768" text-anchor="start">Prix de la branche remplacés par les prix</text>
+<text x="883.0" y="918.8" font-family="Inter" font-size="12" font-weight="400" fill="#4B5768" text-anchor="start">réalisés</text>
+</g>
+<polyline points="1238.2,885.1999999999999 1244.2,891.1999999999999 1238.2,897.1999999999999" fill="none" stroke="#8A96A6" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/>
+<g id="Pont par driver">
+<rect x="1259.2" y="841.5999999999999" width="355.2" height="99.2" rx="8" fill="#FFFFFF" stroke="#D6DCE4" stroke-width="1"/>
+<rect x="1274.2" y="856.5999999999999" width="26" height="26" rx="6" fill="#1E7A6C"/>
+<text x="1287.2" y="874.0999999999999" font-family="Inter" font-size="10" font-weight="700" fill="#FFFFFF" text-anchor="middle">PS</text>
+<text x="1310.2" y="874.5999999999999" font-family="Inter" font-size="14.5" font-weight="600" fill="#13202F" text-anchor="start">Pont par driver</text>
+<text x="1274.2" y="902.5999999999999" font-family="Inter" font-size="12" font-weight="400" fill="#4B5768" text-anchor="start">Partage de Shapley, indépendant de l’ordre ;</text>
+<text x="1274.2" y="918.8" font-family="Inter" font-size="12" font-weight="400" fill="#4B5768" text-anchor="start">résidu affiché</text>
+</g>
+</g>
+<line x1="850.0" y1="964.8" x2="850.0" y2="1002.8" stroke="#8A96A6" stroke-width="1.5"/>
+<polygon points="850.0,1002.8 844.0,991.8 856.0,991.8" fill="#8A96A6"/>
+<g id="Couche — Revue et convergence">
+<rect x="64" y="1006.8" width="1572" height="165.7" rx="12" fill="#EEF6EC" stroke="#D3E8CE" stroke-width="1"/>
+<rect x="85.5" y="1024.8" width="14" height="14" rx="3" fill="#3D7F35"/>
+<text x="109.5" y="1036.3" font-family="Inter" font-size="12" font-weight="700" fill="#3D7F35" text-anchor="start" letter-spacing="0.6">REVUE ET CONVERGENCE</text>
+<g id="Réponses de la branche">
+<rect x="85.5" y="1053.3" width="371.8" height="99.2" rx="8" fill="#FFFFFF" stroke="#D6DCE4" stroke-width="1"/>
+<rect x="100.5" y="1068.3" width="26" height="26" rx="6" fill="#3D7F35"/>
+<text x="113.5" y="1085.8" font-family="Inter" font-size="10" font-weight="700" fill="#FFFFFF" text-anchor="middle">RB</text>
+<text x="136.5" y="1086.3" font-family="Inter" font-size="14.5" font-weight="600" fill="#13202F" text-anchor="start">Réponses de la branche</text>
+<text x="100.5" y="1114.3" font-family="Inter" font-size="12" font-weight="400" fill="#4B5768" text-anchor="start">Couvertures, contrats, stocks : deviennent des</text>
+<text x="100.5" y="1130.5" font-family="Inter" font-size="12" font-weight="400" fill="#4B5768" text-anchor="start">attributs</text>
+</g>
+<g id="Dictionnaire de drivers">
+<rect x="471.2" y="1053.3" width="371.8" height="99.2" rx="8" fill="#FFFFFF" stroke="#D6DCE4" stroke-width="1"/>
+<rect x="486.2" y="1068.3" width="26" height="26" rx="6" fill="#3D7F35"/>
+<text x="499.2" y="1085.8" font-family="Inter" font-size="10" font-weight="700" fill="#FFFFFF" text-anchor="middle">DD</text>
+<text x="522.2" y="1086.3" font-family="Inter" font-size="14.5" font-weight="600" fill="#13202F" text-anchor="start">Dictionnaire de drivers</text>
+<text x="486.2" y="1114.3" font-family="Inter" font-size="12" font-weight="400" fill="#4B5768" text-anchor="start">Drivers équivalents entre branches, validés par la</text>
+<text x="486.2" y="1130.5" font-family="Inter" font-size="12" font-weight="400" fill="#4B5768" text-anchor="start">finance groupe</text>
+</g>
+<g id="Cycle suivant">
+<rect x="857.0" y="1053.3" width="371.8" height="99.2" rx="8" fill="#FFFFFF" stroke="#D6DCE4" stroke-width="1"/>
+<rect x="872.0" y="1068.3" width="26" height="26" rx="6" fill="#3D7F35"/>
+<text x="885.0" y="1085.8" font-family="Inter" font-size="10" font-weight="700" fill="#FFFFFF" text-anchor="middle">CS</text>
+<text x="908.0" y="1086.3" font-family="Inter" font-size="14.5" font-weight="600" fill="#13202F" text-anchor="start">Cycle suivant</text>
+<text x="872.0" y="1114.3" font-family="Inter" font-size="12" font-weight="400" fill="#4B5768" text-anchor="start">Mapping automatique ; un changement de formule est</text>
+<text x="872.0" y="1130.5" font-family="Inter" font-size="12" font-weight="400" fill="#4B5768" text-anchor="start">un signal</text>
+</g>
+<g id="Alertes événements">
+<rect x="1242.8" y="1053.3" width="371.8" height="99.2" rx="8" fill="#FFFFFF" stroke="#D6DCE4" stroke-width="1"/>
+<rect x="1257.8" y="1068.3" width="26" height="26" rx="6" fill="#3D7F35"/>
+<text x="1270.8" y="1085.8" font-family="Inter" font-size="10" font-weight="700" fill="#FFFFFF" text-anchor="middle">AE</text>
+<text x="1293.8" y="1086.3" font-family="Inter" font-size="14.5" font-weight="600" fill="#13202F" text-anchor="start">Alertes événements</text>
+<text x="1257.8" y="1114.3" font-family="Inter" font-size="12" font-weight="400" fill="#4B5768" text-anchor="start">Un incident remonte aux hypothèses exposées de</text>
+<text x="1257.8" y="1130.5" font-family="Inter" font-size="12" font-weight="400" fill="#4B5768" text-anchor="start">chaque branche</text>
+</g>
+</g>
+<g id="Rôle du LLM (Qwen via Bifrost)">
+<rect x="64" y="1202.5" width="1572" height="72" rx="10" fill="#FCF5E6" stroke="#F0DFB5" stroke-width="1"/>
+<text x="85.5" y="1231.5" font-family="Inter" font-size="13" font-weight="700" fill="#B7831A" text-anchor="start">Rôle du LLM (Qwen via Bifrost)</text>
+<text x="85.5" y="1253.5" font-family="Inter" font-size="12" font-weight="400" fill="#4B5768" text-anchor="start">Propose des candidats (sens d’un libellé, relation à tester), formule les questions, rédige les ponts. Il ne calcule aucun nombre : chaque proposition est acceptée ou rejetée par l’arithmétique, le graphe ou la branche.</text>
+</g>
+<text x="64" y="1312.5" font-family="Inter" font-size="12.5" font-weight="400" fill="#7A8696" text-anchor="start">Exemple outillé : scripts/discover_submission.py (branche fictive, prix réalisés Argus) ; chiffres illustratifs, pas des données OCP.</text>
+</svg>

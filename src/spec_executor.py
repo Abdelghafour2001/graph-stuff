@@ -29,6 +29,7 @@ import yaml
 from openpyxl.utils import column_index_from_string, get_column_letter, range_boundaries
 
 from graph import driver
+from periods import FORECAST_FORMAT, parse_period
 
 EXCEL_DIR = Path(os.environ["EXCEL_DIR"])
 KEYS = ("file", "sheet", "table_range", "header_rows", "label_columns", "row_dimensions", "column_dimension",
@@ -44,7 +45,6 @@ MORE_SPECIFIC = {  # if one of these is evidenced, the generic unit is probably 
     "usd_per_ton": ["usd_per_ton_of_p2o5", "usd_per_short_ton"],
 }
 TOLERANCE = 0.01
-FORECAST_FORMAT = re.compile(r'"\s*f\s*"', re.IGNORECASE)  # number formats like mmm\-yy\ "f"
 ANCHOR_SEARCH_ROWS = 60  # how far below the original row the anchor text is looked for
 
 
@@ -81,30 +81,6 @@ def anchor_offset(spec: dict) -> int:
     found = [i + 1 for i, v in enumerate(values) if same_text(v, text)]
     assert found, f"anchor '{text}' (was {cell}) not found in column {col}: the layout changed, redo the spec"
     return min(found, key=lambda r: abs(r - row)) - row
-
-
-def parse_period(v):
-    """Start date of a period label: a date, a year (2026), a quarter (1Q26, Q1 2026) or a month (Oct-25, Oct 2025)."""
-    if hasattr(v, "year") and hasattr(v, "month"):
-        return date(v.year, v.month, getattr(v, "day", 1) if not hasattr(v, "hour") else v.day)
-    if isinstance(v, (int, float)) and float(v).is_integer() and 1990 <= v <= 2100:
-        return date(int(v), 1, 1)
-    if not isinstance(v, str):
-        return None
-    t = v.strip()
-    m = re.fullmatch(r"([1-4])Q(\d{2}|\d{4})|Q([1-4])\s*(\d{4})", t, re.IGNORECASE)
-    if m:
-        q, y = (m.group(1), m.group(2)) if m.group(1) else (m.group(3), m.group(4))
-        return date(int(y) if len(y) == 4 else 2000 + int(y), 3 * int(q) - 2, 1)
-    if re.fullmatch(r"\d{4}", t):
-        return date(int(t), 1, 1)
-    for fmt in ("%b-%y", "%b %y", "%b-%Y", "%b %Y"):
-        try:
-            d = datetime.strptime(t, fmt)
-            return date(d.year, d.month, 1)
-        except ValueError:
-            pass
-    return None
 
 
 def is_missing(v, markers: list) -> bool:

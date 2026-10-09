@@ -12,9 +12,9 @@ The goal is agentic P&L computation across OCP branches and BUs on top of a Neo4
 - [Notes on the market-intel ingestion repo (referential, caster docs)](docs/06-ingestion-repo-notes.md)
 - [Sub-agents with their own graphs (design proposal)](docs/07-subagents.md)
 - [Sample files review (Argus, CRU, S&P, vessel tracker)](docs/09-sample-files-review.md)
-- [P&L agent: living branch forecasts marked to market and to events (design)](docs/10-pnl-agent.md)
+- [P&L agent: branch submissions without templates, structure discovery, P&L engine (design + prototype)](docs/10-pnl-agent.md); try `python scripts/sample_branch.py /tmp/b.xlsx && python scripts/discover_submission.py /tmp/b.xlsx`
 - [Variance diagnosis: why a margin moved (design, with animated architecture)](docs/08-variance-diagnosis.md)
-- Architecture figures (French, SVG importable into Figma): [agentic architecture](docs/figures/01-architecture-agentique.svg), [data flows](docs/figures/02-flux-de-donnees.svg), [graph creation process](docs/figures/03-creation-du-graphe.svg); regenerate with `python docs/figures/build_figures.py`
+- Architecture figures (French, SVG importable into Figma): [agentic architecture](docs/figures/01-architecture-agentique.svg), [data flows](docs/figures/02-flux-de-donnees.svg), [graph creation process](docs/figures/03-creation-du-graphe.svg), [branch submission discovery and P&L](docs/figures/04-decouverte-pnl.svg); regenerate with `python docs/figures/build_figures.py`
 
 Core rule: **the LLM never computes or invents numbers.** Agents maintain structure and a deterministic engine does the math.
 
@@ -50,6 +50,7 @@ podman compose up -d --build     # neo4j, market-intel-db (existing volume), loa
 - **API:** http://localhost:8010/docs (FastAPI Swagger).
 - **Graph:** http://localhost:7474 (Neo4j Browser; neo4j / ocp-poc-password).
 - `.env` must define `EXCEL_DIR` (host folder of the market-intel workbooks), the LLM provider settings, and the rest of `.env.example`.
+- **LLM provider:** `LLM_PROVIDER=azure_openai`, `bifrost` (Qwen behind the Bifrost gateway; check it first with `python scripts/check_gateway.py` on the office network) or anything else for the Claude API.
 - The market-intel Postgres volume `corporate-geni-strategy-intel_postgresql` is reused as-is (external volume). Don't run the market-intel project's own Postgres at the same time.
 
 ## Run (local Python, for development)

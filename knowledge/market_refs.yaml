@@ -1,0 +1,8 @@
+# Market reference for each (concept, driver) of a branch submission: what the P&L agent marks the branch's assumption against.
+# A reference is a provider price sheet (one column per route, Low/High pairs, months down the first column) and a route name.
+# Only months the provider shows as actuals are used (forecasts are marked "f" in the cell format; see docs/09).
+# Sulphur is not in the sample files: until a sulphur series is added, sulphur assumptions stay as submitted.
+references:
+  dap/price:     {file: "Argus Monthly Phosphates Outlook*.xlsx", sheet: Price Forecast, route: DAP Morocco fob}
+  ammonia/price: {file: "Argus Monthly Ammonia Outlook*.xlsx", sheet: Price Forecast, route: Morocco cfr}
+  phosphate_rock/price: {file: "Argus Monthly Phosphates Outlook*.xlsx", sheet: Price Forecast, route: Phosrock Morocco fob}

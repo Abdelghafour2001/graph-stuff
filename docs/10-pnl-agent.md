@@ -1,6 +1,6 @@
 # P&L Agent: Living Forecasts on the Graph
 
-*2026-10-09. Status: design; structure discovery from formulas prototyped. Builds on the [variance diagnosis](08-variance-diagnosis.md), the news / event agent and the review loop.*
+*2026-10-09. Status: structure discovery and P&L engine prototyped (see [Prototype](#prototype-built-2026-10-09)). Builds on the [variance diagnosis](08-variance-diagnosis.md), the news / event agent and the review loop.*
 
 ## The problem, as OCP lives it
 
@@ -56,6 +56,36 @@ Branches do not fill a group template, and there is no shared structure. Each se
    - **A change in a branch's formulas between cycles is itself a signal** ("revenue now nets freight"), reported in the bridge.
 
 The structure is never imposed. It is learned per branch, checked by arithmetic, confirmed by people, and becomes the group standard because it was agreed, not because a template demanded it.
+
+### The flow
+
+Figure (same style as the architecture figures): [figures/04-decouverte-pnl.svg](figures/04-decouverte-pnl.svg) ([PNG preview](figures/04-decouverte-pnl.png)).
+
+```mermaid
+flowchart TB
+    subgraph IN["Branch submission, any format"]
+      XF["Workbook with formulas"]; VC["Pasted values"]; PD["PDF / deck / email"]; FL["Linked files we do not have"]
+    end
+    subgraph DISC["Structure discovery (deterministic)"]
+      F1["1 · Formulas → rules<br/>inputs vs computed lines"] --> F2["2 · Identities on values<br/>sum · k·volume·price · k·volume"]
+      F2 --> F3["3 · Meaning<br/>label → concept + driver type<br/>(Bifrost reranker breaks ties)"]
+      F3 --> F4["4 · Checks<br/>overrides · hidden constants ·<br/>inputs the graph expects"]
+    end
+    subgraph MODEL["Branch model in the graph"]
+      HY["Assumptions (versioned)"]; FO["Formulas"]; RM["Market references<br/>(actual months only)"]; QB["Questions to the branch"]
+    end
+    subgraph ENGINE["P&L engine (deterministic)"]
+      E1["Evaluate"] --> E2["Sensitivities"] --> E3["Mark to market"] --> E4["Shapley bridge<br/>+ unexplained"]
+    end
+    subgraph REVIEW["Review and convergence"]
+      R1["Branch answers<br/>(hedges, contracts, stock)"]; R2["Group driver dictionary"]; R3["Next cycle maps automatically;<br/>formula changes flagged"]; R4["Event alerts on exposed assumptions"]
+    end
+    IN --> DISC --> MODEL --> ENGINE --> REVIEW
+    QB -.-> R1
+    R1 -.-> MODEL
+    LLM["Qwen via Bifrost: proposes candidates, writes questions and bridges; computes nothing"] -.-> DISC
+    LLM -.-> REVIEW
+```
 
 ## Core idea: the submission is a set of assumptions linked to the world
 
@@ -159,10 +189,39 @@ No templates and no structure: the agent learns those. What it needs:
 3. **Validated consumption ratios per plant** where they exist (they also unlock attribution mode in the variance diagnosis).
 4. **Who answers the agent's questions** in each branch, and who in group FP&A approves the driver dictionary.
 
-## Prototype plan
-0. ~~Formula harvesting~~: done, `src/formula_graph.py` + agent tool `describe_formulas` (tests in `tests/test_formula_graph.py`).
-1. Identity search on pasted values (sum, product, constant ratio, constant growth), and overrides detection (constants inside formula blocks).
-2. `knowledge/pnl_model.yaml`: an illustrative formula graph for Nutricrops DAP at Jorf (revenue, variable costs from rock / sulphur / ammonia, freight), clearly marked illustrative, to be replaced by the model discovered from real branch submissions.
-3. `src/pnl.py`: DAG evaluator, sensitivities, Shapley attribution, mark-to-market against provider series (actuals only), with tests.
-4. A synthetic branch submission (an unstructured workbook, not a template), then the Watcher flow end to end on a Hormuz-like incident: exposure by traversal, impact with range, alert text checked by the Reflector.
-5. UI tab: submission vs market-implied, bridge, challenge list.
+## Prototype (built 2026-10-09)
+
+| File | What it does |
+|---|---|
+| `src/formula_graph.py` | Formulas → rules per sheet and per row, sheet dependencies, external links, hard-typed overrides |
+| `src/discovery.py` | Reads any sheet (finds the period columns and the label column), identities on pasted values, label → concept and driver type, questions (overrides, hidden constants, external links, inputs the graph expects, missing units) |
+| `src/concept_match.py` | Label → concept: lexical candidates from the graph's terms, reranked by the Bifrost cross-encoder when `BIFROST_RERANK_MODEL` is set |
+| `src/pnl.py` | Engine: evaluate the branch's own rules, sensitivities, mark to market, exact Shapley bridge with the unexplained residual |
+| `src/market.py`, `knowledge/market_refs.yaml` | Market reference per concept and driver: provider price sheets, actual months only |
+| `scripts/sample_branch.py` | A made-up submission with no template: formula sheet with an override, hidden constants and a linked file; a pasted-values sheet. **Illustrative numbers, not OCP data** |
+| `scripts/discover_submission.py` | End to end: discovery → model → sensitivities → mark to market → bridge |
+| `tests/test_discovery_pnl.py` | Tests of all of the above |
+
+Run on the made-up branch, with the real Argus actuals from the sample files as the market:
+
+- **Formula sheet.** Every computed line is recovered with its expression, and every input is mapped: consumption ratios to sulphur and ammonia, prices to their products, Jorf Lasfar as the site.
+- **Pasted-values sheet.** The logic is found by arithmetic:
+  - margin = revenue − sulphur − ammonia − fixed costs;
+  - revenue = 0.001 × volume × price;
+  - the sulphur cost implies 66 $ per tonne of DAP, which is the hidden 0.40 t/t × 165 $/t.
+- **Questions.**
+  - April sulphur cost typed over the formula (+15.0 M$ against the formula).
+  - The rock line hides `1.6` and `48`.
+  - Six cells come from `[1]Hypotheses`.
+  - The graph expects DAP's intermediates (phosphoric and sulfuric acid) and no line mentions them.
+- **Engine.**
+  - Margin 1,062.6 M$ over H1 (illustrative).
+  - +1 % DAP price = +20.7 M$; +1 % volume = +13.2 M$.
+  - Marked to Argus actuals (DAP Morocco fob, ammonia Morocco cfr): 1,083.7 M$, a change of +21.1. The bridge splits it into +49.0 DAP price and −27.9 ammonia price, with nothing unexplained.
+  - Sulphur has no market series in the files, so it is kept as submitted and the report says so.
+
+## Next
+1. Load discovered models into the graph (`Submission`, `Assumption`, `Formula`, `PRICED_ON`) and show them in a UI tab: lines, questions, bridge.
+2. Watcher: on a new incident, traverse from the affected concepts to the exposed assumptions of every loaded submission and run the engine with a calibrated scenario.
+3. Cross-branch alignment into a group driver dictionary (reviewed).
+4. PDFs and decks: extraction with the verbatim-quote check.

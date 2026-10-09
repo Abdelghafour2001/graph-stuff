@@ -356,8 +356,59 @@ def figure_build():
     s.save(OUT / "03-creation-du-graphe.svg")
 
 
+# ---------- figure 4: structure discovery and P&L of a branch submission ----------
+
+def figure_discovery():
+    s = Svg(1700, 1500)
+    header(s, "Soumission d’une branche — découverte de structure et P&L",
+           "Pas de modèle imposé : l’agent retrouve la logique de chaque fichier, le moteur calcule, la branche confirme, le modèle converge")
+    x, w, gap = 64, 1572, 46
+    y = 160
+    stages = [
+        ("Soumission de la branche (tout format)", "data", [
+            ("Classeur avec formules", "La logique de la branche est dans ses formules : volume × prix, sommes, ratios", "XF"),
+            ("Valeurs collées", "Sans formules : la logique est retrouvée par l’arithmétique", "VC"),
+            ("PDF, présentation, e-mail", "Un nombre n’est gardé que si sa phrase est retrouvée mot pour mot", "PD"),
+            ("Fichiers liés absents", "Cellules reliées à un autre classeur ([1]Hypothèses) : à demander", "FL")], False),
+        ("Découverte de structure (déterministe)", "det", [
+            ("Formules → règles", "395 617 formules → 67 règles (fichier S&P) ; entrées vs lignes calculées", "1"),
+            ("Identités sur valeurs", "Marge = CA − coûts ; CA = volume × prix ; coût = k × volume", "2"),
+            ("Sens des libellés", "Libellé → concept et type de driver ; reranker Bifrost pour départager", "3"),
+            ("Contrôles", "Saisies manuelles sur formule, constantes cachées, intrants attendus par le graphe", "4")], True),
+        ("Modèle de la branche (dans le graphe)", "front", [
+            ("Hypothèses", "Volume, prix, ratio, coût, fret, change : versionnées par cycle", "HY"),
+            ("Formules", "Règles de la branche, lues dans son fichier, évaluables", "FO"),
+            ("Références marché", "PRICED_ON : séries fournisseurs, mois réalisés seulement", "RM"),
+            ("Questions à la branche", "Ce que l’agent ne peut pas voir : jamais deviné", "QB")], False),
+        ("Moteur P&L (déterministe)", "det", [
+            ("Évaluation", "Toutes les lignes, toutes les périodes, depuis les formules de la branche", "EV"),
+            ("Sensibilités", "+1 % sur chaque hypothèse : effet sur la marge", "SE"),
+            ("Valorisation au marché", "Prix de la branche remplacés par les prix réalisés", "VM"),
+            ("Pont par driver", "Partage de Shapley, indépendant de l’ordre ; résidu affiché", "PS")], True),
+        ("Revue et convergence", "review", [
+            ("Réponses de la branche", "Couvertures, contrats, stocks : deviennent des attributs", "RB"),
+            ("Dictionnaire de drivers", "Drivers équivalents entre branches, validés par la finance groupe", "DD"),
+            ("Cycle suivant", "Mapping automatique ; un changement de formule est un signal", "CS"),
+            ("Alertes événements", "Un incident remonte aux hypothèses exposées de chaque branche", "AE")], False),
+    ]
+    for i, (label, role, cards, chev) in enumerate(stages):
+        if i:
+            s.line(x + w / 2, y + 4, x + w / 2, y + gap - 4)
+            y += gap
+        y += band(s, x, y, w, label, role, cards, chevrons=chev)
+    y += 30
+    note_band(s, x, y, w, 72, "Rôle du LLM (Qwen via Bifrost)",
+              "Propose des candidats (sens d’un libellé, relation à tester), formule les questions, rédige les ponts. Il ne calcule "
+              "aucun nombre : chaque proposition est acceptée ou rejetée par l’arithmétique, le graphe ou la branche.", "llm")
+    s.text(64, y + 110, "Exemple outillé : scripts/discover_submission.py (branche fictive, prix réalisés Argus) ; chiffres illustratifs, "
+                       "pas des données OCP.", 12.5, 400, PALETTE["ink3"])
+    s.h = int(y + 140)
+    s.save(OUT / "04-decouverte-pnl.svg")
+
+
 if __name__ == "__main__":
     figure_architecture()
     figure_flows()
     figure_build()
+    figure_discovery()
     print("wrote", sorted(p.name for p in OUT.glob("*.svg")))
