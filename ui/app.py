@@ -71,17 +71,20 @@ with news:
 
 with entities:
     table = pd.DataFrame(get("/entities/assets"))
-    st.markdown(f"**{len(table)} canonical assets** resolved from {int(table['records'].sum())} source records (proposed by the entity agent; approve after review)")
-    st.dataframe(table.drop(columns=["source_names"]), hide_index=True, height=350)
-    labels = [f"{r.asset} ({r.records} records, {r.confidence}, {r.status})" for r in table.itertuples()]
-    choice = st.selectbox("Review asset", labels, index=None, placeholder="Pick an asset to see its source records")
-    if choice:
-        row = table.iloc[labels.index(choice)]
-        st.write(row["reason"])
-        st.code("\n".join(row["source_names"]))
-        if row["status"] != "approved" and st.button("Approve merge (human decision)"):
-            post(f"/entities/assets/{row['asset_id']}/approve", {})
-            st.rerun()
+    if table.empty:
+        st.info("No assets yet. Run: python entity_resolution.py propose, then load.")
+    else:
+        st.markdown(f"**{len(table)} canonical assets** resolved from {int(table['records'].sum())} source records (proposed by the entity agent; approve after review)")
+        st.dataframe(table.drop(columns=["source_names"]), hide_index=True, height=350)
+        labels = [f"{r.asset} ({r.records} records, {r.confidence}, {r.status})" for r in table.itertuples()]
+        choice = st.selectbox("Review asset", labels, index=None, placeholder="Pick an asset to see its source records")
+        if choice:
+            row = table.iloc[labels.index(choice)]
+            st.write(row["reason"])
+            st.code("\n".join(row["source_names"]))
+            if row["status"] != "approved" and st.button("Approve merge (human decision)"):
+                post(f"/entities/assets/{row['asset_id']}/approve", {})
+                st.rerun()
 
 with workbooks:
     col1, col2 = st.columns([1, 2])

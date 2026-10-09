@@ -150,7 +150,7 @@ def calc(expression: str) -> str:
     Args:
         expression: Numbers, + - * / and parentheses only, e.g. "(897.1 - 705.3) / 705.3 * 100".
     """
-    assert re.fullmatch(r"[0-9+\-*/(). ]+", expression), "only numbers, + - * / and parentheses are allowed"
+    assert re.fullmatch(r"[0-9+\-*/(). ]+", expression) and "**" not in expression, "only numbers, + - * / and parentheses are allowed"
     return f"{expression} = {round(eval(expression, {'__builtins__': {}}), 4)}"
 
 
@@ -186,7 +186,17 @@ def ask_anthropic(system: str, tools: list, history: list[dict], trace: list[dic
         fallbacks="default",
     )
     for final in runner:
-        trace.extend({"tool": b.name, "input": b.input} for b in final.content if b.type == "tool_use")
+        calls = [b for b in final.content if b.type == "tool_use"]
+        if not calls:
+            continue
+        # The runner caches this response, so the tools run once; the results go into the trace for the Reflector.
+        response = runner.generate_tool_call_response() or {"content": []}
+        results = {r["tool_use_id"]: r.get("content", "") for r in response["content"]}
+        for b in calls:
+            result = results.get(b.id, "")
+            if not isinstance(result, str):
+                result = " ".join(part.get("text", "") for part in result)
+            trace.append({"tool": b.name, "input": b.input, "result": result})
     assert final.stop_reason != "refusal", f"refused: {final.stop_details}"
     return "".join(b.text for b in final.content if b.type == "text")
 
@@ -229,7 +239,7 @@ def reflect(answer: str, trace: list[dict]) -> list[str]:
     unsupported = sorted({n for n in numbers(answer)
                           if n >= 10 and not 1990 <= n <= 2100 and not any(abs(n - k) <= 0.01 * max(abs(k), 1) for k in known)})
     problems = [f"these numbers do not appear in any tool result: {unsupported[:15]}. Remove them, or get them from a tool (use calc for derived numbers)."] if unsupported else []
-    article_ids = set(re.findall(r'"article_id": (\d+)', evidence))
+    article_ids = set(re.findall(r'\\*"article_id\\*": (\d+)', evidence))  # also inside the news agent's nested (escaped) JSON
     if article_ids and not article_ids & set(re.findall(r"\d{6,}", answer)):
         problems.append("cite the article ids (e.g. article 2795774) that support your claims.")
     return problems

@@ -42,6 +42,7 @@ def validate(spec: dict) -> None:
     assert all(o in SUPPORTED_OPS for o in ops), f"operators {ops}: only {sorted(SUPPORTED_OPS)} are executable today"
     assert ops and ops[-1] == "stack", "the last operator must be stack (one value per output row)"
     assert len(spec["label_columns"]) == len(spec["row_dimensions"]), "one row_dimension per label column"
+    assert spec["header_rows"] and spec["label_columns"], "header_rows and label_columns must not be empty"
     assert canonical_unit(spec["value_unit"]) in UNITS, f"value_unit '{spec['value_unit']}' is not a referential unit or alias; e.g. {sorted(UNITS)[:12]}"
     min_col, min_row, max_col, max_row = range_boundaries(spec["table_range"])
     for key in ("header_rows", "drop_rows"):
