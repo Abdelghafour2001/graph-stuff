@@ -6,7 +6,7 @@ from anthropic import beta_tool
 from load_supply_chain import route_aliases
 
 import exposure as x
-from variance_tools import load_series, read_all
+from variance_tools import CONFIG, load_series, read_all
 
 OCP_SITES = "MATCH (s:Site)-[:PART_OF*]->(:Concept {id: 'ocp_group'}) "
 
@@ -36,15 +36,36 @@ def events_on(concepts: list[str], date_from: str, date_to: str) -> list[dict]:
     return x.dominant(rows)
 
 
-def monthly_prices(items: list[str], date_from: str, date_to: str) -> dict[str, dict[str, float]]:
-    out = {}
-    for item, points in load_series(items).items():
+def monthly_prices(items: list[str], date_from: str, date_to: str) -> tuple[dict[str, dict[str, float]], dict[str, str]]:
+    """Monthly averages per item over the period, and where they come from. The series of driver_series.yaml first; when it
+    has fewer than 2 months in the period, the route with the most assessments in the period (so costs are not left without
+    prices while selling prices have them)."""
+    configured = load_series(items)
+    prices, sources = {}, {}
+    for item in items:
+        points = [(d, v) for d, v in configured.get(item, []) if date_from <= d <= date_to]
+        spec = CONFIG["series"].get(item)
+        source = f"{spec['product']} {spec['location']} {spec['incoterm']} (configured series)" if spec else None
+        if len({d[:7] for d, _ in points}) < 2:
+            best = read_all(
+                "MATCH (p:PriceAssessment)-[:OF]->(:Concept {id: $item}), (p)-[:AT]->(l:Concept), (p)-[:BASIS]->(i:Concept) "
+                "WHERE p.date >= $from AND p.date <= $to RETURN l.id AS location, i.id AS incoterm, count(*) AS n "
+                "ORDER BY n DESC LIMIT 1", item=item, **{"from": date_from, "to": date_to})
+            if best:
+                b = best[0]
+                points = [(r["date"], r["mid"]) for r in read_all(
+                    "MATCH (p:PriceAssessment)-[:OF]->(:Concept {id: $item}), (p)-[:AT]->(:Concept {id: $location}), "
+                    "(p)-[:BASIS]->(:Concept {id: $incoterm}) WHERE p.date >= $from AND p.date <= $to "
+                    "RETURN p.date AS date, avg(p.mid) AS mid ORDER BY date",
+                    item=item, location=b["location"], incoterm=b["incoterm"], **{"from": date_from, "to": date_to})]
+                source = f"{item} {b['location']} {b['incoterm']} (most quoted route in the period, not the configured one)"
         by_month = {}
         for d, v in points:
-            if date_from <= d <= date_to:
-                by_month.setdefault(d[:7], []).append(v)
-        out[item] = {m: sum(vs) / len(vs) for m, vs in by_month.items()}
-    return out
+            by_month.setdefault(d[:7], []).append(v)
+        if by_month:
+            prices[item] = {m: sum(vs) / len(vs) for m, vs in by_month.items()}
+            sources[item] = source
+    return prices, sources
 
 
 def run_exposure(scope: str, date_from: str, date_to: str) -> dict:
@@ -57,8 +78,8 @@ def run_exposure(scope: str, date_from: str, date_to: str) -> dict:
     aliases = route_aliases()
     touch = sorted({t for lane in lanes for t in [lane["origin"], lane.get("destination"), *lane["via"]] if t}
                    | set(items) | {s for ss in sites.values() for s in ss} | {a for names in aliases.values() for a in names})
-    report = x.exposure(lanes, made_from, sites, events_on(touch, date_from, date_to),
-                        monthly_prices(items, date_from, date_to), scope or None, aliases)
+    prices, sources = monthly_prices(items, date_from, date_to)
+    report = x.exposure(lanes, made_from, sites, events_on(touch, date_from, date_to), prices, scope or None, aliases, sources)
     report["period"] = [date_from, date_to]
     return report
 
