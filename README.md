@@ -11,6 +11,7 @@ The goal is agentic P&L computation across OCP branches and BUs on top of a Neo4
 - [Prior art sweep (papers + repos) and decisions](docs/05-prior-art.md)
 - [Notes on the market-intel ingestion repo (referential, caster docs)](docs/06-ingestion-repo-notes.md)
 - [Sub-agents with their own graphs (design proposal)](docs/07-subagents.md)
+- [Variance diagnosis: why a margin moved (design, with animated architecture)](docs/08-variance-diagnosis.md)
 
 Core rule: **the LLM never computes or invents numbers.** Agents maintain structure and a deterministic engine does the math.
 
