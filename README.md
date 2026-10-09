@@ -12,6 +12,7 @@ The goal is agentic P&L computation across OCP branches and BUs on top of a Neo4
 - [Notes on the market-intel ingestion repo (referential, caster docs)](docs/06-ingestion-repo-notes.md)
 - [Sub-agents with their own graphs (design proposal)](docs/07-subagents.md)
 - [Variance diagnosis: why a margin moved (design, with animated architecture)](docs/08-variance-diagnosis.md)
+- Architecture figures (French, SVG importable into Figma): [agentic architecture](docs/figures/01-architecture-agentique.svg), [data flows](docs/figures/02-flux-de-donnees.svg), [graph creation process](docs/figures/03-creation-du-graphe.svg); regenerate with `python docs/figures/build_figures.py`
 
 Core rule: **the LLM never computes or invents numbers.** Agents maintain structure and a deterministic engine does the math.
 
