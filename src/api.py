@@ -13,6 +13,7 @@ from graph import driver, read_graph
 from diff_vs_db import compare
 from spec_executor import check, execute, validate
 import variance
+import variance_tools
 from variance_tools import run_diagnosis
 
 ROOT = Path(__file__).parent.parent
@@ -169,6 +170,35 @@ def variance_diagnosis(metric: str, product: str, period: str, as_of: str = "") 
     """Deterministic part of a variance diagnosis (no LLM): ranked drivers, analogs, incidents, and the report the LLM would get."""
     diag, incidents, not_ranked = run_diagnosis(metric, product, period, as_of)
     return {**diag, "incidents": incidents, "not_ranked": not_ranked, "report": variance.report(diag, metric, product, incidents, not_ranked)}
+
+
+class Review(BaseModel):
+    decision: str
+    top1: str = ""
+    note: str = ""
+    reviewer: str = ""
+
+
+@app.get("/diagnoses")
+def diagnoses() -> list[dict]:
+    return variance_tools.list_diagnoses()
+
+
+@app.get("/diagnoses/{name}")
+def diagnosis(name: str) -> dict:
+    try:
+        return json.loads(variance_tools.diagnosis_path(name).read_text(encoding="utf-8"))
+    except AssertionError as e:
+        raise HTTPException(404, str(e))
+
+
+@app.post("/diagnoses/{name}/review")
+def review(name: str, body: Review) -> dict:
+    """Human decision on a diagnosis; approved and corrected ones become labelled analogs for later diagnoses."""
+    try:
+        return variance_tools.review_diagnosis(name, body.decision, body.top1, body.note, body.reviewer)
+    except AssertionError as e:
+        raise HTTPException(404 if "unknown" in str(e) else 422, str(e))
 
 
 @app.get("/eval")

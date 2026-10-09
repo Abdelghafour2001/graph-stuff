@@ -50,6 +50,54 @@ def path_exists(a: str, b: str) -> bool:
     return bool(read_all("MATCH (:Concept {id: $a})-[r]-(:Concept {id: $b}) RETURN count(r) AS n", a=a, b=b)[0]["n"])
 
 
+# ---------- review queue (data/diagnoses) ----------
+
+REVIEW_DECISIONS = ("approved", "corrected", "rejected")
+
+
+def diagnosis_path(name: str) -> Path:
+    """Path of a stored diagnosis; refuses names that would leave the folder."""
+    path = DIAGNOSES / name
+    assert path.suffix == ".json" and path.resolve().parent == DIAGNOSES.resolve() and path.exists(), f"unknown diagnosis {name}"
+    return path
+
+
+def list_diagnoses() -> list[dict]:
+    out = []
+    for p in sorted(DIAGNOSES.glob("*.json"), reverse=True) if DIAGNOSES.exists() else []:
+        d = json.loads(p.read_text(encoding="utf-8"))
+        out.append({"name": p.name, "status": d["status"], "metric": d["metric"], "product": d["product"], "period": d["diag"]["period"],
+                    "llm_top1": d["answer"]["top1"], "deterministic_top1": d["diag"]["ranking"][0]["id"] if d["diag"]["ranking"] else None,
+                    "reviewed_top1": (d.get("review") or {}).get("top1")})
+    return out
+
+
+def review_diagnosis(name: str, decision: str, top1: str = "", note: str = "", reviewer: str = "") -> dict:
+    """Human decision. approved keeps the model's top-1; corrected sets the true top driver; rejected keeps it out of analogs."""
+    assert decision in REVIEW_DECISIONS, f"decision must be one of {REVIEW_DECISIONS}"
+    path = diagnosis_path(name)
+    d = json.loads(path.read_text(encoding="utf-8"))
+    ranked = [r["id"] for r in d["diag"]["ranking"]]
+    if decision == "corrected":
+        assert top1 in ranked, f"the corrected top driver must be one of {ranked}"
+    label = {"approved": d["answer"]["top1"], "corrected": top1, "rejected": None}[decision]
+    d["status"] = decision
+    d["review"] = {"decision": decision, "top1": label, "note": note, "reviewer": reviewer, "at": datetime.now(timezone.utc).isoformat()}
+    path.write_text(json.dumps(d, ensure_ascii=False, indent=1, default=str), encoding="utf-8")
+    return d["review"]
+
+
+def reviewed_labels(metric_id: str, product_id: str) -> dict[str, str]:
+    """{month: true top driver} from approved or corrected diagnoses; the latest review of a month wins."""
+    labels = {}
+    for p in sorted(DIAGNOSES.glob("*.json")) if DIAGNOSES.exists() else []:
+        d = json.loads(p.read_text(encoding="utf-8"))
+        review = d.get("review") or {}
+        if d["metric"] == metric_id and d["product"] == product_id and review.get("top1"):
+            labels[d["diag"]["period"]] = review["top1"]
+    return labels
+
+
 def run_diagnosis(metric_id: str, product_id: str, period: str, as_of: str = "") -> tuple[dict, list[dict], list[str]]:
     """Deterministic part: diagnosis, incidents on the top drivers and their routes, drivers without a series."""
     graph_edges = edges()
@@ -62,7 +110,8 @@ def run_diagnosis(metric_id: str, product_id: str, period: str, as_of: str = "")
     history = [m for m in months if m < period and months and v.previous_months(m, BASELINE_N)[0] >= months[0]]
     ratios = CONFIG["proxy_ratios"].get(product_id)
     outcome = v.next_changes(v.proxy_margin(series, product_id, ratios)) if ratios else None
-    episodes = v.library(cands, {c: [(d, x) for d, x in pts if d <= as_of] for c, pts in series.items()}, history, BASELINE_N, outcome)
+    episodes = v.library(cands, {c: [(d, x) for d, x in pts if d <= as_of] for c, pts in series.items()}, history, BASELINE_N, outcome,
+                         labels=reviewed_labels(metric_id, product_id))
     diag = v.diagnose(cands, series, period, BASELINE_N, as_of, episodes)
 
     top = [r["id"] for r in diag["ranking"][:3]]

@@ -29,7 +29,8 @@ st.sidebar.code("MATCH (p:Product {id:'dap'})-[:MADE_FROM*]->(x) RETURN p, x\n\n
 counts = get("/health")["counts"]
 st.sidebar.dataframe(pd.DataFrame(counts), hide_index=True)
 
-chat, news, entities, workbooks, specs, evals = st.tabs(["Ask the agent", "News & prices", "Entities", "Workbooks", "Spec review", "Eval"])
+chat, variance_tab, news, entities, workbooks, specs, evals = st.tabs(
+    ["Ask the agent", "Variance", "News & prices", "Entities", "Workbooks", "Spec review", "Eval"])
 
 with chat:
     st.session_state.setdefault("history", [])
@@ -47,6 +48,66 @@ with chat:
         st.session_state.history = res["history"]
         st.session_state.turns.append({"question": question, "answer": res["answer"], "trace": res["trace"]})
         st.rerun()
+
+with variance_tab:
+    st.markdown("**Why did a metric move?** Deterministic ranking of drivers (no LLM). Signal mode: ranked by how unusual each "
+                "driver's move was, not by $/t. Ask the agent for the explained version; its answers land in the review queue below.")
+    c1, c2, c3 = st.columns(3)
+    v_metric = c1.text_input("Metric", "gross_margin", key="v_metric")
+    v_product = c2.text_input("Product", "dap", key="v_product")
+    v_period = c3.text_input("Month (YYYY-MM)", "2026-08", key="v_period")
+    if st.button("Diagnose", key="v_run"):
+        try:
+            st.session_state.v_result = get("/variance", metric=v_metric, product=v_product, period=v_period)
+        except requests.HTTPError as e:
+            st.error(f"Diagnosis failed: {e.response.text[:300]}")
+    res = st.session_state.get("v_result")
+    if res:
+        st.caption(f"{res['period']} vs baseline {res['baseline'][0]} … {res['baseline'][-1]}; earlier moves passing through "
+                   f"searched in {', '.join(res['lookback'])}; as of {res['as_of']}")
+        rows = [{"rank": r["rank"], "driver": r["id"], "role": r["role"], "move %": r.get("pct"), "z": r.get("z"),
+                 "first abnormal": r.get("first_abnormal"),
+                 "earlier move %": (r["earlier_move"] or {}).get("pct") if (r["earlier_move"] or {}).get("first_abnormal") else None,
+                 "score": r["score"], "weekly votes": r["votes"], "path": " → ".join(reversed(r["path"])),
+                 "routes": ", ".join(r["routes"])} for r in res["ranking"]]
+        st.dataframe(pd.DataFrame(rows), hide_index=True)
+        if res["not_ranked"]:
+            st.warning("No price series, so not ranked and not ruled out: " + ", ".join(res["not_ranked"]))
+        left, right = st.columns(2)
+        left.markdown("**Analog months**")
+        left.dataframe(pd.DataFrame(res["analogs"]), hide_index=True)
+        right.markdown("**Incidents on the top drivers**")
+        right.dataframe(pd.DataFrame(res["incidents"]), hide_index=True)
+        with st.expander("Report sent to the LLM"):
+            st.code(res["report"])
+
+    st.markdown("---\n**Review queue**: diagnoses the agent submitted. Approve or correct the top driver; reviewed months become "
+                "labelled analogs for later diagnoses. Reject keeps a month out of the analogs.")
+    queue = pd.DataFrame(get("/diagnoses"))
+    if queue.empty:
+        st.info("No diagnosis submitted yet. Ask the agent a variance question.")
+    else:
+        st.dataframe(queue, hide_index=True)
+        names = list(queue["name"])
+        pick = st.selectbox("Open diagnosis", names, index=None, placeholder="Pick a diagnosis to review", key="v_pick")
+        if pick:
+            d = get(f"/diagnoses/{pick}")
+            ranked = [r["id"] for r in d["diag"]["ranking"]]
+            a, b = st.columns(2)
+            a.markdown("**Model answer**")
+            a.json(d["answer"])
+            b.markdown("**Deterministic ranking**")
+            b.dataframe(pd.DataFrame([{"rank": r["rank"], "driver": r["id"], "score": r["score"], "votes": r["votes"]}
+                                      for r in d["diag"]["ranking"]]), hide_index=True)
+            if d.get("review"):
+                st.success(f"Reviewed: {d['review']['decision']} (top driver {d['review']['top1']}) {d['review']['note']}")
+            decision = st.radio("Decision", ["approved", "corrected", "rejected"], horizontal=True, key="v_decision")
+            true_top = st.selectbox("True top driver", ranked, key="v_true") if decision == "corrected" else ""
+            note = st.text_input("Note (why)", key="v_note")
+            reviewer = st.text_input("Reviewer", key="v_reviewer")
+            if st.button("Save decision", key="v_save"):
+                post(f"/diagnoses/{pick}/review", {"decision": decision, "top1": true_top, "note": note, "reviewer": reviewer})
+                st.rerun()
 
 with news:
     word = st.text_input("Product", "DAP")

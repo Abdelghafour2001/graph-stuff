@@ -43,7 +43,7 @@ The agent has four tools. `lookup_term`, `describe_concept` and `run_cypher` are
 podman compose up -d --build     # neo4j, market-intel-db (existing volume), loader (one-shot graph load), api, ui
 ```
 
-- **UI:** http://localhost:8501. Tabs: chat with the agent (with its tool calls), workbook explorer (sheets by concept, skeleton, cell ranges), spec review (checks, sample rows with source cells, approve), eval results.
+- **UI:** http://localhost:8501. Tabs: chat with the agent (with its tool calls), variance diagnosis with its review queue, workbook explorer (sheets by concept, skeleton, cell ranges), spec review (checks, sample rows with source cells, approve), eval results.
 - **API:** http://localhost:8010/docs (FastAPI Swagger).
 - **Graph:** http://localhost:7474 (Neo4j Browser; neo4j / ocp-poc-password).
 - `.env` must define `EXCEL_DIR` (host folder of the market-intel workbooks), the LLM provider settings, and the rest of `.env.example`.
@@ -74,7 +74,7 @@ Try these questions:
 - An unknown term, e.g. "What is the BL of Khouribga?", should make the agent say it does not know and queue a proposal.
 - "Pourquoi la marge DAP a baissé en août 2026 ?" runs the variance playbook (diagnose_variance, then submit_diagnosis).
 
-Tests: `python -m pytest tests` (no database needed).
+Tests: `python -m pytest tests` (no database needed). Variance diagnosis on the real graph: `python scripts/smoke_variance.py` (see [docs/08](docs/08-variance-diagnosis.md#running-it-on-the-real-graph)).
 
 ## Before showing to finance
 
