@@ -12,6 +12,7 @@ The goal is agentic P&L computation across OCP branches and BUs on top of a Neo4
 - [Notes on the market-intel ingestion repo (referential, caster docs)](docs/06-ingestion-repo-notes.md)
 - [Sub-agents with their own graphs (design proposal)](docs/07-subagents.md)
 - [Sample files review (Argus, CRU, S&P, vessel tracker)](docs/09-sample-files-review.md)
+- [P&L agent: living branch forecasts marked to market and to events (design)](docs/10-pnl-agent.md)
 - [Variance diagnosis: why a margin moved (design, with animated architecture)](docs/08-variance-diagnosis.md)
 - Architecture figures (French, SVG importable into Figma): [agentic architecture](docs/figures/01-architecture-agentique.svg), [data flows](docs/figures/02-flux-de-donnees.svg), [graph creation process](docs/figures/03-creation-du-graphe.svg); regenerate with `python docs/figures/build_figures.py`
 
