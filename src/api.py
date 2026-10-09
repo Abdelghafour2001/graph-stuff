@@ -12,6 +12,8 @@ import excel_tools
 from graph import driver, read_graph
 from diff_vs_db import compare
 from spec_executor import check, execute, validate
+import variance
+from variance_tools import run_diagnosis
 
 ROOT = Path(__file__).parent.parent
 SPECS = ROOT / "specs"
@@ -160,6 +162,13 @@ def approve_asset(asset_id: str) -> dict:
     with driver.session() as s:
         n = s.run("MATCH (:SourceEntity)-[r:SAME_AS]->(:Asset {id: $id}) SET r.status = 'approved' RETURN count(r) AS n", id=asset_id).single()["n"]
     return {"approved": asset_id, "records": n}
+
+
+@app.get("/variance")
+def variance_diagnosis(metric: str, product: str, period: str, as_of: str = "") -> dict:
+    """Deterministic part of a variance diagnosis (no LLM): ranked drivers, analogs, incidents, and the report the LLM would get."""
+    diag, incidents, not_ranked = run_diagnosis(metric, product, period, as_of)
+    return {**diag, "incidents": incidents, "not_ranked": not_ranked, "report": variance.report(diag, metric, product, incidents, not_ranked)}
 
 
 @app.get("/eval")

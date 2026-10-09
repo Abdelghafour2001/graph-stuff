@@ -1,0 +1,361 @@
+<title>Variance Diagnosis Flow</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Schibsted+Grotesk:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap">
+<style>
+/* Layout: a technical drawing of the pipeline, with a step reader beside it; deterministic stages in teal ink, the one LLM stage in sulphur. */
+:root{
+  --ground:#EEF1F4; --surface:#FFFFFF; --ink:#16202A; --ink-2:#4A5866; --line:#C3CDD7; --grid:#E1E6EB;
+  --det:#1F5F7A; --det-soft:#E2EEF3; --llm:#A87700; --llm-soft:#FBF1D6; --live:#D29B00;
+  --ok:#2F7D4F; --bad:#B2412E; --ok-soft:#E3F1E8; --bad-soft:#F7E4E0;
+  --display:"Schibsted Grotesk", "Helvetica Neue", Arial, sans-serif;
+  --mono:"JetBrains Mono", ui-monospace, "SFMono-Regular", Menlo, monospace;
+}
+@media (prefers-color-scheme: dark){
+  :root:not([data-theme="light"]){
+    --ground:#0F151B; --surface:#172029; --ink:#E4EAF0; --ink-2:#9AA8B5; --line:#33414F; --grid:#1B252F;
+    --det:#6FB3CF; --det-soft:#15303B; --llm:#E8BE3A; --llm-soft:#382D0C; --live:#F2C744;
+    --ok:#6CC08E; --bad:#E27A66; --ok-soft:#163323; --bad-soft:#3A1E19; color-scheme:dark;
+  }
+}
+:root[data-theme="dark"]{
+  --ground:#0F151B; --surface:#172029; --ink:#E4EAF0; --ink-2:#9AA8B5; --line:#33414F; --grid:#1B252F;
+  --det:#6FB3CF; --det-soft:#15303B; --llm:#E8BE3A; --llm-soft:#382D0C; --live:#F2C744;
+  --ok:#6CC08E; --bad:#E27A66; --ok-soft:#163323; --bad-soft:#3A1E19; color-scheme:dark;
+}
+*{box-sizing:border-box}
+body{background:var(--ground);color:var(--ink);font-family:var(--display);font-size:15px;line-height:1.5}
+.wrap{max-width:1360px;margin:0 auto;padding-inline:20px;padding-block:24px 40px;display:grid;gap:20px}
+header{display:flex;flex-wrap:wrap;align-items:baseline;justify-content:space-between;gap:8px 24px}
+h1{font-size:clamp(22px,2.6vw,30px);font-weight:700;letter-spacing:-.01em;margin:0;text-wrap:balance}
+.q{font-family:var(--mono);font-size:13px;color:var(--ink-2);margin:4px 0 0}
+.legend{display:flex;flex-wrap:wrap;gap:14px;font-size:13px;color:var(--ink-2)}
+.legend span{display:inline-flex;align-items:center;gap:6px}
+.sw{width:18px;height:12px;border-radius:3px;border:1.5px solid var(--det);background:var(--det-soft)}
+.sw.llm{border:1.5px dashed var(--llm);background:var(--llm-soft)}
+.sw.store{border-color:var(--ink-2);background:var(--surface)}
+.stage{display:grid;grid-template-columns:minmax(0,2.15fr) minmax(0,1fr);gap:20px;align-items:start}
+@media (max-width:980px){.stage{grid-template-columns:minmax(0,1fr)}}
+.board{background:var(--surface);border:1px solid var(--line);border-radius:10px;overflow-x:auto}
+.board svg{display:block;width:100%;min-width:720px;height:auto}
+.reader{background:var(--surface);border:1px solid var(--line);border-radius:10px;padding:18px 20px;display:grid;gap:12px;min-width:0;min-height:420px;align-content:start}
+.eyebrow{font-family:var(--mono);font-size:12px;letter-spacing:.08em;text-transform:uppercase;color:var(--det)}
+.eyebrow.llm{color:var(--llm)}
+.reader h2{margin:0;font-size:21px;line-height:1.25;text-wrap:balance}
+.reader p{margin:0;color:var(--ink-2);max-width:62ch}
+.detail{display:grid;gap:8px;min-width:0}
+.detail table{border-collapse:collapse;font-family:var(--mono);font-size:12.5px;width:100%;font-variant-numeric:tabular-nums}
+.detail th{font-weight:500;text-align:left;color:var(--ink-2);border-bottom:1px solid var(--line);padding:4px 6px}
+.detail td{padding:4px 6px;border-bottom:1px solid var(--grid)}
+.detail td.n{text-align:right;white-space:nowrap}
+.chips{display:flex;flex-wrap:wrap;gap:6px}
+.chip{font-family:var(--mono);font-size:12px;padding:2px 8px;border-radius:999px;border:1px solid var(--line);background:var(--ground)}
+.chip.p{border-color:var(--det);color:var(--det)}
+.chip.d{border-color:var(--ink-2)}
+.chip.g{border-style:dashed;color:var(--ink-2)}
+pre.code{font-family:var(--mono);font-size:12px;line-height:1.45;background:var(--ground);border:1px solid var(--line);border-radius:6px;padding:10px 12px;margin:0;overflow-x:auto;white-space:pre}
+.bar{display:grid;grid-template-columns:120px minmax(0,1fr) 44px;gap:8px;align-items:center;font-family:var(--mono);font-size:12px}
+.bar i{display:block;height:10px;border-radius:2px;background:var(--det)}
+.bar i.top{background:var(--live)}
+.check{display:flex;gap:8px;font-size:13.5px;align-items:baseline}
+.check b{font-family:var(--mono);font-size:12px;min-width:34px}
+.check.ok b{color:var(--ok)} .check.bad b{color:var(--bad)}
+.answer{font-size:14px;border-left:3px solid var(--live);padding:6px 0 6px 12px;color:var(--ink)}
+.note{font-size:12px;color:var(--ink-2);font-family:var(--mono)}
+.controls{display:flex;flex-wrap:wrap;gap:10px;align-items:center}
+.controls button{font:inherit;font-size:14px;border:1px solid var(--line);background:var(--surface);color:var(--ink);border-radius:6px;padding:6px 12px;cursor:pointer}
+.controls button:hover{border-color:var(--det)}
+.controls button:focus-visible,.controls input:focus-visible{outline:2px solid var(--live);outline-offset:2px}
+.controls input[type=range]{flex:1 1 220px;accent-color:var(--det);min-width:0}
+.controls .pos{font-family:var(--mono);font-size:12px;color:var(--ink-2);font-variant-numeric:tabular-nums}
+ol.steps{margin:0;padding-left:0;list-style:none;display:grid;gap:4px;columns:2;column-gap:40px;font-size:14px;color:var(--ink-2)}
+@media (max-width:760px){ol.steps{columns:1}}
+ol.steps li{break-inside:avoid;cursor:pointer}
+ol.steps li.on{color:var(--ink);font-weight:600}
+/* SVG */
+.node rect{fill:var(--surface);stroke:var(--line);stroke-width:1.5}
+.node.det rect{stroke:var(--det)}
+.node.llm rect{stroke:var(--llm);stroke-dasharray:6 4;fill:var(--llm-soft)}
+.node.store rect{stroke:var(--ink-2)}
+.node.actor rect{stroke:var(--ink)}
+.node text{fill:var(--ink);font-family:var(--display);font-size:17px;font-weight:600}
+.node text.sub{fill:var(--ink-2);font-family:var(--mono);font-size:12.5px;font-weight:400}
+.node text.num{fill:var(--det);font-family:var(--mono);font-size:13px;font-weight:500}
+.node.llm text.num{fill:var(--llm)}
+.node.on rect{fill:var(--det-soft);stroke-width:2.5}
+.node.llm.on rect{fill:var(--llm-soft);stroke-width:2.5}
+.node.fail rect{fill:var(--bad-soft);stroke:var(--bad)}
+.node.pass rect{fill:var(--ok-soft);stroke:var(--ok)}
+.edge{fill:none;stroke:var(--line);stroke-width:1.6;marker-end:url(#arr)}
+.edge.live{stroke:var(--live);stroke-width:2.4;stroke-dasharray:7 6;animation:flow .8s linear infinite;marker-end:url(#arrLive)}
+.edge.failed{stroke:var(--bad)}
+@keyframes flow{to{stroke-dashoffset:-13}}
+.elabel{fill:var(--ink-2);font-family:var(--mono);font-size:12.5px}
+.frame{fill:none;stroke:var(--det);stroke-width:1.2;stroke-dasharray:2 4}
+.flabel{fill:var(--det);font-family:var(--mono);font-size:13px;letter-spacing:.04em}
+.packet{fill:var(--live)}
+.gridline{stroke:var(--grid);stroke-width:1}
+/* record mode: fixed frame for the video */
+body.rec .wrap{max-width:none;width:1600px;padding-block:22px}
+body.rec .controls,body.rec ol.steps,body.rec .legend-note{display:none}
+body.rec .reader{min-height:600px}
+@media (prefers-reduced-motion: reduce){.edge.live{animation:none}}
+</style>
+
+<div class="wrap">
+  <header>
+    <div>
+      <h1>Why did the Jorf DAP margin fall in August?</h1>
+      <p class="q">diagnose_variance · architecture and agentic flow · design note 08</p>
+    </div>
+    <div class="legend">
+      <span><i class="sw"></i>deterministic code</span>
+      <span><i class="sw llm"></i>LLM call</span>
+      <span><i class="sw store"></i>data store / agent</span>
+    </div>
+  </header>
+
+  <div class="stage">
+    <div class="board">
+      <svg id="svg" viewBox="0 0 1200 640" role="img" aria-label="Pipeline: question, orchestrator, diagnose_variance stages, LLM rerank, Reflector checks, diagnosis">
+        <defs>
+          <marker id="arr" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0 0 L10 5 L0 10 z" fill="var(--line)"/></marker>
+          <marker id="arrLive" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0 0 L10 5 L0 10 z" fill="var(--live)"/></marker>
+        </defs>
+        <g id="grid"></g>
+        <rect class="frame" x="370" y="130" width="635" height="335" rx="10"/>
+        <text class="flabel" x="388" y="160">diagnose_variance · no LLM inside</text>
+        <g id="edges"></g>
+        <g id="nodes"></g>
+        <g id="packets"></g>
+      </svg>
+    </div>
+
+    <section class="reader" aria-live="polite">
+      <div class="eyebrow" id="eyebrow">Agent</div>
+      <h2 id="title"></h2>
+      <p id="body"></p>
+      <div class="detail" id="detail"></div>
+      <p class="note">Illustrative values, not OCP data.</p>
+    </section>
+  </div>
+
+  <div class="controls">
+    <button id="play" type="button">Pause</button>
+    <button id="prev" type="button" aria-label="Previous step">◀</button>
+    <button id="next" type="button" aria-label="Next step">▶</button>
+    <input id="scrub" type="range" min="0" max="1000" value="0" aria-label="Timeline">
+    <span class="pos" id="pos">0.0 s</span>
+  </div>
+
+  <ol class="steps" id="steps"></ol>
+</div>
+
+<script>
+const NODES = [
+  {id:"q", x:20, y:280, w:150, h:80, kind:"actor", t:"Controller", s:"asks in French"},
+  {id:"orch", x:200, y:280, w:140, h:80, kind:"det", t:"Orchestrator", s:"agent loop"},
+  {id:"neo", x:390, y:30, w:170, h:64, kind:"store", t:"Neo4j", s:"ontology · paths"},
+  {id:"pg", x:590, y:30, w:170, h:64, kind:"store", t:"Postgres", s:"price series"},
+  {id:"cand", x:390, y:190, w:170, h:64, kind:"det", n:"1", t:"Candidates", s:"graph paths"},
+  {id:"ev", x:590, y:190, w:170, h:64, kind:"det", n:"2", t:"Evidence", s:"Δμ · z · onset"},
+  {id:"kg", x:790, y:160, w:180, h:56, kind:"det", n:"3", t:"KG score", s:"primary > direct"},
+  {id:"an", x:790, y:240, w:180, h:56, kind:"det", n:"4", t:"Analogs", s:"cosine on z"},
+  {id:"news", x:390, y:370, w:170, h:64, kind:"store", t:"News agent", s:"incidents, as of"},
+  {id:"rank", x:790, y:370, w:180, h:64, kind:"det", n:"5", t:"Ranking", s:"evidence + analogs"},
+  {id:"rep", x:1020, y:150, w:165, h:56, kind:"det", n:"6", t:"Report", s:"evidence, no series"},
+  {id:"llm", x:1020, y:250, w:165, h:64, kind:"llm", n:"7", t:"LLM rerank", s:"strict JSON"},
+  {id:"refl", x:1020, y:360, w:165, h:56, kind:"det", n:"8", t:"Reflector", s:"7 checks"},
+  {id:"diag", x:1020, y:470, w:165, h:64, kind:"det", n:"9", t:"Diagnosis", s:"trace · review"},
+];
+const EDGES = [
+  {id:"q-orch", d:"M170 320 H200"},
+  {id:"orch-neo", d:"M270 280 V62 H390", label:"lookup_term", lx:282, ly:150},
+  {id:"orch-cand", d:"M340 320 H362 V222 H390"},
+  {id:"neo-cand", d:"M475 94 V190"},
+  {id:"cand-ev", d:"M560 222 H590"},
+  {id:"pg-ev", d:"M675 94 V190"},
+  {id:"ev-kg", d:"M760 214 H776 V188 H790"},
+  {id:"ev-an", d:"M760 230 H776 V268 H790"},
+  {id:"kg-rank", d:"M970 188 H986 V348 H930 V370"},
+  {id:"an-rank", d:"M850 296 V370"},
+  {id:"news-rank", d:"M560 402 H790", label:"event_timeline", lx:620, ly:394},
+  {id:"rank-rep", d:"M970 410 H1008 V178 H1020"},
+  {id:"rep-llm", d:"M1102 206 V250"},
+  {id:"llm-refl", d:"M1102 314 V360"},
+  {id:"refl-llm", d:"M1185 388 H1194 V282 H1185", label:"fail", lx:1150, ly:342},
+  {id:"refl-diag", d:"M1102 416 V470"},
+  {id:"diag-q", d:"M1102 534 V600 H95 V360", label:"cited answer · ranked drivers · path · analogs", lx:430, ly:592},
+];
+
+const STEPS = [
+  {dur:4200, nodes:["q"], edges:[], kind:"det",
+   title:"A controller asks why a margin moved",
+   body:"The question names a metric, a site and a period. The pipeline answers it with ranked drivers, each tied to evidence.",
+   detail:`<pre class="code">« Pourquoi la marge DAP de Jorf
+   a baissé en août ? »</pre>`},
+  {dur:4800, nodes:["orch","neo"], edges:["q-orch","orch-neo"], kind:"det",
+   title:"Frame the question",
+   body:"The orchestrator resolves every word through the graph and fixes a baseline and an as-of date. Every later query is filtered on that date, so nothing published afterwards can leak in.",
+   detail:`<table><tr><th>field</th><th>value</th></tr>
+   <tr><td>metric</td><td>dap_margin</td></tr><tr><td>site</td><td>jorf_lasfar</td></tr>
+   <tr><td>period</td><td>2026-08</td></tr><tr><td>baseline</td><td>2026-05 … 2026-07</td></tr>
+   <tr><td>as_of</td><td>2026-08-31</td></tr></table>`},
+  {dur:5200, nodes:["cand","neo"], edges:["orch-cand","neo-cand"], kind:"det",
+   title:"1 · Candidates come from the graph",
+   body:"A Cypher walk over DEPENDS_ON, MADE_FROM and TRANSITS lists every driver that can move this metric, tagged by role. The set is closed: the LLM cannot name a driver outside it.",
+   detail:`<div class="chips"><span class="chip p">primary · dap fob morocco</span><span class="chip p">primary · production cost</span></div>
+   <div class="chips"><span class="chip d">direct · sulphur</span><span class="chip d">direct · ammonia</span><span class="chip d">direct · phosphate rock</span></div>
+   <div class="chips"><span class="chip g">propagation · sulphuric acid</span><span class="chip g">propagation · freight</span><span class="chip g">route · hormuz</span></div>`},
+  {dur:5600, nodes:["ev","pg"], edges:["cand-ev","pg-ev"], kind:"det",
+   title:"2 · Evidence is computed, not guessed",
+   body:"Each driver's August window is compared with its baseline: the raw shift with its sign, a z-score so units compare, and the first date it left its normal range. Early movers are more likely causes.",
+   detail:`<table><tr><th>driver</th><th class="n">Δμ</th><th class="n">z</th><th>first abnormal</th></tr>
+   <tr><td>sulphur ME fob</td><td class="n">+38 $/t</td><td class="n">4.1</td><td>08-04</td></tr>
+   <tr><td>sulphuric acid</td><td class="n">+21 $/t</td><td class="n">3.0</td><td>08-12</td></tr>
+   <tr><td>ammonia ME fob</td><td class="n">+22 $/t</td><td class="n">2.3</td><td>08-11</td></tr>
+   <tr><td>dap fob morocco</td><td class="n">−9 $/t</td><td class="n">1.1</td><td>none</td></tr>
+   <tr><td>phosphate rock</td><td class="n">0 $/t</td><td class="n">0.2</td><td>none</td></tr></table>`},
+  {dur:5600, nodes:["kg","an"], edges:["ev-kg","ev-an"], kind:"det",
+   title:"3 · 4 · Score by role, retrieve analogs",
+   body:"Direct movers outweigh propagated ones in the KG score. In parallel, past months with a similar z-vector are retrieved, only from before the as-of date and never the queried month itself.",
+   detail:`<div class="bar"><span>sulphur</span><i class="top" style="width:92%"></i><span>0.92</span></div>
+   <div class="bar"><span>ammonia</span><i style="width:61%"></i><span>0.61</span></div>
+   <div class="bar"><span>sulph. acid</span><i style="width:38%"></i><span>0.38</span></div>
+   <div class="bar"><span>dap price</span><i style="width:24%"></i><span>0.24</span></div>
+   <table><tr><th>analog month</th><th class="n">cos</th><th>top driver then</th></tr>
+   <tr><td>2022-03</td><td class="n">0.88</td><td>sulphur</td></tr><tr><td>2024-11</td><td class="n">0.71</td><td>ammonia</td></tr></table>`},
+  {dur:5200, nodes:["rank","news"], edges:["kg-rank","an-rank","news-rank"], kind:"det",
+   title:"5 · Combine, and attach events",
+   body:"Evidence and analog support merge into one ranking; weekly windows are aggregated by rank vote. The news agent adds incidents that touch the top drivers, with article ids.",
+   detail:`<table><tr><th>#</th><th>driver</th><th class="n">S(c)</th><th>incidents</th></tr>
+   <tr><td>1</td><td>sulphur</td><td class="n">0.90</td><td>3 · hormuz</td></tr>
+   <tr><td>2</td><td>ammonia</td><td class="n">0.58</td><td>1 · hormuz</td></tr>
+   <tr><td>3</td><td>sulphuric acid</td><td class="n">0.35</td><td>0</td></tr></table>`},
+  {dur:4800, nodes:["rep","llm"], edges:["rank-rep","rep-llm"], kind:"det",
+   title:"6 · A compact report goes to the model",
+   body:"The LLM sees framing, ranked candidates with their numbers and paths, incidents, analogs and two few-shot examples from other periods. It never sees a raw series.",
+   detail:`<pre class="code">mode: signal (no validated ratios)
+1 sulphur  z 4.1  +38 $/t  first 08-04
+  path hormuz → sulphur → sulph. acid
+       → phos. acid → dap
+  incidents: art. 2795774, 2801102
+analogs: 2022-03 (0.88) …</pre>`},
+  {dur:5200, nodes:["llm"], edges:[], kind:"llm",
+   title:"7 · The LLM reranks and explains",
+   body:"Its only job is to order the candidates it was given, explain why, name the propagation path and state its uncertainty. The output is strict JSON.",
+   detail:`<pre class="code">{"top1": "sulfur",
+ "top3": [{"driver": "sulfur",
+   "evidence": ["ev:sulfur:2026-08",
+                "article:2795774"]}, …],
+ "propagation_path": ["hormuz","sulfur",
+   "sulfuric_acid","phosphoric_acid","dap"],
+ "confidence": "high"}</pre>`},
+  {dur:5000, nodes:["refl"], edges:["llm-refl","refl-llm"], kind:"det", fail:true,
+   title:"8 · The Reflector rejects a bad answer",
+   body:"Deterministic checks run on the JSON. Here the text quoted a number that appears nowhere in the evidence, so the answer goes back with the reason.",
+   detail:`<div class="check ok"><b>pass</b>drivers are in the candidate set</div>
+   <div class="check ok"><b>pass</b>propagation path exists in the graph</div>
+   <div class="check bad"><b>fail</b>“+41 $/t” is not in the evidence report</div>
+   <div class="check ok"><b>pass</b>every claim cites an evidence id</div>`},
+  {dur:4600, nodes:["refl","llm"], edges:["llm-refl"], kind:"det", pass:true,
+   title:"8 · Second attempt passes",
+   body:"The corrected answer quotes only evidence numbers. The model agrees with the deterministic top-1; if it did not, the answer would show both rankings.",
+   detail:`<div class="check ok"><b>pass</b>schema · candidates · path · numbers · citations</div>
+   <div class="check ok"><b>pass</b>agrees with deterministic top-1 (sulphur)</div>
+   <div class="check ok"><b>skip</b>fidelity test needs validated ratios</div>`},
+  {dur:6400, nodes:["diag","q"], edges:["refl-diag","diag-q"], kind:"det",
+   title:"9 · Stored, reviewed, answered",
+   body:"The diagnosis is written to the graph with every piece of evidence it used, so a controller can approve or correct it. Corrections become labelled cases for the analogs and the evaluation.",
+   detail:`<p class="answer">La baisse vient d’abord du soufre (Moyen-Orient fob, +38 $/t vs mai–juillet, z 4,1, premier écart le 4 août), lié à trois incidents à Hormuz (articles 2795774, 2801102, 2803950), puis de l’ammoniac (+22 $/t). Pour le T4 : le cas le plus proche (2022-03) a vu… <em>[analogs only, no LLM forecast]</em></p>`},
+];
+
+const svgNS = "http://www.w3.org/2000/svg";
+const $ = id => document.getElementById(id);
+const mk = (tag, attrs, parent) => { const e = document.createElementNS(svgNS, tag); for (const k in attrs) e.setAttribute(k, attrs[k]); parent && parent.appendChild(e); return e; };
+
+for (let x = 0; x <= 1200; x += 40) mk("line", {x1:x, y1:0, x2:x, y2:640, class:"gridline"}, $("grid"));
+for (let y = 0; y <= 640; y += 40) mk("line", {x1:0, y1:y, x2:1200, y2:y, class:"gridline"}, $("grid"));
+
+const edgeEl = {};
+for (const e of EDGES) {
+  edgeEl[e.id] = mk("path", {d:e.d, class:"edge", id:"e-"+e.id}, $("edges"));
+  if (e.label) { const t = mk("text", {x:e.lx, y:e.ly, class:"elabel"}, $("edges")); t.textContent = e.label; }
+}
+const nodeEl = {};
+for (const n of NODES) {
+  const g = mk("g", {class:"node "+n.kind}, $("nodes"));
+  mk("rect", {x:n.x, y:n.y, width:n.w, height:n.h, rx: n.kind === "actor" ? 40 : 8}, g);
+  const cx = n.x + 14;
+  if (n.n) { const t = mk("text", {x:n.x + n.w - 12, y:n.y + 20, class:"num", "text-anchor":"end"}, g); t.textContent = n.n; }
+  const t = mk("text", {x:cx, y:n.y + n.h/2 - 2}, g); t.textContent = n.t;
+  const s = mk("text", {x:cx, y:n.y + n.h/2 + 15, class:"sub"}, g); s.textContent = n.s;
+  nodeEl[n.id] = g;
+}
+
+const starts = []; let total = 0;
+for (const s of STEPS) { starts.push(total); total += s.dur; }
+const list = $("steps");
+STEPS.forEach((s, i) => { const li = document.createElement("li"); li.textContent = s.title; li.onclick = () => seek(starts[i] + 1); list.appendChild(li); });
+
+const reduced = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+const record = location.hash === "#record";
+if (record) document.body.classList.add("rec");
+
+let t = 0, playing = !reduced, last = null, shown = -1;
+const packets = [];
+
+function stepAt(time) { let i = 0; while (i + 1 < STEPS.length && starts[i + 1] <= time) i++; return i; }
+
+function show(i) {
+  if (i === shown) return;
+  shown = i;
+  const s = STEPS[i];
+  for (const id in nodeEl) nodeEl[id].classList.remove("on", "fail", "pass");
+  for (const id in edgeEl) edgeEl[id].classList.remove("live", "failed");
+  s.nodes.forEach(id => nodeEl[id].classList.add("on"));
+  s.edges.forEach(id => edgeEl[id].classList.add("live"));
+  if (s.fail) { nodeEl.refl.classList.add("fail"); edgeEl["refl-llm"].classList.add("failed"); }
+  if (s.pass) nodeEl.refl.classList.add("pass");
+  $("eyebrow").textContent = s.kind === "llm" ? "LLM call" : s.nodes.some(n => ["q", "orch"].includes(n)) && i < 2 ? "Agent" : "Deterministic";
+  $("eyebrow").className = "eyebrow" + (s.kind === "llm" ? " llm" : "");
+  $("title").textContent = s.title;
+  $("body").textContent = s.body;
+  $("detail").innerHTML = s.detail;
+  [...list.children].forEach((li, k) => li.classList.toggle("on", k === i));
+  packets.forEach(p => p.el.remove()); packets.length = 0;
+  if (!reduced) s.edges.forEach(id => {
+    const path = edgeEl[id];
+    packets.push({path, len: path.getTotalLength(), el: mk("circle", {r:5, class:"packet"}, $("packets"))});
+  });
+}
+
+function render() {
+  const i = stepAt(t);
+  show(i);
+  const local = (t - starts[i]) / 1400;
+  packets.forEach(p => { const pt = p.path.getPointAtLength((local % 1) * p.len); p.el.setAttribute("cx", pt.x); p.el.setAttribute("cy", pt.y); });
+  $("scrub").value = Math.round(1000 * t / total);
+  $("pos").textContent = (t / 1000).toFixed(1) + " s";
+}
+
+function frame(now) {
+  if (last !== null && playing) {
+    t += now - last;
+    if (t >= total) { if (record) { t = total - 1; playing = false; window.__done = true; } else t = 0; }
+  }
+  last = now;
+  render();
+  requestAnimationFrame(frame);
+}
+function seek(time) { t = Math.max(0, Math.min(total - 1, time)); render(); }
+function setPlaying(p) { playing = p; $("play").textContent = p ? "Pause" : "Play"; }
+
+$("play").onclick = () => setPlaying(!playing);
+$("prev").onclick = () => { setPlaying(false); seek(starts[Math.max(0, stepAt(t) - 1)] + 1); };
+$("next").onclick = () => { setPlaying(false); seek(starts[Math.min(STEPS.length - 1, stepAt(t) + 1)] + 1); };
+$("scrub").oninput = e => { setPlaying(false); seek(total * e.target.value / 1000); };
+setPlaying(playing);
+render();
+requestAnimationFrame(frame);
+</script>
