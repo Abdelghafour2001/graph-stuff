@@ -15,11 +15,11 @@ def resolve_entity(name: str) -> str:
         name: Name or fragment, case-insensitive.
     """
     rows = read_graph(
-        "MATCH (e:SourceEntity)-[s:SAME_AS]->(a:Asset) WHERE toLower(e.name) CONTAINS toLower($q) OR toLower(a.name) CONTAINS toLower($q) "
+        "MATCH (e:SourceEntity)-[s:SAME_AS]->(a:Asset) WHERE toLower(e.name) CONTAINS toLower($snake) OR toLower(a.name) CONTAINS toLower($q) "
         "OPTIONAL MATCH (a)-[:LOCATED_AT]->(site:Concept) "
         "RETURN DISTINCT a.id AS asset_id, a.name AS asset, a.kind AS kind, site.id AS site, a.confidence AS confidence, s.status AS status, "
         "[(x:SourceEntity)-[:SAME_AS]->(a) | x.name] AS source_names",
-        q=name.replace(" ", "_") if "_" in name else name,
+        q=name, snake=name.strip().replace(" ", "_"),  # source names are snake_case, asset names are readable
     )
     return json.dumps(rows, ensure_ascii=False) if rows else f"No asset matches '{name}'."
 

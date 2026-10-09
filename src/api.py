@@ -78,9 +78,17 @@ def specs() -> list[dict]:
     return out
 
 
+def spec_path(status: str, name: str, suffix: str = ".yaml") -> Path:
+    """Path of a spec file; rejects unknown statuses and names that would leave the specs folder."""
+    path = SPECS / status / f"{name}{suffix}"
+    if status not in STATUSES or path.resolve().parent != (SPECS / status).resolve():
+        raise HTTPException(404, "unknown spec")
+    return path
+
+
 @app.get("/specs/{status}/{name}")
 def spec(status: str, name: str) -> dict:
-    folder = SPECS / status
+    folder = spec_path(status, name).parent
     if not (folder / f"{name}.yaml").exists():
         raise HTTPException(404, "unknown spec")
     return {"yaml": (folder / f"{name}.yaml").read_text(encoding="utf-8"), **json.loads((folder / f"{name}.checks.json").read_text(encoding="utf-8"))}
@@ -88,7 +96,7 @@ def spec(status: str, name: str) -> dict:
 
 @app.post("/specs/{status}/{name}/run")
 def run_spec(status: str, name: str) -> dict:
-    spec_dict = yaml.safe_load((SPECS / status / f"{name}.yaml").read_text(encoding="utf-8"))
+    spec_dict = yaml.safe_load(spec_path(status, name).read_text(encoding="utf-8"))
     validate(spec_dict)
     rows, ctx = execute(spec_dict)
     return {"checks": check(spec_dict, rows, ctx), "rows": len(rows), "sample": rows[:500]}
@@ -97,7 +105,7 @@ def run_spec(status: str, name: str) -> dict:
 @app.post("/specs/{status}/{name}/compare")
 def compare_spec(status: str, name: str) -> dict:
     """Compare the spec's values with what the old ingestion pipeline stored for the same sheet."""
-    spec_dict = yaml.safe_load((SPECS / status / f"{name}.yaml").read_text(encoding="utf-8"))
+    spec_dict = yaml.safe_load(spec_path(status, name).read_text(encoding="utf-8"))
     validate(spec_dict)
     return compare(spec_dict)
 
@@ -105,9 +113,10 @@ def compare_spec(status: str, name: str) -> dict:
 @app.post("/specs/{status}/{name}/approve")
 def approve(status: str, name: str) -> dict:
     """Human decision. A rejected spec can be approved too (reviewer overrides a check)."""
+    spec_path(status, name)
     (SPECS / "approved").mkdir(exist_ok=True)
     for suffix in (".yaml", ".checks.json"):
-        shutil.move(SPECS / status / f"{name}{suffix}", SPECS / "approved" / f"{name}{suffix}")
+        shutil.move(spec_path(status, name, suffix), SPECS / "approved" / f"{name}{suffix}")
     return {"approved": name}
 
 
