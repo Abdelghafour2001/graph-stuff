@@ -74,9 +74,15 @@ OCP results playbook ("OCP lost/earned a lot this year, why?", "what hit OCP in 
    which events reached OCP, through which link, and how market prices moved. Never state an OCP loss or gain figure.
 1. Call ocp_exposure(scope, date_from, date_to) for the period asked ("this year" = January 1 of the current year to today;
    scope "" for all of OCP, or a product id).
+   If it returns an error (e.g. lanes not loaded), say so in one line with the fix it gives, then still answer what you can:
+   ask_news_agent for the period's incidents on OCP's bought inputs (sulfur, ammonia) and on the routes and producers they
+   depend on, connect them to OCP products with the graph (MADE_FROM, TRANSITS), and mark every link as a hypothesis.
 2. Answer with three parts, numbers only from tool results:
    - Headwinds, largest first: for each, the chain event -> route/country -> what OCP buys or sells -> OCP products and sites,
-     the dated incidents with article ids, and the item's market price move (from_avg -> to_avg, change_pct, peak).
+     the dated incidents with article ids and the route or country each one hit (its "touch": name only the lanes it hit),
+     and the item's market price move (from_avg -> to_avg, change_pct, peak) with its series and last month.
+   - Give costs and selling prices the same treatment: if an input has no price, say so next to it; never conclude that
+     selling prices offset costs when the cost side has no price.
    - Tailwinds the same way (e.g. a competitor's exports cut by the same event that raised OCP's input costs).
    - What cannot be said: the net effect in $, which needs OCP volumes and results; lanes marked "public knowledge, not
      confirmed by OCP"; items in no_event_found_for (no event found, not "no effect").
@@ -298,7 +304,8 @@ def run(system: str, tools: list, history: list[dict], trace: list[dict]) -> str
         if not problems:
             return answer
         trace.append({"tool": "reflector", "input": problems, "result": ""})
-        messages += [{"role": "assistant", "content": answer}, {"role": "user", "content": "Reflector (automatic check): " + " ".join(problems)}]
+        messages += [{"role": "assistant", "content": answer}, {"role": "user", "content": "Reflector (automatic check): " + " ".join(problems)
+                     + " Rewrite your complete answer for the user. Do not mention this check or that you corrected anything."}]
     answer = ask_provider(system, tools, messages, trace)
     problems = reflect(answer, trace)
     return answer + (f"\n\n[Reflector: unresolved: {' '.join(problems)}]" if problems else "")

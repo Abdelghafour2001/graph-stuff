@@ -46,7 +46,7 @@ def test_one_event_two_sides():
     assert {"dap", "map", "tsp", "phosphoric_acid", "sulfuric_acid"} <= set(sulfur["reaches_ocp_products"])
     assert "jorf_lasfar" in sulfur["sites"] and sulfur["lane_status"] == "public knowledge, not confirmed by OCP"
     assert sulfur["price"] == {"from": "2026-01", "from_avg": 160.0, "to": "2026-06", "to_avg": 240.0, "change_pct": 50.0,
-                               "peak": "2026-03", "peak_avg": 260.0}
+                               "peak": "2026-03", "peak_avg": 260.0, "series": None}
     # the same Hormuz closure takes Saudi DAP off the market: a tailwind for OCP
     saudi = find(r, "tailwind", "competitor", "dap")
     assert {e["touch"] for e in saudi["events"]} >= {"hormuz", "country_china"}
@@ -102,3 +102,14 @@ def test_region_news_counts_on_the_route():
     r = x.exposure(LANES, MADE_FROM, SITES, events, {}, aliases=load_supply_chain.route_aliases())
     assert find(r, "headwind", "export", "dap")["events"][0]["touch"] == "bab_el_mandeb"
     assert x.exposure(LANES, MADE_FROM, SITES, events, {})["headwind"] == []  # without the alias it is not on any lane
+
+
+def test_news_about_morocco_is_not_news_about_ocp_exports():
+    """An article tagging Morocco (e.g. 'Hormuz closure hits Morocco's sulphur imports') must not flag OCP's export lanes."""
+    r = x.exposure(LANES, MADE_FROM, SITES, [ev("i-ma", "2026-02-28", "country_morocco", "down", "Hormuz closure hits Morocco")], {})
+    assert r["headwind"] == r["tailwind"] == []
+
+
+def test_price_carries_its_series():
+    r = x.exposure(LANES, MADE_FROM, SITES, EVENTS, PRICES, price_sources={"sulfur": "sulfur region_middle_east fob (configured series)"})
+    assert find(r, "headwind", "supply", "sulfur")["price"]["series"] == "sulfur region_middle_east fob (configured series)"

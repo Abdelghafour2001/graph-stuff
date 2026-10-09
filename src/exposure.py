@@ -54,7 +54,8 @@ def price_move(monthly: dict[str, float] | None) -> dict | None:
 
 
 def exposure(lanes: list[dict], made_from: list[tuple[str, str]], sites: dict[str, list[str]], events: list[dict],
-             prices: dict[str, dict[str, float]], scope: str | None = None, aliases: dict[str, list[str]] | None = None) -> dict:
+             prices: dict[str, dict[str, float]], scope: str | None = None, aliases: dict[str, list[str]] | None = None,
+             price_sources: dict[str, str] | None = None) -> dict:
     """lanes: [{id, role, item, origin, destination, via, status, share}]; sites: {OCP product: [sites]};
     events: [{incident, date, type, summary, concept, direction, channel, article_ids}]; prices: {item: {YYYY-MM: avg}}.
     scope: an OCP product id to keep only what reaches it, or None for all of OCP.
@@ -73,7 +74,9 @@ def exposure(lanes: list[dict], made_from: list[tuple[str, str]], sites: dict[st
 
     links = defaultdict(lambda: {"events": {}, "lanes": set(), "status": set(), "why": set()})
     for lane in lanes:
-        touches = [lane.get("origin"), *lane.get("via", []), lane.get("destination")]
+        # an export lane starts in Morocco, i.e. at OCP itself: news that mentions Morocco is not news about the lane
+        origin = None if lane["role"] == "export" else lane.get("origin")
+        touches = [origin, *lane.get("via", []), lane.get("destination")]
         for t in filter(None, touches):
             for e in by_touch.get(t, []):
                 state = lane_state(e["direction"])
@@ -124,7 +127,7 @@ def exposure(lanes: list[dict], made_from: list[tuple[str, str]], sites: dict[st
             "lane_status": "public knowledge, not confirmed by OCP" if link["status"] <= {"public"} else sorted(link["status"]),
             "incidents": len(evs), "first": evs[0]["date"], "last": evs[-1]["date"],
             "events": [{k: e.get(k) for k in ("date", "type", "summary", "touch", "direction", "channel", "article_ids")} for e in evs[:8]],
-            "price": price_move(prices.get(item)),
+            "price": (lambda m: m and {**m, "series": (price_sources or {}).get(item)})(price_move(prices.get(item))),
         })
     for effect in out:
         out[effect].sort(key=lambda x: (-x["incidents"], x["item"]))
