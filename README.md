@@ -15,6 +15,7 @@ The goal is agentic P&L computation across OCP branches and BUs on top of a Neo4
 - [P&L agent: branch submissions without templates, structure discovery, P&L engine (design + prototype)](docs/10-pnl-agent.md); try `python scripts/sample_branch.py /tmp/b.xlsx && python scripts/discover_submission.py /tmp/b.xlsx`
 - [Variance diagnosis: why a margin moved (design, with animated architecture)](docs/08-variance-diagnosis.md)
 - Architecture figures (French, SVG importable into Figma): [agentic architecture](docs/figures/01-architecture-agentique.svg), [data flows](docs/figures/02-flux-de-donnees.svg), [graph creation process](docs/figures/03-creation-du-graphe.svg), [branch submission discovery and P&L](docs/figures/04-decouverte-pnl.svg); regenerate with `python docs/figures/build_figures.py`
+- UI design: [DESIGN.md](DESIGN.md) (IBM Carbon tokens adapted to a data product; theme in `.streamlit/config.toml`). Skills in `.claude/skills/`: `web-design-guidelines` (review UI changes for accessibility and UX, rules vendored from Vercel Labs) and `taste-skill` (for docs pages and redesigns, not for data tables). Source style: [docs/design/ibm-carbon.DESIGN.md](docs/design/ibm-carbon.DESIGN.md) from VoltAgent/awesome-design-md
 
 Core rule: **the LLM never computes or invents numbers.** Agents maintain structure and a deterministic engine does the math.
 

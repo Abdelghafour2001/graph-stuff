@@ -1,0 +1,22 @@
+# Theme from DESIGN.md (IBM Carbon tokens: White and Gray 100). Fonts fall back to the system sans when Google Fonts is
+# not reachable. Light and dark follow the viewer's setting.
+[theme]
+baseRadius = "none"
+font = "IBM Plex Sans:https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:wght@300;400;600&display=swap"
+codeFont = "IBM Plex Mono:https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500&display=swap"
+
+[theme.light]
+primaryColor = "#0f62fe"
+backgroundColor = "#ffffff"
+secondaryBackgroundColor = "#f4f4f4"
+textColor = "#161616"
+linkColor = "#0f62fe"
+borderColor = "#e0e0e0"
+
+[theme.dark]
+primaryColor = "#4589ff"
+backgroundColor = "#161616"
+secondaryBackgroundColor = "#262626"
+textColor = "#f4f4f4"
+linkColor = "#78a9ff"
+borderColor = "#393939"
